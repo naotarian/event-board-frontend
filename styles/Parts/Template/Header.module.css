@@ -1,0 +1,9 @@
+.headerLink {
+  align-self: center;
+  cursor: pointer;
+  color: #072044;
+}
+
+.headerLink:hover {
+  border-bottom: #072044 1px solid;
+}
