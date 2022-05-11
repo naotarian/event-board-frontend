@@ -12,6 +12,11 @@ export default function Home() {
 				<title>Laravel</title>
 			</Head>
 			<Header />
+			<Link href="/result/result_list">
+				<a>
+					一覧
+				</a>
+			</Link>
 		</>
 	)
 }
