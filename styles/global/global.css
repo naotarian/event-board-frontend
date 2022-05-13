@@ -1,3 +1,24 @@
 body {
   margin-top: 60px;
+  background-color: #f4f5f8;
+  font-family: "Yu Gothic",
+    YuGothic,
+    "Hiragino Sans",
+    "Hiragino Kaku Gothic ProN",
+    Verdana,
+    "メイリオ",
+    Meiryo,
+    sans-serif !important;
+}
+
+h1 {
+  font-weight: 700 !important;
+  font-family: "Yu Gothic",
+    YuGothic,
+    "Hiragino Sans",
+    "Hiragino Kaku Gothic ProN",
+    Verdana,
+    "メイリオ",
+    Meiryo,
+    sans-serif !important;
 }
