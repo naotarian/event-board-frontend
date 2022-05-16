@@ -17,6 +17,9 @@ import CardContent from '@mui/material/CardContent'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import LocalOfferIcon from '@mui/icons-material/LocalOffer'
+import Link from 'next/link'
+import theme from '../../components/default'
+import { ThemeProvider } from '@material-ui/styles'
 
 const StyledTabList = styled(TabList)`
   width: fit-content;
@@ -40,6 +43,25 @@ const H1Typo = styled(Typography)`
   font-size: 22px;
   line-height: 1.4; 
 `
+const ListActions = styled(Grid)`
+  padding :1rem;
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+`
+const ActionItem = styled(Grid)`
+  font-size: 14px;
+`
+const ActionItemChild = styled(Grid)`
+  position:relative;
+  display:inline-block;
+  padding-left: 1rem;
+  &:hover {
+    cursor: pointer;
+    color: #0e7ac4;
+  }
+`
+
 const ResultList = () => {
   const { user } = useAuth({ middleware: 'auth' })
   const [value, setValue] = useState('one');
@@ -79,22 +101,47 @@ const ResultList = () => {
             <StyledTab value="two" label="Item Two" />
           </Tabs>
         </Box>
+        <ListActions>
+          <ActionItem>開催予定48件/開催中0件/全48件</ActionItem>
+          <ActionItem className="flex">
+            <ActionItemChild>
+              <Link href="#">
+                <a>おすすめ順</a>
+              </Link>
+            </ActionItemChild>
+            <ActionItemChild>
+              <Link href="#">
+                <a>新着順</a>
+              </Link>
+            </ActionItemChild>
+            <ActionItemChild>
+              <Link href="#">
+                <a>開催昇順</a>
+              </Link>
+            </ActionItemChild>
+            <ActionItemChild>
+              <Link href="#">
+                <a>開催降順</a>
+              </Link>
+            </ActionItemChild>
+            <ActionItemChild>
+              <Link href="#">
+                <a>申込数順</a>
+              </Link>
+            </ActionItemChild>
+          </ActionItem>
+        </ListActions>
         <WrapperCard>
-          <CardContent>
-            <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-              Word of the Day
+          <CardContent className="flex">
+            <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom className="bold">
+              2022/5/17 17:00 ~ 21:00
             </Typography>
-            <Typography variant="h5" component="div">
-              be{bull}nev{bull}o{bull}lent
-            </Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              adjective
-            </Typography>
-            <Typography variant="body2">
-              well meaning and kindly.
-              <br />
-              {'"a benevolent smile"'}
-            </Typography>
+            <ThemeProvider theme={theme}>
+              <Typography className="bold fs15rem">
+                エンジニアの自由研究発表会vol.6 ～IoT／ローコード開発／アプリ開発etc～業務外でエンジニアスキルを活かしてみた！
+              </Typography>
+
+            </ThemeProvider>
           </CardContent>
           <CardActions>
             <Button size="small">Learn More</Button>

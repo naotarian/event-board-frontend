@@ -10,6 +10,7 @@ export default function Home() {
 		<>
 			<Head>
 				<title>Laravel</title>
+				<link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet"></link>
 			</Head>
 			<Header />
 			<Link href="/result/result_list">
