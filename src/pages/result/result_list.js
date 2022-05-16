@@ -3,6 +3,7 @@ import styled from "styled-components"
 import Header from '../../components/Parts/Template/Header'
 import { useAuth } from '@/hooks/auth'
 import Bread from '../../components/Parts/Template/Breadcrumbs'
+import ResultListCss from '../../../styles/result_list.module.css'
 //mui
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
@@ -20,6 +21,7 @@ import LocalOfferIcon from '@mui/icons-material/LocalOffer'
 import Link from 'next/link'
 import theme from '../../components/default'
 import { ThemeProvider } from '@material-ui/styles'
+import Paper from '@mui/material/Paper'
 
 const StyledTabList = styled(TabList)`
   width: fit-content;
@@ -61,6 +63,17 @@ const ActionItemChild = styled(Grid)`
     color: #0e7ac4;
   }
 `
+const MainContentGrid = styled(Grid)`
+  // display: flex;
+`
+const FlexGrid = styled(Grid)`
+  display: flex;
+  justify-content: space-between;
+`
+const SideBar = styled(Paper)`
+  padding: 1rem;
+  width: 25%;
+`
 
 const ResultList = () => {
   const { user } = useAuth({ middleware: 'auth' })
@@ -101,52 +114,71 @@ const ResultList = () => {
             <StyledTab value="two" label="Item Two" />
           </Tabs>
         </Box>
-        <ListActions>
-          <ActionItem>開催予定48件/開催中0件/全48件</ActionItem>
-          <ActionItem className="flex">
-            <ActionItemChild>
-              <Link href="#">
-                <a>おすすめ順</a>
-              </Link>
-            </ActionItemChild>
-            <ActionItemChild>
-              <Link href="#">
-                <a>新着順</a>
-              </Link>
-            </ActionItemChild>
-            <ActionItemChild>
-              <Link href="#">
-                <a>開催昇順</a>
-              </Link>
-            </ActionItemChild>
-            <ActionItemChild>
-              <Link href="#">
-                <a>開催降順</a>
-              </Link>
-            </ActionItemChild>
-            <ActionItemChild>
-              <Link href="#">
-                <a>申込数順</a>
-              </Link>
-            </ActionItemChild>
-          </ActionItem>
-        </ListActions>
-        <WrapperCard>
-          <CardContent className="flex">
-            <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom className="bold">
-              2022/5/17 17:00 ~ 21:00
-            </Typography>
-            <ThemeProvider theme={theme}>
-              <Typography className="bold fs15rem">
-                エンジニアの自由研究発表会vol.6 ～IoT／ローコード開発／アプリ開発etc～業務外でエンジニアスキルを活かしてみた！
-              </Typography>
+        <MainContentGrid>
+          <ListActions>
+            <ActionItem>開催予定48件/開催中0件/全48件</ActionItem>
+            <ActionItem className="flex">
+              <ActionItemChild>
+                <Link href="#">
+                  <a>おすすめ順</a>
+                </Link>
+              </ActionItemChild>
+              <ActionItemChild>
+                <Link href="#">
+                  <a>新着順</a>
+                </Link>
+              </ActionItemChild>
+              <ActionItemChild>
+                <Link href="#">
+                  <a>開催昇順</a>
+                </Link>
+              </ActionItemChild>
+              <ActionItemChild>
+                <Link href="#">
+                  <a>開催降順</a>
+                </Link>
+              </ActionItemChild>
+              <ActionItemChild>
+                <Link href="#">
+                  <a>申込数順</a>
+                </Link>
+              </ActionItemChild>
+            </ActionItem>
+          </ListActions>
+          <FlexGrid>
+            <WrapperCard>
+              <CardContent className="flex">
+                <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom className="bold">
+                  2022/5/17 17:00 ~ 21:00
+                </Typography>
+                <ThemeProvider theme={theme}>
+                  <Typography className="bold fs15rem">
+                    エンジニアの自由研究発表会vol.6 ～IoT／ローコード開発／アプリ開発etc～業務外でエンジニアスキルを活かしてみた！
+                  </Typography>
 
-            </ThemeProvider>
-          </CardContent>
-          <CardActions>
-            <Button size="small">Learn More</Button>
-          </CardActions>
-        </WrapperCard>
+                </ThemeProvider>
+              </CardContent>
+              <CardActions>
+                <Button size="small">Learn More</Button>
+              </CardActions>
+            </WrapperCard>
+            <SideBar>
+              <dl className={ResultListCss.side_search_bar}>
+                <dt>キーワード</dt>
+                <dd>内容</dd>
+                <dt>タグ</dt>
+                <dd>内容</dd>
+                <dt>エリア</dt>
+                <dd>内容</dd>
+                <dt>開催日</dt>
+                <dd>内容</dd>
+                <dd>内容</dd>
+              </dl>
+            </SideBar>
+          </FlexGrid>
+
+        </MainContentGrid>
+
       </WrapperGrid>
     </>
   )
