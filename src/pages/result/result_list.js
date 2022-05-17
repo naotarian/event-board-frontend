@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
 import styled from "styled-components"
 import Header from '../../components/Parts/Template/Header'
+import TagModal from '../../components/Parts/ResultList/TagModal'
 import { useAuth } from '@/hooks/auth'
 import Bread from '../../components/Parts/Template/Breadcrumbs'
-import ResultListCss from '../../../styles/result_list.module.css'
+import SideBarSearch from '../../components/Parts/ResultList/SideBarSearch'
 //mui
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
@@ -22,6 +23,8 @@ import Link from 'next/link'
 import theme from '../../components/default'
 import { ThemeProvider } from '@material-ui/styles'
 import Paper from '@mui/material/Paper'
+import TextField from '@mui/material/TextField'
+
 
 const StyledTabList = styled(TabList)`
   width: fit-content;
@@ -37,9 +40,6 @@ const WrapperGrid = styled(Grid)`
 `
 const StyledTab = styled(Tab)`
   flex-basis: calc(100% / 2)
-`
-const ContentTag = styled(Grid)`
-  width: 100%;
 `
 const H1Typo = styled(Typography)`
   font-size: 22px;
@@ -70,29 +70,22 @@ const FlexGrid = styled(Grid)`
   display: flex;
   justify-content: space-between;
 `
-const SideBar = styled(Paper)`
-  padding: 1rem;
-  width: 25%;
-`
+
+
 
 const ResultList = () => {
   const { user } = useAuth({ middleware: 'auth' })
   const [value, setValue] = useState('one');
-
+  const [tagModal, setTagModal] = useState(false);
+  const tagModalClose = () => {
+    setTagModal(false)
+  }
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  const bull = (
-    <Box
-      component="span"
-      sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
-    >
-      •
-    </Box>
-  )
-  function handleClick(event) {
-    event.preventDefault();
-    console.info('You clicked a breadcrumb.');
+  const TagFocus = (e) => {
+    e.target.blur()
+    setTagModal(true)
   }
   return (
     <>
@@ -155,31 +148,18 @@ const ResultList = () => {
                   <Typography className="bold fs15rem">
                     エンジニアの自由研究発表会vol.6 ～IoT／ローコード開発／アプリ開発etc～業務外でエンジニアスキルを活かしてみた！
                   </Typography>
-
                 </ThemeProvider>
               </CardContent>
               <CardActions>
                 <Button size="small">Learn More</Button>
               </CardActions>
             </WrapperCard>
-            <SideBar>
-              <dl className={ResultListCss.side_search_bar}>
-                <dt>キーワード</dt>
-                <dd>内容</dd>
-                <dt>タグ</dt>
-                <dd>内容</dd>
-                <dt>エリア</dt>
-                <dd>内容</dd>
-                <dt>開催日</dt>
-                <dd>内容</dd>
-                <dd>内容</dd>
-              </dl>
-            </SideBar>
+            <SideBarSearch TagFocus={TagFocus} />
           </FlexGrid>
-
         </MainContentGrid>
-
+        <TagModal tagModal={tagModal} tagModalClose={tagModalClose} />
       </WrapperGrid>
+
     </>
   )
 }
