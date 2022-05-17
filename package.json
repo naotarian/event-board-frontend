@@ -19,6 +19,7 @@
     "@tailwindcss/forms": "^0.2.1",
     "autoprefixer": "^10.1.0",
     "axios": "^0.21.1",
+    "babel-plugin-styled-components": "^2.0.7",
     "material-icons": "^1.10.11",
     "next": "^12.0.4",
     "postcss": "^8.2.2",
