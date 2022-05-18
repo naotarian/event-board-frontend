@@ -54,3 +54,23 @@ input[type="image"],
 textarea {
   outline: none !important;
 }
+
+*:focus {
+  outline: none;
+}
+
+input[type="text"],
+input[type="password"],
+textarea,
+select {
+  outline: none;
+}
+
+input[type="text"],
+input[type="password"],
+textarea,
+select {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  cursor: pointer;
+  border-color: none !important;
+}
