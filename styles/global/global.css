@@ -2,10 +2,15 @@ body {
   margin-top: 60px;
   background-color: #f4f5f8;
   font-family: "Yu Gothic", YuGothic, "Hiragino Sans", "Hiragino Kaku Gothic ProN", Verdana, "メイリオ", Meiryo, sans-serif !important;
+  color: rgba(0, 0, 0, 0.6);
 }
 
 .css-ahj2mt-MuiTypography-root {
   font-family: "Yu Gothic", YuGothic, "Hiragino Sans", "Hiragino Kaku Gothic ProN", Verdana, "メイリオ", Meiryo, sans-serif !important;
+}
+
+p {
+  color: rgba(0, 0, 0, 0.6);
 }
 
 h1 {
@@ -73,4 +78,8 @@ select {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   cursor: pointer;
   border-color: none !important;
+}
+
+.fs12 {
+  font-size: 1.2rem;
 }

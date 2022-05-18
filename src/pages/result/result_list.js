@@ -24,6 +24,8 @@ import theme from '../../components/default'
 import { ThemeProvider } from '@material-ui/styles'
 import Paper from '@mui/material/Paper'
 import TextField from '@mui/material/TextField'
+//css
+import Css from '../../../styles/result_list.module.css'
 
 
 const StyledTabList = styled(TabList)`
@@ -32,6 +34,7 @@ const StyledTabList = styled(TabList)`
 `
 const WrapperCard = styled(Card)`
   width: 60%;
+  max-height: 240px;
 `
 const WrapperGrid = styled(Grid)`
   max-width: 1200px;
@@ -141,8 +144,8 @@ const ResultList = () => {
           <FlexGrid>
             <WrapperCard>
               <CardContent className="flex">
-                <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom className="bold">
-                  2022/5/17 17:00 ~ 21:00
+                <Typography color="text.secondary" gutterBottom className={`bold ${Css.card_date}`}>
+                  <span className={`fs12`}>05/17</span><br /> 17:00 ~ 21:00
                 </Typography>
                 <ThemeProvider theme={theme}>
                   <Typography className="bold fs15rem">
@@ -150,7 +153,7 @@ const ResultList = () => {
                   </Typography>
                 </ThemeProvider>
               </CardContent>
-              <CardActions>
+              <CardActions className={Css.bottom_card_action}>
                 <Button size="small">Learn More</Button>
               </CardActions>
             </WrapperCard>
