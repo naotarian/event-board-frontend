@@ -14,11 +14,12 @@ import Css from '../../../../styles/sidebar_search.module.css'
 const SideBar = styled(Paper)`
   padding: 1.5rem;
   width: 35%;
+  position: fixed;
+  right: 36px;
 `
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />
 const checkedIcon = <CheckBoxIcon fontSize="small" />
 const SideBarSearch = (props) => {
-  let minDate = new Date("2022-06-03")
   const [selectDateStart, setSelectDateStart] = useState(null)
   const [selectDateEnd, setSelectDateEnd] = useState(null)
   const { TagFocus } = props
