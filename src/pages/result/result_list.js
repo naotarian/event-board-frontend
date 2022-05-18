@@ -31,7 +31,7 @@ const StyledTabList = styled(TabList)`
   margin: 0 auto;
 `
 const WrapperCard = styled(Card)`
-  width: 70%;
+  width: 60%;
 `
 const WrapperGrid = styled(Grid)`
   max-width: 1200px;
@@ -49,7 +49,7 @@ const ListActions = styled(Grid)`
   padding :1rem;
   display: flex;
   justify-content: space-between;
-  width: 70%;
+  width: 60%;
 `
 const ActionItem = styled(Grid)`
   font-size: 14px;
