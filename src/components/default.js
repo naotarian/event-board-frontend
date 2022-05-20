@@ -15,6 +15,17 @@ const theme = createTheme({
       contrastText: '#000',
     },
   },
+  typography: {
+    fontFamily: [
+      '"Yu Gothic"', 'YuGothic', '"Hiragino Sans"', '"Hiragino Kaku Gothic ProN"', 'Verdana', '"メイリオ"', 'Meiryo', 'sans-serif',
+
+
+    ].join(','),
+    body1: {
+      fontWeight: 500,
+      color: 'rgba(0, 0, 0, 0.6)',
+    },
+  },
 });
 
 export default theme
