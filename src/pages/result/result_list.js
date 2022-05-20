@@ -21,7 +21,6 @@ import Typography from '@mui/material/Typography'
 import LocalOfferIcon from '@mui/icons-material/LocalOffer'
 import Link from 'next/link'
 import theme from '../../components/default'
-import { ThemeProvider } from '@material-ui/styles'
 import Paper from '@mui/material/Paper'
 import TextField from '@mui/material/TextField'
 //css
@@ -144,14 +143,12 @@ const ResultList = () => {
           <FlexGrid>
             <WrapperCard>
               <CardContent className="flex">
-                <Typography color="text.secondary" gutterBottom className={`bold ${Css.card_date}`}>
+                <Typography variant='body1' gutterBottom className={`bold ${Css.card_date}`}>
                   <span className={`fs12`}>05/17</span><br /> 17:00 ~ 21:00
                 </Typography>
-                <ThemeProvider theme={theme}>
-                  <Typography className="bold fs15rem">
-                    エンジニアの自由研究発表会vol.6 ～IoT／ローコード開発／アプリ開発etc～業務外でエンジニアスキルを活かしてみた！
-                  </Typography>
-                </ThemeProvider>
+                <Typography className="bold fs15rem" variant='body1'>
+                  エンジニアの自由研究発表会vol.6 ～IoT／ローコード開発／アプリ開発etc～業務外でエンジニアスキルを活かしてみた！
+                </Typography>
               </CardContent>
               <CardActions className={Css.bottom_card_action}>
                 <Button size="small">Learn More</Button>
@@ -162,7 +159,6 @@ const ResultList = () => {
         </MainContentGrid>
         <TagModal tagModal={tagModal} tagModalClose={tagModalClose} />
       </WrapperGrid>
-
     </>
   )
 }
