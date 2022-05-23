@@ -4,7 +4,7 @@ import Header from '../../components/Parts/Template/Header'
 import TagModal from '../../components/Parts/ResultList/TagModal'
 import { useAuth } from '@/hooks/auth'
 import Bread from '../../components/Parts/Template/Breadcrumbs'
-import SideBarSearch from '../../components/Parts/ResultList/SideBarSearch'
+import SideBarSearchArea from '../../components/Parts/ResultList/SideBarSearchArea'
 //mui
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
@@ -154,7 +154,7 @@ const ResultList = () => {
                 <Button size="small">Learn More</Button>
               </CardActions>
             </WrapperCard>
-            <SideBarSearch TagFocus={TagFocus} />
+            <SideBarSearchArea TagFocus={TagFocus} />
           </FlexGrid>
         </MainContentGrid>
         <TagModal tagModal={tagModal} tagModalClose={tagModalClose} />
