@@ -10,6 +10,21 @@ import Link from 'next/link'
 import { useAuth } from '@/hooks/auth'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import styled from "styled-components"
+//mui
+import LoadingButton from '@mui/lab/LoadingButton'
+import TextField from '@mui/material/TextField'
+//icon
+import LoginIcon from '@mui/icons-material/Login'
+//css
+import loginCss from '../../styles/auth/login.module.css'
+import { Typography } from '@mui/material'
+const Title = styled(Typography)`
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.6rem;
+    margin: 0 0 1rem
+`
 
 const Login = () => {
     const router = useRouter()
@@ -23,6 +38,7 @@ const Login = () => {
     const [password, setPassword] = useState('')
     const [errors, setErrors] = useState([])
     const [status, setStatus] = useState(null)
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         if (router.query.reset?.length > 0 && errors.length == 0) {
@@ -33,6 +49,7 @@ const Login = () => {
     })
 
     const submitForm = async event => {
+        setLoading(true)
         event.preventDefault()
 
         login({ email, password, setErrors, setStatus })
@@ -55,39 +72,51 @@ const Login = () => {
                 {/* Validation Errors */}
                 <AuthValidationErrors className="mb-4" errors={errors} />
 
-                <form onSubmit={submitForm}>
-                    {/* Email Address */}
-                    <div>
-                        <Label htmlFor="email">Email</Label>
+                <form onSubmit={submitForm} className={loginCss.login_card}>
+                    <Title>ログイン</Title>
+                    <dl className={loginCss.side_search_bar}>
 
-                        <Input
-                            id="email"
-                            type="email"
-                            value={email}
-                            className="block mt-1 w-full"
-                            onChange={event => setEmail(event.target.value)}
-                            required
-                            autoFocus
-                        />
+
+
+                        <dt className="bold"><Label htmlFor="email">Email</Label></dt>
+                        <dd className='ml100'>
+                            <Input
+                                id="email"
+                                type="email"
+                                value={email}
+                                className={`wi100 ${loginCss.input}`}
+                                onChange={event => setEmail(event.target.value)}
+                                required
+                                autoFocus
+                            />
+                        </dd>
+                        <dt className="bold"><Label htmlFor="password">Password</Label></dt>
+                        <dd className='ml100'>
+                            <Input
+                                id="password"
+                                type="password"
+                                value={password}
+                                className={`wi100 ${loginCss.input}`}
+                                onChange={event => setPassword(event.target.value)}
+                                required
+                                autoComplete="current-password"
+                            />
+                        </dd>
+                    </dl>
+                    {/* Email Address */}
+                    <div className={loginCss.login_row}>
+
                     </div>
 
                     {/* Password */}
-                    <div className="mt-4">
-                        <Label htmlFor="password">Password</Label>
+                    <div className={loginCss.login_row}>
 
-                        <Input
-                            id="password"
-                            type="password"
-                            value={password}
-                            className="block mt-1 w-full"
-                            onChange={event => setPassword(event.target.value)}
-                            required
-                            autoComplete="current-password"
-                        />
+
+
                     </div>
 
                     {/* Remember Me */}
-                    <div className="block mt-4">
+                    <div className={loginCss.login_row}>
                         <label
                             htmlFor="remember_me"
                             className="inline-flex items-center">
@@ -104,14 +133,22 @@ const Login = () => {
                         </label>
                     </div>
 
-                    <div className="flex items-center justify-end mt-4">
+                    <div class={loginCss.login_row}>
                         <Link href="/forgot-password">
                             <a className="underline text-sm text-gray-600 hover:text-gray-900">
                                 Forgot your password?
                             </a>
                         </Link>
 
-                        <Button className="ml-3">Login</Button>
+                        <Button>Login</Button>
+                        {/* <LoadingButton
+                            loading={loading}
+                            loadingPosition="start"
+                            startIcon={<LoginIcon />}
+                            variant="outlined"
+                        >
+                            Login
+                        </LoadingButton> */}
                     </div>
                 </form>
             </AuthCard>
