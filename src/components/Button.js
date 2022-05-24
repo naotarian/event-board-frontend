@@ -8,7 +8,7 @@ const LoginButton = ({ type = 'submit', className, ...props }) => (
     // />
     <Button variant="contained" color="success" type={type}>
 
-        Success
+        ログイン
     </Button>
 )
 
