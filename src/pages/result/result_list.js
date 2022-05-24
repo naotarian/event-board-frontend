@@ -105,8 +105,8 @@ const ResultList = () => {
             indicatorColor="secondary"
             aria-label="secondary tabs example"
           >
-            <StyledTab value="one" label="Item One" />
-            <StyledTab value="two" label="Item Two" />
+            <StyledTab value="one" label="イベント" />
+            <StyledTab value="two" label="レポート" />
           </Tabs>
         </Box>
         <MainContentGrid>
