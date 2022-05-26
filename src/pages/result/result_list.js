@@ -32,8 +32,9 @@ const StyledTabList = styled(TabList)`
   margin: 0 auto;
 `
 const WrapperCard = styled(Card)`
-  width: 60%;
+  width: 85%;
   max-height: 240px;
+  margin-bottom: 2rem;
 `
 const WrapperGrid = styled(Grid)`
   max-width: 1200px;
@@ -141,19 +142,86 @@ const ResultList = () => {
             </ActionItem>
           </ListActions>
           <FlexGrid>
-            <WrapperCard>
-              <CardContent className="flex">
-                <Typography variant='body1' gutterBottom className={`bold ${Css.card_date}`}>
-                  <span className={`fs12`}>05/17</span><br /> 17:00 ~ 21:00
-                </Typography>
-                <Typography className="bold fs15rem" variant='body1'>
-                  エンジニアの自由研究発表会vol.6 ～IoT／ローコード開発／アプリ開発etc～業務外でエンジニアスキルを活かしてみた！
-                </Typography>
-              </CardContent>
-              <CardActions className={Css.bottom_card_action}>
-                <Button size="small">Learn More</Button>
-              </CardActions>
-            </WrapperCard>
+            <Grid>
+              <WrapperCard>
+                <CardContent className="flex">
+                  <Typography variant='body1' gutterBottom className={`bold ${Css.card_date}`}>
+                    <span className={`fs12`}>05/17</span><br /> 17:00 ~ 21:00
+                  </Typography>
+                  <Typography className="bold fs15rem" variant='body1'>
+                    エンジニアの自由研究発表会vol.6 ～IoT／ローコード開発／アプリ開発etc～業務外でエンジニアスキルを活かしてみた！
+                  </Typography>
+                </CardContent>
+                <CardActions className={Css.bottom_card_action}>
+                  <Button size="small">Learn More</Button>
+                </CardActions>
+              </WrapperCard>
+              <WrapperCard>
+                <CardContent className="flex">
+                  <Typography variant='body1' gutterBottom className={`bold ${Css.card_date}`}>
+                    <span className={`fs12`}>05/17</span><br /> 17:00 ~ 21:00
+                  </Typography>
+                  <Typography className="bold fs15rem" variant='body1'>
+                    エンジニアの自由研究発表会vol.6 ～IoT／ローコード開発／アプリ開発etc～業務外でエンジニアスキルを活かしてみた！
+                  </Typography>
+                </CardContent>
+                <CardActions className={Css.bottom_card_action}>
+                  <Button size="small">Learn More</Button>
+                </CardActions>
+              </WrapperCard>
+              <WrapperCard>
+                <CardContent className="flex">
+                  <Typography variant='body1' gutterBottom className={`bold ${Css.card_date}`}>
+                    <span className={`fs12`}>05/17</span><br /> 17:00 ~ 21:00
+                  </Typography>
+                  <Typography className="bold fs15rem" variant='body1'>
+                    エンジニアの自由研究発表会vol.6 ～IoT／ローコード開発／アプリ開発etc～業務外でエンジニアスキルを活かしてみた！
+                  </Typography>
+                </CardContent>
+                <CardActions className={Css.bottom_card_action}>
+                  <Button size="small">Learn More</Button>
+                </CardActions>
+              </WrapperCard>
+              <WrapperCard>
+                <CardContent className="flex">
+                  <Typography variant='body1' gutterBottom className={`bold ${Css.card_date}`}>
+                    <span className={`fs12`}>05/17</span><br /> 17:00 ~ 21:00
+                  </Typography>
+                  <Typography className="bold fs15rem" variant='body1'>
+                    エンジニアの自由研究発表会vol.6 ～IoT／ローコード開発／アプリ開発etc～業務外でエンジニアスキルを活かしてみた！
+                  </Typography>
+                </CardContent>
+                <CardActions className={Css.bottom_card_action}>
+                  <Button size="small">Learn More</Button>
+                </CardActions>
+              </WrapperCard>
+              <WrapperCard>
+                <CardContent className="flex">
+                  <Typography variant='body1' gutterBottom className={`bold ${Css.card_date}`}>
+                    <span className={`fs12`}>05/17</span><br /> 17:00 ~ 21:00
+                  </Typography>
+                  <Typography className="bold fs15rem" variant='body1'>
+                    エンジニアの自由研究発表会vol.6 ～IoT／ローコード開発／アプリ開発etc～業務外でエンジニアスキルを活かしてみた！
+                  </Typography>
+                </CardContent>
+                <CardActions className={Css.bottom_card_action}>
+                  <Button size="small">Learn More</Button>
+                </CardActions>
+              </WrapperCard>
+              <WrapperCard>
+                <CardContent className="flex">
+                  <Typography variant='body1' gutterBottom className={`bold ${Css.card_date}`}>
+                    <span className={`fs12`}>05/17</span><br /> 17:00 ~ 21:00
+                  </Typography>
+                  <Typography className="bold fs15rem" variant='body1'>
+                    エンジニアの自由研究発表会vol.6 ～IoT／ローコード開発／アプリ開発etc～業務外でエンジニアスキルを活かしてみた！
+                  </Typography>
+                </CardContent>
+                <CardActions className={Css.bottom_card_action}>
+                  <Button size="small">Learn More</Button>
+                </CardActions>
+              </WrapperCard>
+            </Grid>
             <SideBarSearchArea TagFocus={TagFocus} />
           </FlexGrid>
         </MainContentGrid>
