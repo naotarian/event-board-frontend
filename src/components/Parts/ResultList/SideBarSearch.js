@@ -4,16 +4,26 @@ import Checkbox from '@mui/material/Checkbox'
 import Autocomplete from '@mui/material/Autocomplete'
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank'
 import CheckBoxIcon from '@mui/icons-material/CheckBox'
+import Grid from '@mui/material/Grid'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
+import LoadingButton from '@mui/lab/LoadingButton'
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
 //css
+import styled from "styled-components"
 import Css from '../../../../styles/sidebar_search.module.css'
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />
 const checkedIcon = <CheckBoxIcon fontSize="small" />
+const ButtonArea = styled(Grid)`
+  padding: 1rem;
+  border-top: 1px solid #ddd;
+  text-align: center;
+`
 const SideBarSearch = (props) => {
   const [selectDateStart, setSelectDateStart] = useState(null)
   const [selectDateEnd, setSelectDateEnd] = useState(null)
+  const [loading, setLoading] = useState(false)
   const { TagFocus } = props
   return (
     <dl className={Css.side_search_bar}>
@@ -59,7 +69,7 @@ const SideBarSearch = (props) => {
             </li>
           )}
           renderInput={(params) => (
-            <TextField {...params} label="Checkboxes" placeholder="Favorites" />
+            <TextField {...params} label="エリアを選択" />
           )}
         />
       </dd>
@@ -89,6 +99,16 @@ const SideBarSearch = (props) => {
           />
         </LocalizationProvider>
       </dd>
+      <ButtonArea>
+        <LoadingButton
+          loading={loading}
+          loadingPosition="start"
+          startIcon={<FilterAltIcon />}
+          variant="outlined"
+        >
+          絞り込む
+        </LoadingButton>
+      </ButtonArea>
     </dl>
   )
 }

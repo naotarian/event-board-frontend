@@ -14,9 +14,9 @@ const SideBar = styled(Paper)`
   margin-bottom: 2rem;
 `
 const SideBarWrapper = styled(Grid)`
-  width: 35%;
-  position: fixed;
-  right: 36px;
+  width: 50%;
+  // position: fixed;
+  // right: 36px;
 `
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />
 const checkedIcon = <CheckBoxIcon fontSize="small" />
@@ -29,9 +29,7 @@ const SideBarSearchArea = (props) => {
       <SideBar>
         <SideBarSearch TagFocus={TagFocus} />
       </SideBar>
-      <SideBar>
-        <SideBarTagSearch />
-      </SideBar>
+      <SideBarTagSearch />
     </SideBarWrapper>
   )
 }

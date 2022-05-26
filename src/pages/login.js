@@ -14,6 +14,7 @@ import styled from "styled-components"
 //mui
 import LoadingButton from '@mui/lab/LoadingButton'
 import TextField from '@mui/material/TextField'
+import Grid from '@mui/material/Grid'
 //icon
 import LoginIcon from '@mui/icons-material/Login'
 //css
@@ -24,6 +25,9 @@ const Title = styled(Typography)`
     font-weight: bold;
     font-size: 1.6rem;
     margin: 0 0 1rem
+`
+const ButtonArea = styled(Grid)`
+    text-align: right;
 `
 
 const Login = () => {
@@ -103,20 +107,9 @@ const Login = () => {
                             />
                         </dd>
                     </dl>
-                    {/* Email Address */}
-                    <div className={loginCss.login_row}>
-
-                    </div>
-
-                    {/* Password */}
-                    <div className={loginCss.login_row}>
-
-
-
-                    </div>
 
                     {/* Remember Me */}
-                    <div className={loginCss.login_row}>
+                    <div>
                         <label
                             htmlFor="remember_me"
                             className="inline-flex items-center">
@@ -131,25 +124,25 @@ const Login = () => {
                                 Remember me
                             </span>
                         </label>
-                    </div>
-
-                    <div class={loginCss.login_row}>
                         <Link href="/forgot-password">
                             <a className="underline text-sm text-gray-600 hover:text-gray-900">
                                 Forgot your password?
                             </a>
                         </Link>
+                    </div>
 
-                        <Button>Login</Button>
+                    <ButtonArea>
+
                         {/* <LoadingButton
                             loading={loading}
                             loadingPosition="start"
                             startIcon={<LoginIcon />}
                             variant="outlined"
-                        >
+                            >
                             Login
                         </LoadingButton> */}
-                    </div>
+                        <Button>Login</Button>
+                    </ButtonArea>
                 </form>
             </AuthCard>
         </GuestLayout>
