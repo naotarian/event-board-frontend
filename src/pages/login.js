@@ -10,7 +10,9 @@ import Link from 'next/link'
 import { useAuth } from '@/hooks/auth'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+//components
 import styled from "styled-components"
+import SignIn from '../components/Auth/SignIn'
 //mui
 import LoadingButton from '@mui/lab/LoadingButton'
 import TextField from '@mui/material/TextField'
@@ -53,99 +55,106 @@ const Login = () => {
     })
 
     const submitForm = async event => {
-        setLoading(true)
-        event.preventDefault()
-
+        console.log('tr')
+        // setLoading(true)
+        // event.preventDefault()
+        console.log(email)
+        console.log(password)
+        // login({ email, password, setErrors, setStatus })
         login({ email, password, setErrors, setStatus })
     }
 
     return (
-        <GuestLayout>
-            <AuthCard
-                logo={
-                    <Link href="/">
-                        <a>
-                            <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
-                        </a>
-                    </Link>
-                }>
-
-                {/* Session Status */}
-                <AuthSessionStatus className="mb-4" status={status} />
-
-                {/* Validation Errors */}
-                <AuthValidationErrors className="mb-4" errors={errors} />
-
-                <form onSubmit={submitForm} className={loginCss.login_card}>
-                    <Title>ログイン</Title>
-                    <dl className={loginCss.side_search_bar}>
-
-
-
-                        <dt className="bold"><Label htmlFor="email">Email</Label></dt>
-                        <dd className='ml100'>
-                            <Input
-                                id="email"
-                                type="email"
-                                value={email}
-                                className={`wi100 ${loginCss.input}`}
-                                onChange={event => setEmail(event.target.value)}
-                                required
-                                autoFocus
-                            />
-                        </dd>
-                        <dt className="bold"><Label htmlFor="password">Password</Label></dt>
-                        <dd className='ml100'>
-                            <Input
-                                id="password"
-                                type="password"
-                                value={password}
-                                className={`wi100 ${loginCss.input}`}
-                                onChange={event => setPassword(event.target.value)}
-                                required
-                                autoComplete="current-password"
-                            />
-                        </dd>
-                    </dl>
-
-                    {/* Remember Me */}
-                    <div>
-                        <label
-                            htmlFor="remember_me"
-                            className="inline-flex items-center">
-                            <input
-                                id="remember_me"
-                                type="checkbox"
-                                name="remember"
-                                className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                            />
-
-                            <span className="ml-2 text-sm text-gray-600">
-                                Remember me
-                            </span>
-                        </label>
-                        <Link href="/forgot-password">
-                            <a className="underline text-sm text-gray-600 hover:text-gray-900">
-                                Forgot your password?
+        <>
+            <SignIn
+                submitForm={submitForm}
+                email={email}
+                setEmail={setEmail}
+                password={password}
+                setPassword={setPassword}
+                errors={errors}
+                setErrors={setErrors}
+                status={status}
+                setStatus={setStatus}
+                loading={loading}
+                setLoading={setLoading}
+            />
+            {/* <GuestLayout>
+                <AuthCard
+                    logo={
+                        <Link href="/">
+                            <a>
+                                <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
                             </a>
                         </Link>
-                    </div>
+                    }>
 
-                    <ButtonArea>
+                    <AuthSessionStatus className="mb-4" status={status} />
 
-                        {/* <LoadingButton
-                            loading={loading}
-                            loadingPosition="start"
-                            startIcon={<LoginIcon />}
-                            variant="outlined"
-                            >
-                            Login
-                        </LoadingButton> */}
-                        <Button>Login</Button>
-                    </ButtonArea>
-                </form>
-            </AuthCard>
-        </GuestLayout>
+                    <AuthValidationErrors className="mb-4" errors={errors} />
+
+                    <form onSubmit={submitForm} className={loginCss.login_card}>
+                        <Title>ログイン</Title>
+                        <dl className={loginCss.side_search_bar}>
+
+
+
+                            <dt className="bold"><Label htmlFor="email">Email</Label></dt>
+                            <dd className='ml100'>
+                                <Input
+                                    id="email"
+                                    type="email"
+                                    value={email}
+                                    className={`wi100 ${loginCss.input}`}
+                                    onChange={event => setEmail(event.target.value)}
+                                    required
+                                    autoFocus
+                                />
+                            </dd>
+                            <dt className="bold"><Label htmlFor="password">Password</Label></dt>
+                            <dd className='ml100'>
+                                <Input
+                                    id="password"
+                                    type="password"
+                                    value={password}
+                                    className={`wi100 ${loginCss.input}`}
+                                    onChange={event => setPassword(event.target.value)}
+                                    required
+                                    autoComplete="current-password"
+                                />
+                            </dd>
+                        </dl>
+
+                        <div>
+                            <label
+                                htmlFor="remember_me"
+                                className="inline-flex items-center">
+                                <input
+                                    id="remember_me"
+                                    type="checkbox"
+                                    name="remember"
+                                    className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                />
+
+                                <span className="ml-2 text-sm text-gray-600">
+                                    Remember me
+                                </span>
+                            </label>
+                            <Link href="/forgot-password">
+                                <a className="underline text-sm text-gray-600 hover:text-gray-900">
+                                    Forgot your password?
+                                </a>
+                            </Link>
+                        </div>
+
+                        <ButtonArea>
+
+                            <Button>Login</Button>
+                        </ButtonArea>
+                    </form>
+                </AuthCard>
+            </GuestLayout> */}
+        </>
     )
 }
 
