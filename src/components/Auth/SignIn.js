@@ -31,15 +31,6 @@ const theme = createTheme();
 export default function SignIn(props) {
   const { submitForm, email, setEmail, password, setPassword, errors, setErrors, status, setStatus, loading, setLoading } = props
 
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   const data = new FormData(event.currentTarget);
-  //   console.log({
-  //     email: data.get('email'),
-  //     password: data.get('password'),
-  //   });
-  // };
-
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -52,20 +43,19 @@ export default function SignIn(props) {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            ログイン
           </Typography>
-          <Box component="form" noValidate sx={{ mt: 1 }}>
+          <Box noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
               fullWidth
               id="email"
-              label="Email Address"
-              name="email"
+              label="メールアドレス"
               autoComplete="email"
               autoFocus
               onChange={event => setEmail(event.target.value)}
@@ -75,7 +65,7 @@ export default function SignIn(props) {
               required
               fullWidth
               name="password"
-              label="Password"
+              label="パスワード"
               type="password"
               id="password"
               autoComplete="current-password"
@@ -92,17 +82,17 @@ export default function SignIn(props) {
               sx={{ mt: 3, mb: 2 }}
               onClick={submitForm}
             >
-              Sign In
+              ログイン
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
+                <Link href="/forgot-password" variant="body2">
+                  パスワードを忘れた方はこちら
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                <Link href="/register" variant="body2">
+                  {"新規アカウント登録"}
                 </Link>
               </Grid>
             </Grid>
