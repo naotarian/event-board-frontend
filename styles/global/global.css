@@ -85,3 +85,7 @@ select {
 .rounded-md {
   border-radius: 0.375rem;
 }
+
+a {
+  text-decoration: none;
+}
