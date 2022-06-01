@@ -16,6 +16,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { TimePicker } from '@mui/x-date-pickers/TimePicker'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
+import LoadingButton from '@mui/lab/LoadingButton'
 const WrapperBody = styled(Grid)`
 @media screen and (min-width:767px) {
   min-width: 1220px;
@@ -85,18 +86,22 @@ const StyledTimePicker = styled(TimePicker)`
     width: 150px;
   }
 `
+const SendButton = styled(LoadingButton)`
+  width: 200px;
+`
 const CreateEvent = () => {
   const [startTime, setStartTime] = useState(new Date());
   let dt = new Date()
   let ts = dt.getTime()
   let ts_after = ts + (1000 * 60 * 60 * 1)
   const [endTime, setEndTime] = useState(new Date(ts_after))
-  const [value, setValue] = useState(null)
-  const [rangeValue, setRangeValue] = useState([null, null])
+  const [eventDate, setEventValue] = useState(null)
   const [zipCode, setZipCode] = useState('')
   const [address, setAddress] = useState('')
   const [rangeStartValue, setRangeStartValue] = useState(new Date())
   const [rangeEndValue, setRangeEndValue] = useState(new Date())
+  const [loading, setLoading] = useState(false)
+  const [eventTitle, setEventTitle] = useState('')
   useEffect(() => {
     if (zipCode) {
       fetch(`https://api.zipaddress.net/?zipcode=${zipCode}`, {
@@ -110,6 +115,15 @@ const CreateEvent = () => {
         });
     }
   }, [zipCode]);
+  const send = () => {
+    let sendDatas = {}
+    sendDatas.eventTitle = eventTitle
+    sendDatas.eventDate = eventDate.getFullYear() + '/' + (eventDate.getMonth() + 1) + '/' + eventDate.getDate()
+    sendDatas.zipCode = zipCode
+    sendDatas.address = address
+    console.log(sendDatas)
+    setLoading(true)
+  }
 
   return (
     <>
@@ -133,6 +147,8 @@ const CreateEvent = () => {
               label="イベントのタイトル"
               placeholder="イベントのタイトルを入力"
               multiline
+              value={eventTitle}
+              onChange={event => setEventTitle(event.target.value)}
             />
             <PcFlex>
               <PcFlexItem>
@@ -142,12 +158,12 @@ const CreateEvent = () => {
                 <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={jaLocale}>
                   <DatePicker
                     label="開催日設定"
-                    value={value}
+                    value={eventDate}
                     onChange={(newValue) => {
-                      setValue(newValue);
+                      setEventValue(newValue);
                     }}
                     inputFormat='yyyy年MM月dd日'
-                    mask='____年__月__日'
+                    mask="__/__/____"
                     renderInput={(params) => <TextField {...params} />}
                   />
                 </LocalizationProvider>
@@ -227,7 +243,7 @@ const CreateEvent = () => {
                     setRangeStartValue(newValue);
                   }}
                   ampm={false}
-                  inputFormat='yyyy年MM月dd日HH時MM分'
+                  inputFormat='yyyy年MM月dd日HH時mm分'
                 />
                 <DateTimePicker
                   renderInput={(props) => <TextField {...props} />}
@@ -237,7 +253,7 @@ const CreateEvent = () => {
                     setRangeEndValue(newValue);
                   }}
                   ampm={false}
-                  inputFormat='yyyy年MM月dd日HH時MM分'
+                  inputFormat='yyyy年MM月dd日HH時mm分'
                   minDateTime={rangeStartValue}
                 />
               </LocalizationProvider>
@@ -280,6 +296,13 @@ const CreateEvent = () => {
               ・他の参加者の方の妨げになるような行為は禁止、運営側の判断でご退出をお願いする場合があります。&#13;&#10;
               ・ブログやSNS等で当イベントに関する発信を行う際は、公序良俗に反する内容のないよう、ご協力をお願いします。"
             />
+            <SendButton
+              loading={loading}
+              variant="contained"
+              onClick={send}
+            >
+              Submit
+            </SendButton>
           </MainArea>
         </WrapperBodyBg>
       </WrapperBody>
