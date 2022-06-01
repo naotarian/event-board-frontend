@@ -15,6 +15,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { TimePicker } from '@mui/x-date-pickers/TimePicker'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
 const WrapperBody = styled(Grid)`
 @media screen and (min-width:767px) {
   min-width: 1220px;
@@ -54,12 +55,12 @@ const TextArea = styled(TextField)`
   width: 100%;
 `
 const TimerGrid = styled(Grid)`
-  
   margin-bottom: 2rem;
+  justify-content: space-between;
+  width: 100%;
+  display: flex;
   @media screen and (min-width:767px) {
     width: 600px;
-    display: flex;
-    justify-content: space-between;
   }
 `
 const PcFlex = styled(Grid)`
@@ -75,6 +76,15 @@ const PcFlexItem = styled(Grid)`
     width: 100%;
   }
 `
+const PlaceGrid = styled(Grid)`
+  margin-bottom: 2rem;
+`
+const StyledTimePicker = styled(TimePicker)`
+  @media screen and (max-width:767px) {
+    margin-bottom: 2rem;
+    width: 150px;
+  }
+`
 const CreateEvent = () => {
   const [startTime, setStartTime] = useState(new Date());
   let dt = new Date()
@@ -82,8 +92,11 @@ const CreateEvent = () => {
   let ts_after = ts + (1000 * 60 * 60 * 1)
   const [endTime, setEndTime] = useState(new Date(ts_after))
   const [value, setValue] = useState(null)
+  const [rangeValue, setRangeValue] = useState([null, null])
   const [zipCode, setZipCode] = useState('')
   const [address, setAddress] = useState('')
+  const [rangeStartValue, setRangeStartValue] = useState(new Date())
+  const [rangeEndValue, setRangeEndValue] = useState(new Date())
   useEffect(() => {
     if (zipCode) {
       fetch(`https://api.zipaddress.net/?zipcode=${zipCode}`, {
@@ -143,25 +156,37 @@ const CreateEvent = () => {
                 <SubItem variant="h2">
                   開催場所
                 </SubItem>
-                <TextField
-                  id="zipcode"
-                  label="郵便番号"
-                  variant="outlined"
-                  placeholder="XXX-XXXX"
-                  value={zipCode}
-                  onChange={(e) => {
-                    setZipCode(e.target.value);
-                  }}
-                />
-                <TextField
-                  id="address"
-                  label="住所"
-                  variant="outlined"
-                  value={address}
-                  onChange={(e) => {
-                    setAddress(e.target.value);
-                  }}
-                />
+                <PlaceGrid>
+                  <TextField
+                    id="zipcode"
+                    label="郵便番号"
+                    variant="outlined"
+                    placeholder="XXX-XXXX"
+                    value={zipCode}
+                    onChange={(e) => {
+                      setZipCode(e.target.value);
+                    }}
+                  />
+                </PlaceGrid>
+                <PlaceGrid>
+                  <TextField
+                    id="address"
+                    label="住所"
+                    variant="outlined"
+                    value={address}
+                    onChange={(e) => {
+                      setAddress(e.target.value);
+                    }}
+                    fullWidth
+                  />
+                </PlaceGrid>
+                <PlaceGrid>
+                  <TextField
+                    label="以下住所"
+                    variant="outlined"
+                    fullWidth
+                  />
+                </PlaceGrid>
               </PcFlexItem>
             </PcFlex>
 
@@ -173,14 +198,14 @@ const CreateEvent = () => {
               adapterLocale={jaLocale}
             >
               <TimerGrid>
-                <TimePicker
+                <StyledTimePicker
                   value={startTime}
                   onChange={(newValue) => setStartTime(newValue)}
                   renderInput={(params) => <TextField {...params} />}
                   ampm={false}
                   label="開始時間"
                 />
-                <TimePicker
+                <StyledTimePicker
                   value={endTime}
                   onChange={(newValue) => setEndTime(newValue)}
                   renderInput={(params) => <TextField {...params} />}
@@ -189,6 +214,34 @@ const CreateEvent = () => {
                 />
               </TimerGrid>
             </LocalizationProvider>
+            <SubItem variant="h2">
+              募集期間
+            </SubItem>
+            <TimerGrid>
+              <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={jaLocale}>
+                <DateTimePicker
+                  renderInput={(props) => <TextField {...props} />}
+                  label="募集開始"
+                  value={rangeStartValue}
+                  onChange={(newValue) => {
+                    setRangeStartValue(newValue);
+                  }}
+                  ampm={false}
+                  inputFormat='yyyy年MM月dd日HH時MM分'
+                />
+                <DateTimePicker
+                  renderInput={(props) => <TextField {...props} />}
+                  label="募集終了"
+                  value={rangeEndValue}
+                  onChange={(newValue) => {
+                    setRangeEndValue(newValue);
+                  }}
+                  ampm={false}
+                  inputFormat='yyyy年MM月dd日HH時MM分'
+                  minDateTime={rangeStartValue}
+                />
+              </LocalizationProvider>
+            </TimerGrid>
             <SubItem variant="h2">
               概要
             </SubItem>
@@ -227,7 +280,6 @@ const CreateEvent = () => {
               ・他の参加者の方の妨げになるような行為は禁止、運営側の判断でご退出をお願いする場合があります。&#13;&#10;
               ・ブログやSNS等で当イベントに関する発信を行う際は、公序良俗に反する内容のないよう、ご協力をお願いします。"
             />
-
           </MainArea>
         </WrapperBodyBg>
       </WrapperBody>
