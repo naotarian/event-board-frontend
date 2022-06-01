@@ -23,9 +23,9 @@ const Header = () => {
       <div className={`fixed top-0 right-0 px-6 py-4 sm:block`}>
         {user ?
           <div>
-            <Link href="/dashboard">
+            <Link href="/create_event">
               <a className={`ml-4 text-sm ${HeaderCss.headerLink}`}>
-                Dashboard
+                イベントを主催
               </a>
             </Link>
             {/* <Link href={logout}> */}

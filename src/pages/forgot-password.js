@@ -1,7 +1,5 @@
 import ApplicationLogo from '@/components/ApplicationLogo'
 import AuthCard from '@/components/AuthCard'
-import AuthSessionStatus from '@/components/AuthSessionStatus'
-import AuthValidationErrors from '@/components/AuthValidationErrors'
 import Button from '@/components/Button'
 import GuestLayout from '@/components/Layouts/GuestLayout'
 import Input from '@/components/Input'
@@ -9,8 +7,12 @@ import Label from '@/components/Label'
 import Link from 'next/link'
 import { useAuth } from '@/hooks/auth'
 import { useState } from 'react'
+import { useRouter } from 'next/router'
+//components
+import ForgetPassword from '../components/Auth/ForgetPassword'
 
 const ForgotPassword = () => {
+    const router = useRouter()
     const { forgotPassword } = useAuth({ middleware: 'guest' })
 
     const [email, setEmail] = useState('')
@@ -19,55 +21,69 @@ const ForgotPassword = () => {
 
     const submitForm = event => {
         event.preventDefault()
-
+        console.log(email)
         forgotPassword({ email, setErrors, setStatus })
+        console.log(status)
+        // router.push('/send-complate')
     }
 
     return (
-        <GuestLayout>
-            <AuthCard
-                logo={
-                    <Link href="/">
-                        <a>
-                            <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
-                        </a>
-                    </Link>
-                }>
+        <>
+            <ForgetPassword
+                email={email}
+                setEmail={setEmail}
+                errors={errors}
+                setErrors={setErrors}
+                status={status}
+                setStatus={setStatus}
+                submitForm={submitForm}
+            />
 
-                <div className="mb-4 text-sm text-gray-600">
-                    Forgot your password? No problem. Just let us know your
-                    email address and we will email you a password reset link
-                    that will allow you to choose a new one.
-                </div>
+        </>
+        // <GuestLayout>
+        //     <AuthCard
+        //         logo={
+        //             <Link href="/">
+        //                 <a>
+        //                     <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
+        //                 </a>
+        //             </Link>
+        //         }>
 
-                {/* Session Status */}
-                <AuthSessionStatus className="mb-4" status={status} />
+        //         <div className="mb-4 text-sm text-gray-600">
+        //             Forgot your password? No problem. Just let us know your
+        //             email address and we will email you a password reset link
+        //             that will allow you to choose a new one.
+        //         </div>
 
-                {/* Validation Errors */}
-                <AuthValidationErrors className="mb-4" errors={errors} />
+        //         {/* Session Status */}
+        // <AuthSessionStatus className="mb-4" status={status} />
 
-                <form onSubmit={submitForm}>
-                    {/* Email Address */}
-                    <div>
-                        <Label htmlFor="email">Email</Label>
-                        <Input
-                            id="email"
-                            type="email"
-                            name="email"
-                            value={email}
-                            className="block mt-1 w-full"
-                            onChange={event => setEmail(event.target.value)}
-                            required
-                            autoFocus
-                        />
-                    </div>
+        //         {/* Validation Errors */}
+        // <AuthValidationErrors className="mb-4" errors={errors} />
 
-                    <div className="flex items-center justify-end mt-4">
-                        <Button>Email Password Reset Link</Button>
-                    </div>
-                </form>
-            </AuthCard>
-        </GuestLayout>
+        //         <form onSubmit={submitForm}>
+        //             {/* Email Address */}
+        //             <div>
+        //                 <Label htmlFor="email">Email</Label>
+        //                 <Input
+        //                     id="email"
+        //                     type="email"
+        //                     name="email"
+        //                     value={email}
+        //                     className="block mt-1 w-full"
+        //                     onChange={event => setEmail(event.target.value)}
+        //                     required
+        //                     autoFocus
+        //                 />
+        //             </div>
+
+        //             <div className="flex items-center justify-end mt-4">
+        //                 <Button>Email Password Reset Link</Button>
+        //             </div>
+        //         </form>
+        //     </AuthCard>
+        // </GuestLayout>
     )
 }
 
