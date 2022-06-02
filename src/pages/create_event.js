@@ -91,6 +91,9 @@ const ButtonArea = styled(Grid)`
   text-align: center;
   margin-top: 2rem;
 `
+const StyledInput = styled(TextField)`
+  width: 300px;
+`
 const CreateEvent = () => {
   const [startTime, setStartTime] = useState(new Date());
   let dt = new Date()
@@ -109,6 +112,12 @@ const CreateEvent = () => {
   const [eventTheme, setEventTheme] = useState('')
   const [recommendation, setRecommendation] = useState('')
   const [notes, setNotes] = useState('')
+  const [email, setEmail] = useState('')
+  //errorflag用
+  const [eventTitleError, setEventTitleError] = useState(false)
+  const [eventDateError, setEventDateError] = useState(false)
+  const [zipCodeError, setZipCodeError] = useState(false)
+  const [addressError, setAddressError] = useState(false)
   useEffect(() => {
     if (zipCode) {
       fetch(`https://api.zipaddress.net/?zipcode=${zipCode}`, {
@@ -123,7 +132,27 @@ const CreateEvent = () => {
     }
   }, [zipCode]);
   const send = () => {
+    // setLoading(true)
+    //validation
+    let sendFlag = true
     let sendDatas = {}
+    if (!eventTitle) {
+      setEventTitleError(true)
+      sendFlag = false
+    }
+    if (!eventDate) {
+      setEventDateError(true)
+      sendFlag = false
+    }
+    if (!zipCode) {
+      setZipCodeError(true)
+    }
+    if (!address) {
+      setAddressError(true)
+    }
+    if (!sendFlag) {
+      return
+    }
     sendDatas.eventTitle = eventTitle
     sendDatas.eventDate = eventDate.getFullYear() + '/' + (eventDate.getMonth() + 1) + '/' + eventDate.getDate()
     sendDatas.zipCode = zipCode
@@ -137,8 +166,13 @@ const CreateEvent = () => {
     sendDatas.eventTheme = eventTheme
     sendDatas.recommendation = recommendation
     sendDatas.notes = notes
+    sendDatas.email = email
     console.log(sendDatas)
-    setLoading(true)
+    if (sendFlag) {
+      //postする
+    } else {
+      return
+    }
   }
 
   return (
@@ -163,6 +197,8 @@ const CreateEvent = () => {
               label="イベントのタイトル"
               placeholder="イベントのタイトルを入力"
               multiline
+              required
+              error={eventTitleError}
               value={eventTitle}
               onChange={event => setEventTitle(event.target.value)}
             />
@@ -182,6 +218,7 @@ const CreateEvent = () => {
                     // mask="__/__/____"
                     mask="____年__月__日"
                     renderInput={(params) => <TextField {...params} />}
+                    onError={eventDateError}
                   />
                 </LocalizationProvider>
               </PcFlexItem>
@@ -199,6 +236,7 @@ const CreateEvent = () => {
                     onChange={(e) => {
                       setZipCode(e.target.value);
                     }}
+                    error={zipCodeError}
                   />
                 </PlaceGrid>
                 <PlaceGrid>
@@ -210,6 +248,7 @@ const CreateEvent = () => {
                     onChange={(e) => {
                       setAddress(e.target.value);
                     }}
+                    error={addressError}
                     fullWidth
                   />
                 </PlaceGrid>
@@ -307,6 +346,18 @@ const CreateEvent = () => {
               value={eventTheme}
               onChange={event => setEventTheme(event.target.value)}
               placeholder="イベントのテーマを記入"
+            />
+            <SubItem variant="h2">
+              お問い合わせ用メールアドレス
+            </SubItem>
+            <StyledInput
+              label="お問い合わせ用メールアドレス"
+              placeholder='test@test.com'
+              required
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
             />
             <SubItem variant="h2">
               こんな方におすすめ
