@@ -163,7 +163,8 @@ const CreateEvent = () => {
                       setEventValue(newValue);
                     }}
                     inputFormat='yyyy年MM月dd日'
-                    mask="__/__/____"
+                    // mask="__/__/____"
+                    mask="____年__月__日"
                     renderInput={(params) => <TextField {...params} />}
                   />
                 </LocalizationProvider>
@@ -243,7 +244,8 @@ const CreateEvent = () => {
                     setRangeStartValue(newValue);
                   }}
                   ampm={false}
-                  inputFormat='yyyy年MM月dd日HH時mm分'
+                  inputFormat='yyyy年MM月dd日 HH時mm分'
+                  mask="____年__月__日 __時__分"
                 />
                 <DateTimePicker
                   renderInput={(props) => <TextField {...props} />}
@@ -253,7 +255,9 @@ const CreateEvent = () => {
                     setRangeEndValue(newValue);
                   }}
                   ampm={false}
-                  inputFormat='yyyy年MM月dd日HH時mm分'
+                  inputFormat='yyyy年MM月dd日 HH時mm分'
+                  // mask="____年__月__日 __時__分"
+                  mask="____年__月__日 __時__分"
                   minDateTime={rangeStartValue}
                 />
               </LocalizationProvider>
