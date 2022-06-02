@@ -9,8 +9,6 @@ import Grid from '@mui/material/Grid'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import jaLocale from 'date-fns/locale/ja'
-import ToggleButton from '@mui/material/ToggleButton'
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { TimePicker } from '@mui/x-date-pickers/TimePicker'
@@ -89,6 +87,10 @@ const StyledTimePicker = styled(TimePicker)`
 const SendButton = styled(LoadingButton)`
   width: 200px;
 `
+const ButtonArea = styled(Grid)`
+  text-align: center;
+  margin-top: 2rem;
+`
 const CreateEvent = () => {
   const [startTime, setStartTime] = useState(new Date());
   let dt = new Date()
@@ -98,10 +100,15 @@ const CreateEvent = () => {
   const [eventDate, setEventValue] = useState(null)
   const [zipCode, setZipCode] = useState('')
   const [address, setAddress] = useState('')
+  const [otherAddress, setOtherAddress] = useState('')
   const [rangeStartValue, setRangeStartValue] = useState(new Date())
   const [rangeEndValue, setRangeEndValue] = useState(new Date())
   const [loading, setLoading] = useState(false)
   const [eventTitle, setEventTitle] = useState('')
+  const [overview, setOverview] = useState('')
+  const [eventTheme, setEventTheme] = useState('')
+  const [recommendation, setRecommendation] = useState('')
+  const [notes, setNotes] = useState('')
   useEffect(() => {
     if (zipCode) {
       fetch(`https://api.zipaddress.net/?zipcode=${zipCode}`, {
@@ -121,6 +128,15 @@ const CreateEvent = () => {
     sendDatas.eventDate = eventDate.getFullYear() + '/' + (eventDate.getMonth() + 1) + '/' + eventDate.getDate()
     sendDatas.zipCode = zipCode
     sendDatas.address = address
+    sendDatas.startTime = startTime.getHours() + ':' + startTime.getMinutes()
+    sendDatas.endTime = endTime.getHours() + ':' + endTime.getMinutes()
+    sendDatas.rangeStartValue = rangeStartValue.getFullYear() + '/' + (rangeStartValue.getMonth() + 1) + '/' + rangeStartValue.getDate() + ' ' + rangeStartValue.getHours() + ':' + rangeStartValue.getMinutes()
+    sendDatas.rangeEndValue = rangeEndValue.getFullYear() + '/' + (rangeEndValue.getMonth() + 1) + '/' + rangeEndValue.getDate() + ' ' + rangeEndValue.getHours() + ':' + rangeEndValue.getMinutes()
+    sendDatas.otherAddress = otherAddress
+    sendDatas.overview = overview
+    sendDatas.eventTheme = eventTheme
+    sendDatas.recommendation = recommendation
+    sendDatas.notes = notes
     console.log(sendDatas)
     setLoading(true)
   }
@@ -163,7 +179,8 @@ const CreateEvent = () => {
                       setEventValue(newValue);
                     }}
                     inputFormat='yyyy年MM月dd日'
-                    mask="__/__/____"
+                    // mask="__/__/____"
+                    mask="____年__月__日"
                     renderInput={(params) => <TextField {...params} />}
                   />
                 </LocalizationProvider>
@@ -200,6 +217,10 @@ const CreateEvent = () => {
                   <TextField
                     label="以下住所"
                     variant="outlined"
+                    value={otherAddress}
+                    onChange={(e) => {
+                      setOtherAddress(e.target.value);
+                    }}
                     fullWidth
                   />
                 </PlaceGrid>
@@ -243,8 +264,12 @@ const CreateEvent = () => {
                     setRangeStartValue(newValue);
                   }}
                   ampm={false}
-                  inputFormat='yyyy年MM月dd日HH時mm分'
+                  inputFormat='yyyy年MM月dd日 HH時mm分'
+                  mask="____年__月__日 __時__分"
+                  fullWidth
                 />
+              </LocalizationProvider>
+              <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={jaLocale}>
                 <DateTimePicker
                   renderInput={(props) => <TextField {...props} />}
                   label="募集終了"
@@ -253,7 +278,9 @@ const CreateEvent = () => {
                     setRangeEndValue(newValue);
                   }}
                   ampm={false}
-                  inputFormat='yyyy年MM月dd日HH時mm分'
+                  inputFormat='yyyy年MM月dd日 HH時mm分'
+                  // mask="____年__月__日 __時__分"
+                  mask="____年__月__日 __時__分"
                   minDateTime={rangeStartValue}
                 />
               </LocalizationProvider>
@@ -266,14 +293,19 @@ const CreateEvent = () => {
               multiline
               rows={8}
               placeholder="イベントの概要を記入"
+              value={overview}
+              onChange={event => setOverview(event.target.value)}
+
             />
             <SubItem variant="h2">
-              概要
+              テーマ
             </SubItem>
             <TextArea
               label="テーマ"
               multiline
               rows={4}
+              value={eventTheme}
+              onChange={event => setEventTheme(event.target.value)}
               placeholder="イベントのテーマを記入"
             />
             <SubItem variant="h2">
@@ -284,6 +316,8 @@ const CreateEvent = () => {
               multiline
               rows={4}
               placeholder="・技術検証組織に興味がある&#13;&#10;・SaaS開発に携わるエンジニアの話が聞きたい"
+              value={recommendation}
+              onChange={event => setRecommendation(event.target.value)}
             />
             <SubItem variant="h2">
               注意事項
@@ -295,14 +329,18 @@ const CreateEvent = () => {
               placeholder="・当イベントの内容およびスケジュールは、予告なく変更となる場合があります。予めご了承ください。&#13;&#10;
               ・他の参加者の方の妨げになるような行為は禁止、運営側の判断でご退出をお願いする場合があります。&#13;&#10;
               ・ブログやSNS等で当イベントに関する発信を行う際は、公序良俗に反する内容のないよう、ご協力をお願いします。"
+              value={notes}
+              onChange={event => setNotes(event.target.value)}
             />
-            <SendButton
-              loading={loading}
-              variant="contained"
-              onClick={send}
-            >
-              Submit
-            </SendButton>
+            <ButtonArea>
+              <SendButton
+                loading={loading}
+                variant="contained"
+                onClick={send}
+              >
+                この内容で作成
+              </SendButton>
+            </ButtonArea>
           </MainArea>
         </WrapperBodyBg>
       </WrapperBody>
