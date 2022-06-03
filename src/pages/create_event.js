@@ -4,6 +4,7 @@ import styled from "styled-components"
 import Header from '../components/Parts/Template/Header'
 import Bread from '../components/Parts/Template/Breadcrumbs'
 import Head from 'next/head'
+import axios from '@/lib/axios'
 //mui
 import Grid from '@mui/material/Grid'
 import TextField from '@mui/material/TextField'
@@ -15,6 +16,7 @@ import { TimePicker } from '@mui/x-date-pickers/TimePicker'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
 import LoadingButton from '@mui/lab/LoadingButton'
+import Alert from '@mui/material/Alert'
 const WrapperBody = styled(Grid)`
 @media screen and (min-width:767px) {
   min-width: 1220px;
@@ -94,6 +96,9 @@ const ButtonArea = styled(Grid)`
 const StyledInput = styled(TextField)`
   width: 300px;
 `
+const SuccessAlert = styled(Alert)`
+  margin-top: 2rem;
+`
 const CreateEvent = () => {
   const [startTime, setStartTime] = useState(new Date());
   let dt = new Date()
@@ -113,11 +118,15 @@ const CreateEvent = () => {
   const [recommendation, setRecommendation] = useState('')
   const [notes, setNotes] = useState('')
   const [email, setEmail] = useState('')
+  const [success, setSuccess] = useState(false)
   //errorflag用
   const [eventTitleError, setEventTitleError] = useState(false)
   const [eventDateError, setEventDateError] = useState(false)
   const [zipCodeError, setZipCodeError] = useState(false)
   const [addressError, setAddressError] = useState(false)
+  const [emailError, setEmailError] = useState(false)
+  const [startTimeError, setStartTimeError] = useState(false)
+  const [endTimeError, setEndTimeError] = useState(false)
   useEffect(() => {
     if (zipCode) {
       fetch(`https://api.zipaddress.net/?zipcode=${zipCode}`, {
@@ -132,8 +141,9 @@ const CreateEvent = () => {
     }
   }, [zipCode]);
   const send = () => {
-    // setLoading(true)
+    setLoading(true)
     //validation
+    console.log(rangeStartValue)
     let sendFlag = true
     let sendDatas = {}
     if (!eventTitle) {
@@ -150,17 +160,26 @@ const CreateEvent = () => {
     if (!address) {
       setAddressError(true)
     }
+    if (!email) {
+      setEmailError(true)
+    }
+    if (!startTime) {
+      setStartTimeError(true)
+    }
+    if (!endTime) {
+      setEndTimeError(true)
+    }
     if (!sendFlag) {
       return
     }
     sendDatas.eventTitle = eventTitle
-    sendDatas.eventDate = eventDate.getFullYear() + '/' + (eventDate.getMonth() + 1) + '/' + eventDate.getDate()
+    sendDatas.eventDate = eventDate.getFullYear() + '/' + ('00' + (eventDate.getMonth() + 1)).slice(-2) + '/' + ('00' + eventDate.getDate()).slice(-2)
     sendDatas.zipCode = zipCode
     sendDatas.address = address
-    sendDatas.startTime = startTime.getHours() + ':' + startTime.getMinutes()
-    sendDatas.endTime = endTime.getHours() + ':' + endTime.getMinutes()
-    sendDatas.rangeStartValue = rangeStartValue.getFullYear() + '/' + (rangeStartValue.getMonth() + 1) + '/' + rangeStartValue.getDate() + ' ' + rangeStartValue.getHours() + ':' + rangeStartValue.getMinutes()
-    sendDatas.rangeEndValue = rangeEndValue.getFullYear() + '/' + (rangeEndValue.getMonth() + 1) + '/' + rangeEndValue.getDate() + ' ' + rangeEndValue.getHours() + ':' + rangeEndValue.getMinutes()
+    sendDatas.startTime = startTime.getFullYear() + '/' + ('00' + (startTime.getMonth() + 1)).slice(-2) + '/' + ('00' + startTime.getDate()).slice(-2) + ' ' + ('00' + startTime.getHours()).slice(-2) + ':' + ('00' + startTime.getMinutes()).slice(-2)
+    sendDatas.endTime = endTime.getFullYear() + '/' + ('00' + (endTime.getMonth() + 1)).slice(-2) + '/' + ('00' + endTime.getDate()).slice(-2) + ' ' + ('00' + endTime.getHours()).slice(-2) + ':' + ('00' + endTime.getMinutes()).slice(-2)
+    sendDatas.rangeStartValue = rangeStartValue.getFullYear() + '/' + ('00' + (rangeStartValue.getMonth() + 1)).slice(-2) + '/' + ('00' + rangeStartValue.getDate()).slice(-2) + ' ' + ('00' + rangeStartValue.getHours()).slice(-2) + ':' + ('00' + rangeStartValue.getMinutes()).slice(-2)
+    sendDatas.rangeEndValue = rangeEndValue.getFullYear() + '/' + ('00' + (rangeEndValue.getMonth() + 1)).slice(-2) + '/' + ('00' + rangeEndValue.getDate()).slice(-2) + ' ' + ('00' + rangeEndValue.getHours()).slice(-2) + ':' + ('00' + rangeEndValue.getMinutes()).slice(-2)
     sendDatas.otherAddress = otherAddress
     sendDatas.overview = overview
     sendDatas.eventTheme = eventTheme
@@ -169,7 +188,18 @@ const CreateEvent = () => {
     sendDatas.email = email
     console.log(sendDatas)
     if (sendFlag) {
-      //postする
+      axios.post('/api/create_event', sendDatas)
+        .then(res => {
+          console.log(res)
+          if (res.data.code == 200) {
+            console.log('test')
+            setSuccess(true)
+            setLoading(false)
+          }
+        })
+        .catch(error => {
+          if (error.response.status != 422) throw error
+        })
     } else {
       return
     }
@@ -218,7 +248,6 @@ const CreateEvent = () => {
                     // mask="__/__/____"
                     mask="____年__月__日"
                     renderInput={(params) => <TextField {...params} />}
-                    onError={eventDateError}
                   />
                 </LocalizationProvider>
               </PcFlexItem>
@@ -269,27 +298,39 @@ const CreateEvent = () => {
             <SubItem variant="h2">
               開始、終了時間
             </SubItem>
-            <LocalizationProvider
-              dateAdapter={AdapterDateFns}
-              adapterLocale={jaLocale}
-            >
-              <TimerGrid>
-                <StyledTimePicker
-                  value={startTime}
-                  onChange={(newValue) => setStartTime(newValue)}
-                  renderInput={(params) => <TextField {...params} />}
-                  ampm={false}
+            <TimerGrid>
+              <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={jaLocale}>
+                <DateTimePicker
+                  renderInput={(props) => <TextField {...props} />}
                   label="開始時間"
-                />
-                <StyledTimePicker
-                  value={endTime}
-                  onChange={(newValue) => setEndTime(newValue)}
-                  renderInput={(params) => <TextField {...params} />}
+                  value={startTime}
+                  onChange={(newValue) => {
+                    setStartTime(newValue);
+                  }}
                   ampm={false}
-                  label="終了時間"
+                  inputFormat='yyyy年MM月dd日 HH時mm分'
+                  mask="____年__月__日 __時__分"
+                  fullWidth
+                  error={startTimeError}
                 />
-              </TimerGrid>
-            </LocalizationProvider>
+              </LocalizationProvider>
+              <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={jaLocale}>
+                <DateTimePicker
+                  renderInput={(props) => <TextField {...props} />}
+                  label="終了時間"
+                  value={endTime}
+                  onChange={(newValue) => {
+                    setEndTime(newValue);
+                  }}
+                  ampm={false}
+                  inputFormat='yyyy年MM月dd日 HH時mm分'
+                  // mask="____年__月__日 __時__分"
+                  mask="____年__月__日 __時__分"
+                  minDateTime={rangeStartValue}
+                  error={endTimeError}
+                />
+              </LocalizationProvider>
+            </TimerGrid>
             <SubItem variant="h2">
               募集期間
             </SubItem>
@@ -358,6 +399,7 @@ const CreateEvent = () => {
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
+              error={emailError}
             />
             <SubItem variant="h2">
               こんな方におすすめ
@@ -383,6 +425,9 @@ const CreateEvent = () => {
               value={notes}
               onChange={event => setNotes(event.target.value)}
             />
+            {success && (
+              <SuccessAlert onClose={() => { setSuccess(false); }} variant="filled" severity="success">新規イベントを作成しました。</SuccessAlert>
+            )}
             <ButtonArea>
               <SendButton
                 loading={loading}
