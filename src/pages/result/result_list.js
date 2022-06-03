@@ -3,6 +3,8 @@ import styled from "styled-components"
 import Header from '../../components/Parts/Template/Header'
 import TagModal from '../../components/Parts/ResultList/TagModal'
 import { useAuth } from '@/hooks/auth'
+import axios from '@/lib/axios'
+//componentes
 import Bread from '../../components/Parts/Template/Breadcrumbs'
 import SideBarSearchArea from '../../components/Parts/ResultList/SideBarSearchArea'
 import DisplayCards from '@/components/Parts/ResultList/DisplayCards'
@@ -74,17 +76,19 @@ const FlexGrid = styled(Grid)`
   display: flex;
   justify-content: space-between;
 `
-
-
-
 const ResultList = () => {
   const { user } = useAuth({ middleware: 'auth' })
   const [value, setValue] = useState('one');
   const [tagModal, setTagModal] = useState(false);
+  const [events, setEvents] = useState(null)
+  useEffect(async () => {
+    axios.get('/api/get_events')
+      .then(res => {
+        setEvents(res.data.contents)
+      }).catch(error => {
 
-
-
-
+      })
+  }, [])
   const tagModalClose = () => {
     setTagModal(false)
   }
@@ -148,7 +152,9 @@ const ResultList = () => {
           </ListActions>
           <FlexGrid>
             <Grid>
-              <DisplayCards cardData={cardData} />
+              {events && (
+                <DisplayCards events={events} />
+              )}
             </Grid>
             <SideBarSearchArea TagFocus={TagFocus} />
           </FlexGrid>
@@ -159,11 +165,3 @@ const ResultList = () => {
   )
 }
 export default ResultList
-
-const cardData = {
-  '0': { 'date': '05/17', 'time': '17:00 ~ 21:00', 'title': 'エンジニアの自由研究発表会vol.6 ～IoT／ローコード開発／アプリ開発etc～業務外でエンジニアスキルを活かしてみた！' },
-  '1': { 'date': '05/17', 'time': '17:00 ~ 21:00', 'title': 'エンジニアの自由研究発表会vol.6 ～IoT／ローコード開発／アプリ開発etc～業務外でエンジニアスキルを活かしてみた！' },
-  '2': { 'date': '05/17', 'time': '17:00 ~ 21:00', 'title': 'エンジニアの自由研究発表会vol.6 ～IoT／ローコード開発／アプリ開発etc～業務外でエンジニアスキルを活かしてみた！' },
-  '3': { 'date': '05/17', 'time': '17:00 ~ 21:00', 'title': 'エンジニアの自由研究発表会vol.6 ～IoT／ローコード開発／アプリ開発etc～業務外でエンジニアスキルを活かしてみた！' },
-  '4': { 'date': '05/17', 'time': '17:00 ~ 21:00', 'title': 'エンジニアの自由研究発表会vol.6 ～IoT／ローコード開発／アプリ開発etc～業務外でエンジニアスキルを活かしてみた！' },
-}

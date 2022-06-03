@@ -25,17 +25,17 @@ const WrapperCard = styled(Card)`
   margin-bottom: 2rem;
 `
 const DisplayCards = (props) => {
-  const { cardData } = props
+  const { events } = props
   return (
     <>
-      {Object.entries(cardData).map((data, index) => (
+      {events.map((data, index) => (
         <WrapperCard key={index}>
           <CardContent className="flex">
             <Typography variant='body1' gutterBottom className={`bold ${Css.card_date}`}>
-              <span className={`fs12`}>{data.date}</span><br /> 17:00 ~ 21:00
+              <span className={`fs12`}>{data.date}</span><br />{data.event_start}
             </Typography>
             <Typography className="bold fs15rem" variant='body1'>
-              エンジニアの自由研究発表会vol.6 ～IoT／ローコード開発／アプリ開発etc～業務外でエンジニアスキルを活かしてみた！
+              {data.title}
             </Typography>
           </CardContent>
           <CardActions className={Css.bottom_card_action}>
