@@ -23,6 +23,11 @@ const Header = () => {
       <div className={`fixed top-0 right-0 px-6 py-4 sm:block`}>
         {user ?
           <div>
+            <Link href="/result/result_list">
+              <a className={`ml-4 text-sm ${HeaderCss.headerLink}`}>
+                イベント一覧
+              </a>
+            </Link>
             <Link href="/create_event">
               <a className={`ml-4 text-sm ${HeaderCss.headerLink}`}>
                 イベントを主催
