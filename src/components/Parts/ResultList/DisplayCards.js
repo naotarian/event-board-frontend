@@ -1,22 +1,11 @@
 import { useEffect, useState } from 'react'
 import styled from "styled-components"
 //mui
-import Grid from '@mui/material/Grid'
-import Box from '@mui/material/Box'
-import Tab from '@mui/material/Tab'
-import Tabs from '@mui/material/Tabs'
-import TabContext from '@mui/lab/TabContext'
-import TabList from '@mui/lab/TabList'
-import TabPanel from '@mui/lab/TabPanel'
 import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
-import LocalOfferIcon from '@mui/icons-material/LocalOffer'
-import Link from 'next/link'
-import Paper from '@mui/material/Paper'
-import TextField from '@mui/material/TextField'
 //css
 import Css from '../../../../styles/result_list.module.css'
 const WrapperCard = styled(Card)`
@@ -39,7 +28,7 @@ const DisplayCards = (props) => {
             </Typography>
           </CardContent>
           <CardActions className={Css.bottom_card_action}>
-            <Button size="small">Learn More</Button>
+            <Button size="small">{data.user_id}</Button>
           </CardActions>
         </WrapperCard>
 

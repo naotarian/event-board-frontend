@@ -81,10 +81,13 @@ const ResultList = () => {
   const [value, setValue] = useState('one');
   const [tagModal, setTagModal] = useState(false);
   const [events, setEvents] = useState(null)
+  const [areas, setAreas] = useState(null)
   useEffect(async () => {
     axios.get('/api/get_events')
       .then(res => {
-        setEvents(res.data.contents)
+        console.log(res)
+        setEvents(res.data.contents.events)
+        setAreas(res.data.contents.areas)
       }).catch(error => {
 
       })
@@ -98,6 +101,20 @@ const ResultList = () => {
   const TagFocus = (e) => {
     e.target.blur()
     setTagModal(true)
+  }
+  const eventDesc = () => {
+    let descEvents = events.slice(0, events.length)
+    let sortedDesc = descEvents.sort(function (a, b) {
+      return (a.event_start > b.event_start) ? -1 : 1;  //オブジェクトの降順ソート
+    });
+    setEvents(sortedDesc)
+  }
+  const eventAsc = () => {
+    let AscEvents = events.slice(0, events.length)
+    let sortedAsc = AscEvents.sort(function (a, b) {
+      return (a.event_start < b.event_start) ? -1 : 1;  //オブジェクトの昇順ソート
+    });
+    setEvents(sortedAsc)
   }
   return (
     <>
@@ -121,27 +138,20 @@ const ResultList = () => {
         </Box>
         <MainContentGrid>
           <ListActions>
-            <ActionItem>開催予定48件/開催中0件/全48件</ActionItem>
+            {events && (
+              <ActionItem>開催予定{events.length}件/開催中0件/全{events.length}件</ActionItem>
+            )}
             <ActionItem className="flex">
               <ActionItemChild>
                 <Link href="#">
                   <a>おすすめ順</a>
                 </Link>
               </ActionItemChild>
-              <ActionItemChild>
-                <Link href="#">
-                  <a>新着順</a>
-                </Link>
+              <ActionItemChild onClick={eventAsc}>
+                開催昇順
               </ActionItemChild>
-              <ActionItemChild>
-                <Link href="#">
-                  <a>開催昇順</a>
-                </Link>
-              </ActionItemChild>
-              <ActionItemChild>
-                <Link href="#">
-                  <a>開催降順</a>
-                </Link>
+              <ActionItemChild onClick={eventDesc}>
+                開催降順
               </ActionItemChild>
               <ActionItemChild>
                 <Link href="#">
@@ -156,7 +166,9 @@ const ResultList = () => {
                 <DisplayCards events={events} />
               )}
             </Grid>
-            <SideBarSearchArea TagFocus={TagFocus} />
+            {areas && (
+              <SideBarSearchArea TagFocus={TagFocus} setEvents={setEvents} areas={areas} />
+            )}
           </FlexGrid>
         </MainContentGrid>
         <TagModal tagModal={tagModal} tagModalClose={tagModalClose} />
