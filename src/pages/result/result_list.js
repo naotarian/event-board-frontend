@@ -135,7 +135,9 @@ const ResultList = () => {
         </Box>
         <MainContentGrid>
           <ListActions>
-            <ActionItem>開催予定{events.length}件/開催中0件/全{events.length}件</ActionItem>
+            {events && (
+              <ActionItem>開催予定{events.length}件/開催中0件/全{events.length}件</ActionItem>
+            )}
             <ActionItem className="flex">
               <ActionItemChild>
                 <Link href="#">
@@ -161,7 +163,7 @@ const ResultList = () => {
                 <DisplayCards events={events} />
               )}
             </Grid>
-            <SideBarSearchArea TagFocus={TagFocus} />
+            <SideBarSearchArea TagFocus={TagFocus} setEvents={setEvents} />
           </FlexGrid>
         </MainContentGrid>
         <TagModal tagModal={tagModal} tagModalClose={tagModalClose} />

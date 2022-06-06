@@ -9,7 +9,8 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import LoadingButton from '@mui/lab/LoadingButton'
-import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import FilterAltIcon from '@mui/icons-material/FilterAlt'
+import axios from '@/lib/axios'
 //css
 import styled from "styled-components"
 import Css from '../../../../styles/sidebar_search.module.css'
@@ -24,7 +25,20 @@ const SideBarSearch = (props) => {
   const [selectDateStart, setSelectDateStart] = useState(null)
   const [selectDateEnd, setSelectDateEnd] = useState(null)
   const [loading, setLoading] = useState(false)
-  const { TagFocus } = props
+  const [keyWord, setKeyWord] = useState('')
+  const { TagFocus, setEvents } = props
+  const searchEvent = () => {
+    console.log(keyWord)
+    let searchData = {}
+    searchData.keyWord = keyWord
+    axios.post('/api/event_search', searchData)
+      .then(res => {
+        console.log(res)
+        setEvents(res.data.contents)
+      }).catch(error => {
+
+      })
+  }
   return (
     <dl className={Css.side_search_bar}>
       <dt className="bold">キーワード</dt>
@@ -32,9 +46,13 @@ const SideBarSearch = (props) => {
         <TextField
           label=""
           id="outlined-size-small"
-          defaultValue="キーワード"
           size="small"
           variant="filled"
+          value={keyWord}
+          placeholder="キーワード"
+          onChange={(e) => {
+            setKeyWord(e.target.value);
+          }}
         />
       </dd>
       <dt className="bold">タグ</dt>
@@ -105,6 +123,7 @@ const SideBarSearch = (props) => {
           loadingPosition="start"
           startIcon={<FilterAltIcon />}
           variant="outlined"
+          onClick={searchEvent}
         >
           絞り込む
         </LoadingButton>

@@ -23,11 +23,11 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />
 const SideBarSearchArea = (props) => {
   const [selectDateStart, setSelectDateStart] = useState(null)
   const [selectDateEnd, setSelectDateEnd] = useState(null)
-  const { TagFocus } = props
+  const { TagFocus, setEvents } = props
   return (
     <SideBarWrapper>
       <SideBar>
-        <SideBarSearch TagFocus={TagFocus} />
+        <SideBarSearch TagFocus={TagFocus} setEvents={setEvents} />
       </SideBar>
       <SideBarTagSearch />
     </SideBarWrapper>
