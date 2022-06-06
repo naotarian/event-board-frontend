@@ -26,18 +26,27 @@ const SideBarSearch = (props) => {
   const [selectDateEnd, setSelectDateEnd] = useState(null)
   const [loading, setLoading] = useState(false)
   const [keyWord, setKeyWord] = useState('')
-  const { TagFocus, setEvents } = props
+  const [selectAreas, setSelectAreas] = useState({})
+  const { TagFocus, setEvents, areas } = props
   const searchEvent = () => {
-    console.log(keyWord)
     let searchData = {}
     searchData.keyWord = keyWord
+    searchData.areas = []
+    if (selectAreas.length > 0) {
+      selectAreas.map((data, index) => {
+        searchData.areas.push(data.id)
+      })
+    }
+    console.log(searchData)
     axios.post('/api/event_search', searchData)
       .then(res => {
-        console.log(res)
         setEvents(res.data.contents)
       }).catch(error => {
 
       })
+  }
+  const areaChange = (e, newValue) => {
+    setSelectAreas(newValue)
   }
   return (
     <dl className={Css.side_search_bar}>
@@ -72,9 +81,10 @@ const SideBarSearch = (props) => {
         <Autocomplete
           multiple
           id="checkboxes-tags-demo"
-          options={top100Films}
+          options={areas}
           disableCloseOnSelect
-          getOptionLabel={(option) => option.title}
+          onChange={areaChange}
+          getOptionLabel={(option) => option.area_name}
           renderOption={(props, option, { selected }) => (
             <li {...props}>
               <Checkbox
@@ -83,7 +93,7 @@ const SideBarSearch = (props) => {
                 style={{ marginRight: 8 }}
                 checked={selected}
               />
-              {option.title}
+              {option.area_name}
             </li>
           )}
           renderInput={(params) => (

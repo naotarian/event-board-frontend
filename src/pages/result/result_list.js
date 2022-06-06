@@ -81,10 +81,13 @@ const ResultList = () => {
   const [value, setValue] = useState('one');
   const [tagModal, setTagModal] = useState(false);
   const [events, setEvents] = useState(null)
+  const [areas, setAreas] = useState(null)
   useEffect(async () => {
     axios.get('/api/get_events')
       .then(res => {
-        setEvents(res.data.contents)
+        console.log(res)
+        setEvents(res.data.contents.events)
+        setAreas(res.data.contents.areas)
       }).catch(error => {
 
       })
@@ -163,7 +166,9 @@ const ResultList = () => {
                 <DisplayCards events={events} />
               )}
             </Grid>
-            <SideBarSearchArea TagFocus={TagFocus} setEvents={setEvents} />
+            {areas && (
+              <SideBarSearchArea TagFocus={TagFocus} setEvents={setEvents} areas={areas} />
+            )}
           </FlexGrid>
         </MainContentGrid>
         <TagModal tagModal={tagModal} tagModalClose={tagModalClose} />
