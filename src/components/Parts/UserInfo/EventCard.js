@@ -10,6 +10,10 @@ import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
+import Accordion from '@mui/material/Accordion'
+import AccordionSummary from '@mui/material/AccordionSummary'
+import AccordionDetails from '@mui/material/AccordionDetails'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 //css
 import Css from '../../../../styles/result_list.module.css'
 const WrapperCard = styled(Card)`
@@ -102,7 +106,8 @@ const EventCards = (props) => {
             </EventTitleTypo>
           </StyledCardContents>
         </WrapperCard>
-      ))}
+      )
+      )}
     </>
   )
 }

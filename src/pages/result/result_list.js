@@ -8,6 +8,7 @@ import axios from '@/lib/axios'
 import Bread from '../../components/Parts/Template/Breadcrumbs'
 import SideBarSearchArea from '../../components/Parts/ResultList/SideBarSearchArea'
 import DisplayCards from '@/components/Parts/ResultList/DisplayCards'
+import Head from 'next/head'
 //mui
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
@@ -118,6 +119,10 @@ const ResultList = () => {
   }
   return (
     <>
+      <Head>
+        <title>イベント一覧</title>
+        <meta name="viewport" content="width=device-width"></meta>
+      </Head>
       <Header />
       <WrapperGrid>
         <Bread />
