@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import styled from "styled-components"
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import moment from 'moment'
+import 'moment/locale/ja'
 //mui
 import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
@@ -15,11 +17,27 @@ const WrapperCard = styled(Card)`
   max-height: 240px;
   margin-bottom: 2rem;
 `
+const EventDateArea = styled(Typography)`
+  padding-top 2rem;
+  width: 30%;
+  text-align: center;
+`
+const EventDateTypo = styled(Typography)`
+  font-weight: bold;
+  font-size: 1.1rem;
+`
+const EventTitleTypo = styled(Typography)`
+  width: 100%;
+`
 const DisplayCards = (props) => {
   const { events } = props
   const router = useRouter()
+  events.map((data, index) => {
+    data.eventDate = moment(data.event_date).format('YYYY-MM-DD(ddd)')
+    data.eventStartTime = moment(data.event_start).format('HH:mm')
+    data.eventEndTime = moment(data.event_end).format('HH:mm')
+  })
   const mypage = (data) => {
-    console.log(data)
     router.push({
       pathname: `/user/${data.user_id}`,
     });
@@ -29,12 +47,12 @@ const DisplayCards = (props) => {
       {events.map((data, index) => (
         <WrapperCard key={index}>
           <CardContent className="flex">
-            <Typography variant='body1' gutterBottom className={`bold ${Css.card_date}`}>
-              <span className={`fs12`}>{data.date}</span><br />{data.event_start}
-            </Typography>
-            <Typography className="bold fs15rem" variant='body1'>
+            <EventDateArea variant='body1' gutterBottom>
+              <EventDateTypo>{data.eventDate}</EventDateTypo>{data.eventStartTime} ~ {data.eventEndTime}
+            </EventDateArea>
+            <EventTitleTypo className="bold fs15rem" variant='body1'>
               {data.title}
-            </Typography>
+            </EventTitleTypo>
           </CardContent>
           <CardActions className={Css.bottom_card_action}>
             <Button size="small" onClick={() => mypage(data)}>{data.user_id}</Button>
