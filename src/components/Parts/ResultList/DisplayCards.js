@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 import styled from "styled-components"
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 //mui
 import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
@@ -15,6 +17,13 @@ const WrapperCard = styled(Card)`
 `
 const DisplayCards = (props) => {
   const { events } = props
+  const router = useRouter()
+  const mypage = (data) => {
+    console.log(data)
+    router.push({
+      pathname: `/user/${data.user_id}`,
+    });
+  }
   return (
     <>
       {events.map((data, index) => (
@@ -28,7 +37,7 @@ const DisplayCards = (props) => {
             </Typography>
           </CardContent>
           <CardActions className={Css.bottom_card_action}>
-            <Button size="small">{data.user_id}</Button>
+            <Button size="small" onClick={() => mypage(data)}>{data.user_id}</Button>
           </CardActions>
         </WrapperCard>
 
