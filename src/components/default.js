@@ -34,6 +34,9 @@ const theme = createTheme({
       fontSize: 18,
       lineHeight: 2,
       fontWeight: 700,
+    },
+    button: {
+      textTransform: "none"
     }
   },
 });
