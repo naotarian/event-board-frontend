@@ -13,32 +13,10 @@ import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
 import Tab from '@mui/material/Tab'
 import Tabs from '@mui/material/Tabs'
-import TabContext from '@mui/lab/TabContext'
-import TabList from '@mui/lab/TabList'
-import TabPanel from '@mui/lab/TabPanel'
-import Card from '@mui/material/Card'
-import CardActions from '@mui/material/CardActions'
-import CardContent from '@mui/material/CardContent'
-import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import LocalOfferIcon from '@mui/icons-material/LocalOffer'
 import Link from 'next/link'
-import theme from '../../components/default'
-import Paper from '@mui/material/Paper'
-import TextField from '@mui/material/TextField'
-//css
-import Css from '../../../styles/result_list.module.css'
 
-
-const StyledTabList = styled(TabList)`
-  width: fit-content;
-  margin: 0 auto;
-`
-const WrapperCard = styled(Card)`
-  width: 85%;
-  max-height: 240px;
-  margin-bottom: 2rem;
-`
 const WrapperGrid = styled(Grid)`
   max-width: 1200px;
   margin: 0 auto;
