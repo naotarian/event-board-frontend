@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import styled from "styled-components"
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import moment from 'moment'
 import 'moment/locale/ja'
@@ -58,7 +57,6 @@ const DisplayCards = (props) => {
             <Button size="small" onClick={() => mypage(data)}>{data.user.name}</Button>
           </CardActions>
         </WrapperCard>
-
       ))}
     </>
   )
