@@ -36,7 +36,7 @@ const UserName = () => {
 			{userInfo && (
 				<UserPageWrapper>
 					<LeftArea userInfo={userInfo} />
-					<MainArea />
+					<MainArea userInfo={userInfo} />
 				</UserPageWrapper>
 			)}
 		</>

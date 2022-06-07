@@ -33,7 +33,6 @@ const UserInfoColumn = styled(Typography)`
 `
 const LeftArea = (props) => {
   const { userInfo } = props
-  console.log(userInfo)
   return (
     <LeftAreaWrapper>
       <ImageGrid>画像が入る</ImageGrid>
