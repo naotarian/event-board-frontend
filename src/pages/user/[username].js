@@ -1,6 +1,58 @@
+import { useEffect, useState } from 'react'
+import axios from '@/lib/axios'
+import styled from "styled-components"
+import Grid from '@mui/material/Grid'
+import Card from '@mui/material/Card'
+import Header from '../../components/Parts/Template/Header'
+const UserPageWrapper = styled(Grid)`
+	margin: 6rem auto 0 auto;
+	@media screen and (min-width:1024px) {
+		max-width: 1200px;
+		display: flex;
+		justify-content: space-around;
+	}
+`
+const LeftArea = styled(Grid)`
+	@media screen and (min-width:1024px) {
+		width: 300px;
+	}
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	padding: 1rem;
+`
+const MainArea = styled(Grid)`
+	@media screen and (min-width:1024px) {
+		width: 800px;
+	}
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	padding: 1rem;
+`
 const UserName = () => {
-    return (
-        <>aa</>
-    )
+	const [userInfo, setUserInfo] = useState(null)
+	if (process.browser) {
+		let sendData = {}
+		sendData.userName = location.href.substring(location.href.lastIndexOf('/') + 1)
+		useEffect(async () => {
+			axios.post('/api/user_info', sendData)
+				.then(res => {
+					console.log(res)
+					setUserInfo(res.data.contents.user_info)
+				}).catch(error => {
+
+				})
+		}, [])
+	}
+	return (
+		<>
+			<Header />
+			{userInfo && (
+				<UserPageWrapper>
+					<LeftArea>test</LeftArea>
+					<MainArea>test</MainArea>
+				</UserPageWrapper>
+			)}
+		</>
+	)
 }
 export default UserName

@@ -39,7 +39,7 @@ const DisplayCards = (props) => {
   })
   const mypage = (data) => {
     router.push({
-      pathname: `/user/${data.user_id}`,
+      pathname: `/user/${data.user.name}`,
     });
   }
   return (
@@ -55,7 +55,7 @@ const DisplayCards = (props) => {
             </EventTitleTypo>
           </CardContent>
           <CardActions className={Css.bottom_card_action}>
-            <Button size="small" onClick={() => mypage(data)}>{data.user_id}</Button>
+            <Button size="small" onClick={() => mypage(data)}>{data.user.name}</Button>
           </CardActions>
         </WrapperCard>
 
