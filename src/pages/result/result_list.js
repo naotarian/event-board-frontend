@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import styled from "styled-components"
-import Header from '../../components/Parts/Template/Header'
-import TagModal from '../../components/Parts/ResultList/TagModal'
 import { useAuth } from '@/hooks/auth'
 import axios from '@/lib/axios'
 //componentes
+import Header from '../../components/Parts/Template/Header'
+import TagModal from '../../components/Parts/ResultList/TagModal'
 import Bread from '../../components/Parts/Template/Breadcrumbs'
 import SideBarSearchArea from '../../components/Parts/ResultList/SideBarSearchArea'
 import DisplayCards from '@/components/Parts/ResultList/DisplayCards'
