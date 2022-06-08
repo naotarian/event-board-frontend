@@ -9,6 +9,7 @@ import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
+import Link from 'next/link'
 //css
 import Css from '../../../../styles/result_list.module.css'
 const WrapperCard = styled(Card)`
@@ -50,7 +51,9 @@ const DisplayCards = (props) => {
               <EventDateTypo>{data.eventDate}</EventDateTypo>{data.eventStartTime} ~ {data.eventEndTime}
             </EventDateArea>
             <EventTitleTypo className="bold fs15rem" variant='body1'>
-              {data.title}
+              <Link href={`/result/event?event=${data.id}`}>
+                {data.title}
+              </Link>
             </EventTitleTypo>
           </CardContent>
           <CardActions className={Css.bottom_card_action}>
