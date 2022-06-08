@@ -11,6 +11,7 @@ import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
 //components
 import DetailTags from './DetailTags'
+import EventContent from './EventContent'
 const MainPaper = styled(Paper)`
   width: 800px;
   margin-top: 1rem;
@@ -39,6 +40,7 @@ const MainArea = (props) => {
             </Typography>
             <DetailTags />
             <Baner>イベント内容</Baner>
+            <EventContent eventInfo={eventInfo} />
           </MainWrapper>
         </>
       )}
