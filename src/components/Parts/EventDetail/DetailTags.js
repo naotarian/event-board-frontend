@@ -31,6 +31,9 @@ const TagButton = styled(Button)`
 `
 const DetailTags = () => {
   const tags = ['セキュリティ', 'javascript', '機械学習', 'UX', 'DevOps', 'iOS', 'デジタルマーケティング', 'Go', 'Azure', 'Deep Learning']
+  const ClickTag = (index) => {
+    console.log(index)
+  }
   return (
     <FlexGrid>
       {tags.map((data, index) => (

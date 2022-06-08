@@ -19,7 +19,10 @@ const ButtonArea = styled(Grid)`
   margin-top: 2rem;
 `
 const StyledLoadingButton = styled(LoadingButton)`
+@media screen and (min-width:1024px) {
   width: 500px;
+
+}
   height: 50px;
   margin: 0 auto;
   // background-color: ${(props) => props.theme.palette.dark}
