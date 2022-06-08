@@ -33,6 +33,7 @@ const Event = (props) => {
   useEffect(async () => {
     if (router.isReady) {
       let sendData = {}
+      console.log(sendData)
       sendData.id = eventId
       axios.post('/api/event_detail', sendData)
         .then(res => {
@@ -41,7 +42,6 @@ const Event = (props) => {
         }).catch(error => {
 
         })
-
     }
 
   }, [eventId])
@@ -51,8 +51,12 @@ const Event = (props) => {
       <WrapperGrid>
         <Bread />
         <ContentWrapper>
-          <MainArea eventInfo={eventInfo} />
-          <RightArea eventInfo={eventInfo} />
+          {eventInfo && (
+            <MainArea eventInfo={eventInfo} />
+          )}
+          {eventInfo && (
+            <RightArea eventInfo={eventInfo} />
+          )}
         </ContentWrapper>
       </WrapperGrid>
     </>
