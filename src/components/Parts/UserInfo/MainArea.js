@@ -11,6 +11,9 @@ const MainAreaGrid = styled(Grid)`
   @media screen and (min-width:1024px) {
     width: 800px;
   }
+  @media screen and (max-width:767px) {
+    width: 100%;
+  }
   border: 1px solid #ddd;
   border-radius: 5px;
   padding: 1rem;

@@ -23,7 +23,9 @@ const WrapperGrid = styled(Grid)`
   padding-top: 2rem;
 `
 const ContentWrapper = styled(Grid)`
-  display: flex;
+@media screen and (min-width:1024px) {
+    display: flex;
+  }
   justify-content: space-between;
 `
 const Event = (props) => {

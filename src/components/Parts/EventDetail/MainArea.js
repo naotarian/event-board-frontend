@@ -13,7 +13,9 @@ import Typography from '@mui/material/Typography'
 import DetailTags from './DetailTags'
 import EventContent from './EventContent'
 const MainPaper = styled(Paper)`
-  width: 800px;
+  @media screen and (min-width:1024px) {
+    width: 800px;
+  }
   margin-top: 1rem;
 `
 const MainWrapper = styled(Grid)`

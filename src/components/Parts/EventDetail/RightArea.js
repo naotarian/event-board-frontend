@@ -14,11 +14,19 @@ import LoadingButton from '@mui/lab/LoadingButton'
 //icons
 import EmailIcon from '@mui/icons-material/Email';
 const RightAreaWrapper = styled(Grid)`
+@media screen and (min-width:1024px) {
   width: 300px;
+}
   margin-top: 1rem;
+  @media screen and (min-width:1024px) {
+    position: fixed;
+    left: 70%;
+  }
 `
 const RightAreaPaper = styled(Paper)`
+@media screen and (min-width:1024px) {
   width: 320px;
+}
   padding: 1rem;
 `
 const EventDateTypo = styled(Typography)`
@@ -26,9 +34,14 @@ const EventDateTypo = styled(Typography)`
   margin-bottom: 1rem;
 `
 const StyledLoadingButton = styled(LoadingButton)`
+@media screen and (min-width:1024px) {
   width: 300px;
   height: 50px;
   margin: 0 auto;
+}
+@media screen and (max-width:767px) {
+  display: none;
+}
 `
 const Recruitment = styled(Typography)`
   font-size: 0.8rem;
