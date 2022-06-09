@@ -33,6 +33,11 @@ const Header = () => {
                 イベントを主催
               </a>
             </Link>
+            <Link href="/user/mypage">
+              <a className={`ml-4 text-sm ${HeaderCss.headerLink}`}>
+                マイページ
+              </a>
+            </Link>
             {/* <Link href={logout}> */}
             <a className={`ml-4 text-sm ${HeaderCss.headerLink}`} onClick={logout}>
               ログアウト

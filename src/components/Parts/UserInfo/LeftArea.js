@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
 import styled from "styled-components"
+import { useRouter } from 'next/router'
 //mui
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
+import Button from '@mui/material/Button'
 //icons
 import MailOutlineIcon from '@mui/icons-material/MailOutline'
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline'
@@ -46,15 +48,33 @@ const ImageGrid = styled(Grid)`
 const UserInfoColumn = styled(Typography)`
   margin-top: 1rem;
 `
+const EditProfileButton = styled(Button)`
+  width: 100%;
+`
 const LeftArea = (props) => {
   const { userInfo } = props
+  const [myPage, setMyPage] = useState(false)
+  const router = useRouter()
+  let pathName = router.pathname
+  useEffect(async () => {
+    if (router.isReady) {
+      if (pathName == '/user/mypage') {
+        setMyPage(true)
+      }
+    }
+
+  }, [pathName])
   return (
     <LeftAreaWrapper>
       <ImageGrid />
       <LeftAreaGrid>
-        <UserInfoColumn><PersonOutlineIcon style={{ verticalAlign: 'bottom', marginRight: '1rem' }} />{userInfo[0].name}</UserInfoColumn>
+        <UserInfoColumn><PersonOutlineIcon style={{ verticalAlign: 'bottom', marginRight: '1rem' }} />{userInfo.name}</UserInfoColumn>
         <UserInfoColumn><CommentIcon style={{ verticalAlign: 'bottom', marginRight: '1rem' }} />一言コメントが入る</UserInfoColumn>
-        <UserInfoColumn><MailOutlineIcon style={{ verticalAlign: 'bottom', marginRight: '1rem' }} />{userInfo[0].email}</UserInfoColumn>
+        <UserInfoColumn><MailOutlineIcon style={{ verticalAlign: 'bottom', marginRight: '1rem' }} />{userInfo.email}</UserInfoColumn>
+        {myPage && (
+          <UserInfoColumn><EditProfileButton variant="contained">Edit Profile</EditProfileButton></UserInfoColumn>
+        )}
+
       </LeftAreaGrid>
     </LeftAreaWrapper>
   )

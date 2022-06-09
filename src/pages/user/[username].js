@@ -3,7 +3,6 @@ import axios from '@/lib/axios'
 import styled from "styled-components"
 //mui
 import Grid from '@mui/material/Grid'
-import Card from '@mui/material/Card'
 import Header from '../../components/Parts/Template/Header'
 import LeftArea from '../../components/Parts/UserInfo/LeftArea'
 import MainArea from '../../components/Parts/UserInfo/MainArea'

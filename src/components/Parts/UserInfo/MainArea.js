@@ -23,7 +23,7 @@ const MainArea = (props) => {
   return (
     <MainAreaGrid>
       <Typography variant="h1" style={{ textAlign: 'center', marginBottom: '1rem' }}>主な主催イベント</Typography>
-      <EventCard events={userInfo[0].events} />
+      <EventCard events={userInfo.events} />
     </MainAreaGrid>
   )
 }

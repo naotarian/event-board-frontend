@@ -35,7 +35,6 @@ const Event = (props) => {
   useEffect(async () => {
     if (router.isReady) {
       let sendData = {}
-      console.log(sendData)
       sendData.id = eventId
       axios.post('/api/event_detail', sendData)
         .then(res => {
@@ -45,7 +44,6 @@ const Event = (props) => {
 
         })
     }
-
   }, [eventId])
   return (
     <>
