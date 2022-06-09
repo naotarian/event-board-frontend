@@ -13,21 +13,19 @@ class MyDocument extends Document {
                 originalRenderPage({
                     enhanceApp: (App) => (props) => sheet.collectStyles(<App {...props} />),
                 });
-
-            const initialProps = await Document.getInitialProps(ctx);
+            const styleTags = sheet.getStyleElement()
             return {
                 ...initialProps,
                 styles: (
                     <>
                         {initialProps.styles}
-                        {sheet.getStyleElement()}
+                        {styleTags}
                     </>
                 ),
             };
         } finally {
             sheet.seal();
         }
-        return { ...initialProps }
     }
 
 
@@ -40,6 +38,8 @@ class MyDocument extends Document {
                         href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap"
                         rel="stylesheet"
                     />
+                    <meta charSet="utf-8" />
+                    {this.props.styleTags}
                 </Head>
                 <body>
                     <Main />

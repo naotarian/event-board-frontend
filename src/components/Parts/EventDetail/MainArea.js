@@ -4,7 +4,6 @@ import { useRouter } from 'next/router'
 import moment from 'moment'
 import 'moment/locale/ja'
 import axios from '@/lib/axios'
-import Image from 'next/image'
 //mui
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
@@ -35,7 +34,7 @@ const MainArea = (props) => {
     <MainPaper elevation={0}>
       {eventInfo && (
         <>
-          <Image src='/images/test.jpeg' alt='logo' width='800' height='400' />
+          <img src='/images/test.jpeg' alt='logo' width='800' height='400' />
           <MainWrapper>
             <Typography variant='h2' gutterBottom>
               {eventInfo.title}

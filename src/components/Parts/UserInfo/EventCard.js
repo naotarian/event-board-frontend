@@ -126,7 +126,7 @@ const EventCards = (props) => {
               <EventDateArea variant='body1' gutterBottom>
                 <EventDateTypo>{data.eventDate}</EventDateTypo>{data.eventStartTime} ~ {data.eventEndTime}
               </EventDateArea>
-              <EventTitleTypo className="bold fs15rem" variant='body1'>
+              <EventTitleTypo variant='body2'>
                 {data.title}
               </EventTitleTypo>
             </StyledCardContents>

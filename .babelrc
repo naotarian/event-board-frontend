@@ -4,7 +4,7 @@
   ],
   "plugins": [
     [
-      "styled-components",
+      "babel-plugin-styled-components",
       {
         "ssg": true,
         "displayName": true,
@@ -12,15 +12,4 @@
       }
     ]
   ]
-  // "presets": [
-  //   "next/babel"
-  // ],
-  // "plugins": [
-  //   [
-  //     "styled-components",
-  //     {
-  //       "ssr": true
-  //     }
-  //   ]
-  // ]
 }

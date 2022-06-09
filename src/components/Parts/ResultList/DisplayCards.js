@@ -70,7 +70,7 @@ const DisplayCards = (props) => {
             <EventDateArea variant='body1' gutterBottom>
               <EventDateTypo>{data.eventDate}</EventDateTypo>{data.eventStartTime} ~ {data.eventEndTime}
             </EventDateArea>
-            <EventTitleTypo className="bold fs15rem" variant='body1'>
+            <EventTitleTypo variant='body2'>
               <Link href={`/result/event?event=${data.id}`} style={{ color: 'red' }}>
                 <a style={{ color: '#333' }}>{data.title}</a>
               </Link>
