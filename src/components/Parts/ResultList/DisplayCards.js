@@ -16,18 +16,38 @@ const WrapperCard = styled(Card)`
   width: 85%;
   max-height: 240px;
   margin-bottom: 2rem;
+  @media screen and (max-width:767px) {
+    width: 100%;
+  }
 `
 const EventDateArea = styled(Typography)`
-  padding-top 2rem;
-  width: 30%;
+  @media screen and (min-width:1024px) {
+    padding-top 2rem;
+    width: 30%;
+  }
   text-align: center;
 `
 const EventDateTypo = styled(Typography)`
   font-weight: bold;
   font-size: 1.1rem;
+  @media screen and (max-width:767px) {
+    display: inline;
+  }
 `
 const EventTitleTypo = styled(Typography)`
   width: 100%;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  @media screen and (min-width:1024px) {
+    -webkit-line-clamp: 3;
+  }
+`
+const StyledCardContents = styled(CardContent)`
+  @media screen and (min-width:1024px) {
+    display: flex;
+  }
 `
 const DisplayCards = (props) => {
   const { events } = props
@@ -46,16 +66,16 @@ const DisplayCards = (props) => {
     <>
       {events.map((data, index) => (
         <WrapperCard key={index}>
-          <CardContent className="flex">
+          <StyledCardContents>
             <EventDateArea variant='body1' gutterBottom>
               <EventDateTypo>{data.eventDate}</EventDateTypo>{data.eventStartTime} ~ {data.eventEndTime}
             </EventDateArea>
             <EventTitleTypo className="bold fs15rem" variant='body1'>
-              <Link href={`/result/event?event=${data.id}`}>
-                {data.title}
+              <Link href={`/result/event?event=${data.id}`} style={{ color: 'red' }}>
+                <a style={{ color: '#333' }}>{data.title}</a>
               </Link>
             </EventTitleTypo>
-          </CardContent>
+          </StyledCardContents>
           <CardActions className={Css.bottom_card_action}>
             <Button size="small" onClick={() => mypage(data)}>{data.user.name}</Button>
           </CardActions>

@@ -30,10 +30,15 @@ const H1Typo = styled(Typography)`
   line-height: 1.4; 
 `
 const ListActions = styled(Grid)`
-  padding :1rem;
-  display: flex;
+  padding: 1rem;
   justify-content: space-between;
   width: 60%;
+  @media screen and (max-width:767px) {
+    width: 100%;
+  }
+  @media screen and (min-width:1024px) {
+    display: flex;
+  }
 `
 const ActionItem = styled(Grid)`
   font-size: 14px;
@@ -42,6 +47,11 @@ const ActionItemChild = styled(Grid)`
   position:relative;
   display:inline-block;
   padding-left: 1rem;
+  @media screen and (max-width:767px) {
+    margin-top: 1rem;
+    padding: 0;
+    margin-right: 1rem;
+  }
   &:hover {
     cursor: pointer;
     color: #0e7ac4;
@@ -51,8 +61,10 @@ const MainContentGrid = styled(Grid)`
   // display: flex;
 `
 const FlexGrid = styled(Grid)`
-  display: flex;
   justify-content: space-between;
+  @media screen and (min-width:1024px) {
+    display: flex;
+  }
 `
 const ResultList = () => {
   const { user } = useAuth({ middleware: 'auth' })

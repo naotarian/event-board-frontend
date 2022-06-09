@@ -14,7 +14,9 @@ const SideBar = styled(Paper)`
   margin-bottom: 2rem;
 `
 const SideBarWrapper = styled(Grid)`
+@media screen and (min-width:1024px) {
   width: 50%;
+}
   // position: fixed;
   // right: 36px;
 `
