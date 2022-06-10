@@ -119,6 +119,7 @@ const CreateEvent = () => {
   const [notes, setNotes] = useState('')
   const [email, setEmail] = useState('')
   const [success, setSuccess] = useState(false)
+  const [numberOfApplicants, setNumberOfApplicants] = useState(0)
   //errorflag用
   const [eventTitleError, setEventTitleError] = useState(false)
   const [eventDateError, setEventDateError] = useState(false)
@@ -127,6 +128,7 @@ const CreateEvent = () => {
   const [emailError, setEmailError] = useState(false)
   const [startTimeError, setStartTimeError] = useState(false)
   const [endTimeError, setEndTimeError] = useState(false)
+  const [numberOfApplicantsError, setNumberOfApplicantsError] = useState(false)
   useEffect(() => {
     if (zipCode) {
       fetch(`https://api.zipaddress.net/?zipcode=${zipCode}`, {
@@ -169,6 +171,9 @@ const CreateEvent = () => {
     if (!endTime) {
       setEndTimeError(true)
     }
+    if (!numberOfApplicants) {
+      setNumberOfApplicantsError(true)
+    }
     if (!sendFlag) {
       return
     }
@@ -184,9 +189,9 @@ const CreateEvent = () => {
     sendDatas.overview = overview
     sendDatas.eventTheme = eventTheme
     sendDatas.recommendation = recommendation
+    sendDatas.numberOfApplicants = numberOfApplicants
     sendDatas.notes = notes
     sendDatas.email = email
-    console.log(sendDatas)
     if (sendFlag) {
       axios.post('/api/create_event', sendDatas)
         .then(res => {
@@ -365,6 +370,20 @@ const CreateEvent = () => {
                 />
               </LocalizationProvider>
             </TimerGrid>
+            <SubItem variant="h2">
+              募集人数
+            </SubItem>
+            <TextField
+              id="outlined-number"
+              label="募集人数(名)"
+              type="number"
+              value={numberOfApplicants}
+              InputLabelProps={{
+                shrink: true,
+              }}
+              error={numberOfApplicantsError}
+              onChange={event => setNumberOfApplicants(event.target.value)}
+            />
             <SubItem variant="h2">
               概要
             </SubItem>

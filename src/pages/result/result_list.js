@@ -60,6 +60,9 @@ const ActionItemChild = styled(Grid)`
 const MainContentGrid = styled(Grid)`
   // display: flex;
 `
+const CardContentGrid = styled(Grid)`
+  min-width: 900px;
+`
 const FlexGrid = styled(Grid)`
   justify-content: space-between;
   @media screen and (min-width:1024px) {
@@ -151,11 +154,17 @@ const ResultList = () => {
             </ActionItem>
           </ListActions>
           <FlexGrid>
-            <Grid>
+            <CardContentGrid>
               {events && (
-                <DisplayCards events={events} />
+                <Grid style={{ marginRight: 8 }}>
+                  {events.length != 0 ? (
+                    <DisplayCards events={events} />
+                  ) : (
+                    <>対象のイベントがありません</>
+                  )}
+                </Grid>
               )}
-            </Grid>
+            </CardContentGrid>
             {areas && (
               <SideBarSearchArea TagFocus={TagFocus} setEvents={setEvents} areas={areas} />
             )}

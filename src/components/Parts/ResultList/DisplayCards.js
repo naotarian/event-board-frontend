@@ -10,6 +10,8 @@ import CardContent from '@mui/material/CardContent'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import Link from 'next/link'
+//icons
+import BookmarkIcon from '@mui/icons-material/Bookmark';
 //css
 import Css from '../../../../styles/result_list.module.css'
 const WrapperCard = styled(Card)`
@@ -49,6 +51,15 @@ const StyledCardContents = styled(CardContent)`
     display: flex;
   }
 `
+const NumberOfApplicants = styled(Typography)`
+  text-align: right;
+  padding-right: 1rem;
+`
+const StyledCardActions = styled(CardActions)`
+  border-top: 1px solid #ddd;
+  padding: 0.5rem 1rem;
+  justify-content: space-between;
+`
 const DisplayCards = (props) => {
   const { events } = props
   const router = useRouter()
@@ -61,6 +72,9 @@ const DisplayCards = (props) => {
     router.push({
       pathname: `/user/${data.user.name}`,
     });
+  }
+  const bookmaek = (bookSelectId) => {
+    console.log(bookSelectId)
   }
   return (
     <>
@@ -76,9 +90,11 @@ const DisplayCards = (props) => {
               </Link>
             </EventTitleTypo>
           </StyledCardContents>
-          <CardActions className={Css.bottom_card_action}>
+          <NumberOfApplicants variant='body1'>0/{data.number_of_applicants}人</NumberOfApplicants>
+          <StyledCardActions>
             <Button size="small" onClick={() => mypage(data)}>{data.user.name}</Button>
-          </CardActions>
+            <BookmarkIcon style={{ cursor: 'pointer' }} onClick={() => bookmaek(data.id)} />
+          </StyledCardActions>
         </WrapperCard>
       ))}
     </>
