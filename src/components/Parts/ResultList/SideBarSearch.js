@@ -39,6 +39,7 @@ const SideBarSearch = (props) => {
     }
     axios.post('/api/event_search', searchData)
       .then(res => {
+        console.log(res.data.contents)
         setEvents(res.data.contents)
       }).catch(error => {
 
