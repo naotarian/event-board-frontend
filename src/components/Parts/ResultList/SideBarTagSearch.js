@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import styled from "styled-components"
+import axios from '@/lib/axios'
 //mui
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
@@ -33,10 +34,18 @@ const TagButton = styled(Button)`
   cursor: pointer;
   text-transform: none;
 `
-const SideBarTagSearch = () => {
+const SideBarTagSearch = (props) => {
+  const { setEvents } = props
   const tags = ['セキュリティ', 'javascript', '機械学習', 'UX', 'DevOps', 'iOS', 'デジタルマーケティング', 'Go', 'Azure', 'Deep Learning']
   const ClickTag = (index) => {
-    console.log(index)
+    let sendData = {}
+    sendData.id = index + 1
+    axios.post('/api/event_tags_search', sendData)
+      .then(res => {
+        setEvents(res.data.contents)
+      }).catch(error => {
+
+      })
   }
   return (
     <Grid>

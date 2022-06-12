@@ -31,7 +31,7 @@ const SideBarSearchArea = (props) => {
       <SideBar>
         <SideBarSearch TagFocus={TagFocus} setEvents={setEvents} areas={areas} />
       </SideBar>
-      <SideBarTagSearch />
+      <SideBarTagSearch setEvents={setEvents} />
     </SideBarWrapper>
   )
 }
