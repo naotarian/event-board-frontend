@@ -3,6 +3,7 @@ import styled from "styled-components"
 import { useRouter } from 'next/router'
 import moment from 'moment'
 import 'moment/locale/ja'
+import axios from '@/lib/axios'
 //mui
 import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
@@ -12,8 +13,6 @@ import Typography from '@mui/material/Typography'
 import Link from 'next/link'
 //icons
 import BookmarkIcon from '@mui/icons-material/Bookmark';
-//css
-import Css from '../../../../styles/result_list.module.css'
 const WrapperCard = styled(Card)`
   width: 85%;
   max-height: 240px;
@@ -61,8 +60,7 @@ const StyledCardActions = styled(CardActions)`
   justify-content: space-between;
 `
 const DisplayCards = (props) => {
-  const { events } = props
-  console.log(events)
+  const { events, setEvents } = props
   const router = useRouter()
   events.map((data, index) => {
     data.eventDate = moment(data.event_date).format('YYYY-MM-DD(ddd)')
@@ -73,6 +71,18 @@ const DisplayCards = (props) => {
     router.push({
       pathname: `/user/${data.user.name}`,
     });
+  }
+  const clickTag = (tagId) => {
+    let sendData = {}
+    sendData.tagId = tagId
+    axios.post('/api/event_tag_search', sendData)
+      .then(res => {
+        console.log(res)
+        setEvents(res.data.contents)
+      }).catch(error => {
+
+      })
+    console.log(tagId)
   }
   const bookmaek = (bookSelectId) => {
     console.log(bookSelectId)
@@ -96,11 +106,12 @@ const DisplayCards = (props) => {
             <Button size="small" onClick={() => mypage(data)}>{data.user.name}</Button>
             <Typography variant='body1' gutterBottom>
               {Object.entries(data.id_tagname).map(([key, tag], index) => (
-                <Link href={`search_tag/${key}`}>
-                  <a style={{paddingRight: '1rem'}}>
-                    {tag}
-                  </a>
-                </Link>
+                <Button size="small" onClick={() => clickTag(key)}>{tag}</Button>
+                // <Link href={`search_tag/${key}`}>
+                //   <a style={{paddingRight: '1rem'}}>
+                //     {tag}
+                //   </a>
+                // </Link>
               ))}
             </Typography>
             <BookmarkIcon style={{ cursor: 'pointer' }} onClick={() => bookmaek(data.id)} />

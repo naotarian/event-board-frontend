@@ -158,7 +158,7 @@ const ResultList = () => {
               {events && (
                 <Grid style={{ marginRight: 8 }}>
                   {events.length != 0 ? (
-                    <DisplayCards events={events} />
+                    <DisplayCards events={events} setEvents={setEvents} />
                   ) : (
                     <>対象のイベントがありません</>
                   )}
