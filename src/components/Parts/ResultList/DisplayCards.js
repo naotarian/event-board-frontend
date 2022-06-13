@@ -62,6 +62,7 @@ const StyledCardActions = styled(CardActions)`
 `
 const DisplayCards = (props) => {
   const { events } = props
+  console.log(events)
   const router = useRouter()
   events.map((data, index) => {
     data.eventDate = moment(data.event_date).format('YYYY-MM-DD(ddd)')
@@ -93,6 +94,15 @@ const DisplayCards = (props) => {
           <NumberOfApplicants variant='body1'>0/{data.number_of_applicants}人</NumberOfApplicants>
           <StyledCardActions>
             <Button size="small" onClick={() => mypage(data)}>{data.user.name}</Button>
+            <Typography variant='body1' gutterBottom>
+              {Object.entries(data.id_tagname).map(([key, tag], index) => (
+                <Link href={`search_tag/${key}`}>
+                  <a style={{paddingRight: '1rem'}}>
+                    {tag}
+                  </a>
+                </Link>
+              ))}
+            </Typography>
             <BookmarkIcon style={{ cursor: 'pointer' }} onClick={() => bookmaek(data.id)} />
           </StyledCardActions>
         </WrapperCard>
