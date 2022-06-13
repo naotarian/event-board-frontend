@@ -104,12 +104,7 @@ const DisplayCards = (props) => {
             <Button size="small" onClick={() => mypage(data)}>{data.user.name}</Button>
             <Typography variant='body1' gutterBottom>
               {Object.entries(data.id_tagname).map(([key, tag], index) => (
-                <Button size="small" onClick={() => clickTag(key)}>{tag}</Button>
-                // <Link href={`search_tag/${key}`}>
-                //   <a style={{paddingRight: '1rem'}}>
-                //     {tag}
-                //   </a>
-                // </Link>
+                <Button size="small" onClick={() => clickTag(key)} key={index}>{tag}</Button>
               ))}
             </Typography>
             <BookmarkIcon style={{ cursor: 'pointer' }} onClick={() => bookmaek(data.id)} />
