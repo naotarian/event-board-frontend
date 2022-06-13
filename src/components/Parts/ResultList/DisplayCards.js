@@ -77,12 +77,10 @@ const DisplayCards = (props) => {
     sendData.tagId = tagId
     axios.post('/api/event_tag_search', sendData)
       .then(res => {
-        console.log(res)
         setEvents(res.data.contents)
       }).catch(error => {
 
       })
-    console.log(tagId)
   }
   const bookmaek = (bookSelectId) => {
     console.log(bookSelectId)
