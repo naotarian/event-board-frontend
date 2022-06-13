@@ -35,12 +35,11 @@ const TagButton = styled(Button)`
   text-transform: none;
 `
 const SideBarTagSearch = (props) => {
-  const { setEvents } = props
-  const tags = ['セキュリティ', 'javascript', '機械学習', 'UX', 'DevOps', 'iOS', 'デジタルマーケティング', 'Go', 'Azure', 'Deep Learning']
-  const ClickTag = (index) => {
+  const { setEvents, eventTags } = props
+  const ClickTag = (tagId) => {
     let sendData = {}
-    sendData.id = index + 1
-    axios.post('/api/event_tags_search', sendData)
+    sendData.tagId = tagId
+    axios.post('/api/event_tag_search', sendData)
       .then(res => {
         setEvents(res.data.contents)
       }).catch(error => {
@@ -54,14 +53,14 @@ const SideBarTagSearch = (props) => {
       </StyledTagTypography>
       <Box>
         <FlexGrid>
-          {tags.map((data, index) => (
+          {eventTags.map((data, index) => (
             <TagGrid key={index}>
               <TagButton
                 variant="contained"
                 color="primary"
-                onClick={() => ClickTag(index)}
+                onClick={() => ClickTag(data.id)}
               >
-                {data}
+                {data.tag_name}
               </TagButton>
             </TagGrid>
           ))}
