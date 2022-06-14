@@ -38,6 +38,7 @@ const StyledLoadingButton = styled(LoadingButton)`
   width: 300px;
   height: 50px;
   margin: 0 auto;
+  display: block;
 }
 @media screen and (max-width:767px) {
   display: none;

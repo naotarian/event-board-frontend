@@ -29,7 +29,7 @@ const theme = createTheme({
     body2: {
       fontWeight: 700,
       color: 'rgba(0, 0, 0, 0.6)',
-      fontSize: '1.5rem'
+      // fontSize: '1.5rem'
     },
     h1: {
       fontSize: 22,

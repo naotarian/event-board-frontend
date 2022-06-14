@@ -3,6 +3,7 @@ import styled from "styled-components"
 //components
 import Header from '../components/Parts/Template/Header'
 import Bread from '../components/Parts/Template/Breadcrumbs'
+import AssignmentTags from '../components/Parts/CreateEvent/AssignmentTags'
 import Head from 'next/head'
 import axios from '@/lib/axios'
 //mui
@@ -17,6 +18,14 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
 import LoadingButton from '@mui/lab/LoadingButton'
 import Alert from '@mui/material/Alert'
+import Button from '@mui/material/Button'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogContentText from '@mui/material/DialogContentText'
+import DialogTitle from '@mui/material/DialogTitle'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { useTheme } from '@mui/material/styles'
 const WrapperBody = styled(Grid)`
 @media screen and (min-width:767px) {
   min-width: 1220px;
@@ -129,6 +138,8 @@ const CreateEvent = () => {
   const [startTimeError, setStartTimeError] = useState(false)
   const [endTimeError, setEndTimeError] = useState(false)
   const [numberOfApplicantsError, setNumberOfApplicantsError] = useState(false)
+  //modal
+  const [open, setOpen] = useState(false);
   useEffect(() => {
     if (zipCode) {
       fetch(`https://api.zipaddress.net/?zipcode=${zipCode}`, {
@@ -209,6 +220,13 @@ const CreateEvent = () => {
       return
     }
   }
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <>
@@ -407,6 +425,10 @@ const CreateEvent = () => {
               onChange={event => setEventTheme(event.target.value)}
               placeholder="イベントのテーマを記入"
             />
+            <SubItem variant="h2">
+              イベントのタグ設定
+            </SubItem>
+            <AssignmentTags open={open} setOpen={setOpen} handleClickOpen={handleClickOpen} handleClose={handleClose} />
             <SubItem variant="h2">
               お問い合わせ用メールアドレス
             </SubItem>
