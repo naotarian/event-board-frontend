@@ -139,7 +139,9 @@ const CreateEvent = () => {
   const [endTimeError, setEndTimeError] = useState(false)
   const [numberOfApplicantsError, setNumberOfApplicantsError] = useState(false)
   //modal
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
+  const [tagAll, setTagAll] = useState(null)
+  const [checkedTags, setCheckedTags] = useState([])
   useEffect(() => {
     if (zipCode) {
       fetch(`https://api.zipaddress.net/?zipcode=${zipCode}`, {
@@ -153,10 +155,17 @@ const CreateEvent = () => {
         });
     }
   }, [zipCode]);
+  useEffect(async () => {
+    axios.get('/api/get_tags')
+      .then(res => {
+        setTagAll(res.data.contents.tags)
+      }).catch(error => {
+
+      })
+  }, [])
   const send = () => {
-    setLoading(true)
+    // setLoading(true)
     //validation
-    console.log(rangeStartValue)
     let sendFlag = true
     let sendDatas = {}
     if (!eventTitle) {
@@ -203,12 +212,11 @@ const CreateEvent = () => {
     sendDatas.numberOfApplicants = numberOfApplicants
     sendDatas.notes = notes
     sendDatas.email = email
+    sendDatas.event_tags = checkedTags
     if (sendFlag) {
       axios.post('/api/create_event', sendDatas)
         .then(res => {
-          console.log(res)
           if (res.data.code == 200) {
-            console.log('test')
             setSuccess(true)
             setLoading(false)
           }
@@ -428,7 +436,17 @@ const CreateEvent = () => {
             <SubItem variant="h2">
               イベントのタグ設定
             </SubItem>
-            <AssignmentTags open={open} setOpen={setOpen} handleClickOpen={handleClickOpen} handleClose={handleClose} />
+            {tagAll && (
+              <AssignmentTags
+                open={open}
+                setOpen={setOpen}
+                handleClickOpen={handleClickOpen}
+                handleClose={handleClose}
+                tagAll={tagAll}
+                checkedTags={checkedTags}
+                setCheckedTags={setCheckedTags}
+              />
+            )}
             <SubItem variant="h2">
               お問い合わせ用メールアドレス
             </SubItem>
