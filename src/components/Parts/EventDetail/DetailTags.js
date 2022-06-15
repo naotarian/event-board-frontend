@@ -29,21 +29,21 @@ const TagButton = styled(Button)`
   cursor: pointer;
   text-transform: none;
 `
-const DetailTags = () => {
-  const tags = ['セキュリティ', 'javascript', '機械学習', 'UX', 'DevOps', 'iOS', 'デジタルマーケティング', 'Go', 'Azure', 'Deep Learning']
+const DetailTags = (props) => {
+  const { eventInfo } = props
   const ClickTag = (index) => {
     console.log(index)
   }
   return (
     <FlexGrid>
-      {tags.map((data, index) => (
-        <TagGrid key={index}>
+      {eventInfo.set_tags.map((tag, key) => (
+        <TagGrid key={key}>
           <TagButton
             variant="contained"
             color="primary"
-            onClick={() => ClickTag(index)}
+            onClick={() => ClickTag(tag.id)}
           >
-            {data}
+            {tag.tag_name}
           </TagButton>
         </TagGrid>
       ))}

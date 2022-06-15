@@ -38,6 +38,7 @@ const Event = (props) => {
       sendData.id = eventId
       axios.post('/api/event_detail', sendData)
         .then(res => {
+          console.log(res)
           setEventInfo(res.data.contents.event_info)
         }).catch(error => {
 

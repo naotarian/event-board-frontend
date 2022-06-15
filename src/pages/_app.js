@@ -16,6 +16,7 @@ const App = ({ Component, pageProps }) => {
           html {
 
           }
+          img {}
         `}
       </style>
       <Component {...pageProps} />

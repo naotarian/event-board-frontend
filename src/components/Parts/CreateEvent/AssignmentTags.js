@@ -23,6 +23,7 @@ const CategoryName = styled(Typography)`
 
 const AssignmentTags = (props) => {
   const { open, setOpen, handleClickOpen, handleClose, tagAll, checkedTags, setCheckedTags } = props
+  console.log(tagAll)
   const handleChange = (e) => {
     if (checkedTags.includes(e.target.value)) {
       setCheckedTags(
