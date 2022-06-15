@@ -31,7 +31,6 @@ const StyledLoadingButton = styled(LoadingButton)`
 const EventContent = (props) => {
   const { eventInfo } = props
   const [loading, setLoading] = useState(false)
-  console.log(eventInfo)
   return (
     <>
       <SubTitle>概要</SubTitle>

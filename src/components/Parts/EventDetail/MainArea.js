@@ -34,12 +34,12 @@ const MainArea = (props) => {
     <MainPaper elevation={0}>
       {eventInfo && (
         <>
-          <img src='/images/test.jpeg' alt='logo' width='800' height='400' />
+          <img src='/images/test.jpeg' alt='logo' width='800' style={{ maxWidth: '100%' }} />
           <MainWrapper>
             <Typography variant='h2' gutterBottom>
               {eventInfo.title}
             </Typography>
-            <DetailTags />
+            <DetailTags eventInfo={eventInfo} />
             <Baner>イベント内容</Baner>
             <EventContent eventInfo={eventInfo} />
           </MainWrapper>
