@@ -25,10 +25,10 @@ const VerifyEmail = () => {
                 }>
 
                 <div className="mb-4 text-sm text-gray-600">
-                    Thanks for signing up! Before getting started, could you
-                    verify your email address by clicking on the link we just
-                    emailed to you? If you didn't receive the email, we will
-                    gladly send you another.
+                    ご登録ありがとうございます。<br />
+                    メールアドレスあてに確認メールを送信しました。<br />
+                    メールに含まれるURLより、メールアドレスの確認をお願いいたします。<br />
+                    確認メールを再送する場合は、「メール再送」ボタンを押してください。<br />
                 </div>
 
                 {status == 'verification-link-sent' && (
@@ -41,14 +41,14 @@ const VerifyEmail = () => {
                 <div className="mt-4 flex items-center justify-between">
                     <Button
                         onClick={() => resendEmailVerification({ setStatus })}>
-                        Resend Verification Email
+                        メール再送
                     </Button>
 
                     <button
                         type="button"
                         className="underline text-sm text-gray-600 hover:text-gray-900"
                         onClick={logout}>
-                        Logout
+                        ログアウト
                     </button>
                 </div>
             </AuthCard>
