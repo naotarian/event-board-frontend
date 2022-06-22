@@ -70,7 +70,6 @@ const FlexGrid = styled(Grid)`
   }
 `
 const ResultList = () => {
-  const { user } = useAuth({ middleware: 'auth' })
   const [value, setValue] = useState('one');
   const [tagModal, setTagModal] = useState(false);
   const [events, setEvents] = useState(null)
