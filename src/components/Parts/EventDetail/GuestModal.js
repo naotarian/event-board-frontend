@@ -10,7 +10,7 @@ import Link from 'next/link'
 
 
 const GuestModal = (props) => {
-  const { guestModalOpen, guestModalClose, guestApplication, setGuestName, setGuestEmail } = props
+  const { guestModalOpen, guestModalClose, guestApplication, setGuestName, setGuestEmail, applicationButtonDisabled } = props
   return (
     <div>
       <Dialog open={guestModalOpen} onClose={guestModalClose}>
@@ -50,7 +50,7 @@ const GuestModal = (props) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={guestModalClose}>閉じる</Button>
-          <Button onClick={guestApplication}>申し込む</Button>
+          <Button onClick={guestApplication} disabled={applicationButtonDisabled}>申し込む</Button>
         </DialogActions>
       </Dialog>
     </div>
