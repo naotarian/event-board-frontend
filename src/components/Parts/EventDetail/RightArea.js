@@ -37,13 +37,13 @@ const EventDateTypo = styled(Typography)`
 `
 const StyledLoadingButton = styled(LoadingButton)`
 @media screen and (min-width:1024px) {
-  width: 300px;
-  height: 50px;
-  margin: 0 auto;
-  display: block;
 }
+width: 300px;
+height: 50px;
+margin: 0 auto;
+display: block;
 @media screen and (max-width:767px) {
-  display: none;
+  // display: none;
 }
 `
 const Recruitment = styled(Typography)`
@@ -76,6 +76,7 @@ const RightArea = (props) => {
   const [guestModalOpen, setGuestModalOpen] = useState(false)
   const [guestName, setGuestName] = useState('')
   const [guestEmail, setGuestEmail] = useState('')
+  const [applicationButtonDisabled, setApplicationButtonDisabled] = useState(false)
   useEffect(() => {
     setRecruitEnd(moment(new Date(eventInfo.recruit_end)).format('YYYY-MM-DD-HH:mm'))
     setRecruitStart(moment(new Date(eventInfo.recruit_start)).format('YYYY-MM-DD-HH:mm'))
@@ -104,6 +105,7 @@ const RightArea = (props) => {
     setGuestModalOpen(false)
   }
   const guestApplication = () => {
+    setApplicationButtonDisabled(true)
     let sendData = {}
     sendData.userId = -1
     sendData.eventId = eventInfo.id
@@ -162,6 +164,7 @@ const RightArea = (props) => {
         guestApplication={guestApplication}
         setGuestName={setGuestName}
         setGuestEmail={setGuestEmail}
+        applicationButtonDisabled={applicationButtonDisabled}
       />
     </RightAreaWrapper>
   )

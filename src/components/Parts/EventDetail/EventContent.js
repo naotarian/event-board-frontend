@@ -49,15 +49,6 @@ const EventContent = (props) => {
       <Grid>
         {eventInfo.notes}
       </Grid>
-      <ButtonArea>
-        <StyledLoadingButton
-          loading={loading}
-          loadingPosition="start"
-          variant="contained"
-        >
-          イベントに申し込む
-        </StyledLoadingButton>
-      </ButtonArea>
     </>
   )
 }
