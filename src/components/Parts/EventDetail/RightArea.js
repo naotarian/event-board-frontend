@@ -5,7 +5,7 @@ import moment from 'moment'
 import 'moment/locale/ja'
 import axios from '@/lib/axios'
 import Link from 'next/link'
-
+import { useAuth } from '@/hooks/auth'
 //mui
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
@@ -13,6 +13,8 @@ import Typography from '@mui/material/Typography'
 import LoadingButton from '@mui/lab/LoadingButton'
 //icons
 import EmailIcon from '@mui/icons-material/Email';
+//components
+import GuestModal from './GuestModal'
 const RightAreaWrapper = styled(Grid)`
 @media screen and (min-width:1024px) {
   width: 300px;
@@ -66,38 +68,101 @@ const Contact = styled(Typography)`
 `
 const RightArea = (props) => {
   const { eventInfo } = props
+  const { user } = useAuth({ middleware: 'guest' })
   const [loading, setLoading] = useState(false)
   const [recruitEnd, setRecruitEnd] = useState(null)
   const [recruitStart, setRecruitStart] = useState(null)
+  const [applicationDisabled, setApplicationDisabled] = useState(false)
+  const [guestModalOpen, setGuestModalOpen] = useState(false)
+  const [guestName, setGuestName] = useState('')
+  const [guestEmail, setGuestEmail] = useState('')
   useEffect(() => {
     setRecruitEnd(moment(new Date(eventInfo.recruit_end)).format('YYYY-MM-DD-HH:mm'))
     setRecruitStart(moment(new Date(eventInfo.recruit_start)).format('YYYY-MM-DD-HH:mm'))
+    if (user) {
+      if (user.id == eventInfo.user_id) {
+        setApplicationDisabled(true)
+      }
+    }
   }, [eventInfo])
   eventInfo.eventDate = moment(new Date(eventInfo.event_start)).format('YYYY-MM-DD(ddd)')
   eventInfo.eventStartTime = moment(new Date(eventInfo.event_start)).format('HH:mm')
   eventInfo.eventEndTime = moment(new Date(eventInfo.event_end)).format('HH:mm')
+  const eventApplication = () => {
+    let sendData = {}
+    sendData.userId = user.id
+    sendData.eventId = eventInfo.id
+    sendData.guestFlag = false
+    axios.post('/api/event_application', sendData)
+      .then(res => {
+        console.log(res)
+      }).catch(error => {
+
+      })
+  }
+  const guestModalClose = () => {
+    setGuestModalOpen(false)
+  }
+  const guestApplication = () => {
+    let sendData = {}
+    sendData.userId = -1
+    sendData.eventId = eventInfo.id
+    sendData.userName = guestName
+    sendData.email = guestEmail
+    sendData.guestFlag = true
+    axios.post('/api/event_application', sendData)
+      .then(res => {
+      }).catch(error => {
+
+      })
+  }
+  const clickGuestModal = () => {
+    setGuestModalOpen(true)
+  }
   return (
     <RightAreaWrapper>
       <RightAreaPaper>
         <EventDateTypo>
           <strong>{eventInfo.eventDate}</strong><br />{eventInfo.eventStartTime} ~ {eventInfo.eventEndTime}
         </EventDateTypo>
-        <StyledLoadingButton
-          loading={loading}
-          loadingPosition="start"
-          variant="contained"
-        >
-          イベントに申し込む
-        </StyledLoadingButton>
+        {user ? (
+          <StyledLoadingButton
+            loading={loading}
+            loadingPosition="start"
+            variant="contained"
+            disabled={applicationDisabled}
+            onClick={eventApplication}
+          >
+            イベントに申し込む
+          </StyledLoadingButton>
+
+        ) : (
+          <StyledLoadingButton
+            loading={loading}
+            loadingPosition="start"
+            variant="contained"
+            disabled={applicationDisabled}
+            onClick={clickGuestModal}
+          >
+            イベントに申し込む
+          </StyledLoadingButton>
+        )}
         <Recruitment>&#12304;募集期間&#12305;<br />{recruitStart} ~ {recruitEnd}</Recruitment>
         <Venue>会場 : {eventInfo.address}{eventInfo.other_address}</Venue>
-        <Venue>参加者 : <strong>100人</strong> / 150人</Venue>
+        <Venue>参加者 : <strong>{eventInfo.event_crowd_management.current_number_of_applicants}人</strong> / {eventInfo.event_crowd_management.number_of_applicants}人</Venue>
         <Contact>
           <Link href="#">
             <a><EmailIcon style={{ verticalAlign: 'middle' }} />イベントに関するお問合せ</a>
           </Link>
         </Contact>
       </RightAreaPaper>
+      <GuestModal
+        guestModalOpen={guestModalOpen}
+        guestModalClose={guestModalClose}
+        guestApplication={guestApplication}
+        setGuestName={setGuestName}
+        setGuestEmail={setGuestEmail}
+      />
     </RightAreaWrapper>
   )
 }
