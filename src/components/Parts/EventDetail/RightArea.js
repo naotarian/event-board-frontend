@@ -91,7 +91,6 @@ const RightArea = (props) => {
   eventInfo.eventEndTime = moment(new Date(eventInfo.event_end)).format('HH:mm')
   const eventApplication = () => {
     let sendData = {}
-    sendData.userId = user.id
     sendData.eventId = eventInfo.id
     sendData.guestFlag = false
     axios.post('/api/event_application', sendData)
@@ -152,11 +151,13 @@ const RightArea = (props) => {
         <Recruitment>&#12304;募集期間&#12305;<br />{recruitStart} ~ {recruitEnd}</Recruitment>
         <Venue>会場 : {eventInfo.address}{eventInfo.other_address}</Venue>
         <Venue>参加者 : <strong>{eventInfo.event_crowd_management.current_number_of_applicants}人</strong> / {eventInfo.event_crowd_management.number_of_applicants}人</Venue>
-        <Contact>
-          <Link href="#">
-            <a><EmailIcon style={{ verticalAlign: 'middle' }} />イベントに関するお問合せ</a>
-          </Link>
-        </Contact>
+        {!applicationDisabled && (
+          <Contact>
+            <Link href="#">
+              <a><EmailIcon style={{ verticalAlign: 'middle' }} />イベントに関するお問合せ</a>
+            </Link>
+          </Contact>
+        )}
       </RightAreaPaper>
       <GuestModal
         guestModalOpen={guestModalOpen}
