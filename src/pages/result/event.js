@@ -16,6 +16,7 @@ import Header from '../../components/Parts/Template/Header'
 import Bread from '../../components/Parts/Template/Breadcrumbs'
 import MainArea from '../../components/Parts/EventDetail/MainArea'
 import RightArea from '../../components/Parts/EventDetail/RightArea'
+import { useAuth } from '@/hooks/auth'
 
 const WrapperGrid = styled(Grid)`
   max-width: 1200px;
@@ -32,18 +33,20 @@ const Event = (props) => {
   const router = useRouter()
   const [eventInfo, setEventInfo] = useState(null)
   let eventId = router.query.event
+  const { user } = useAuth({ middleware: 'guest' })
   useEffect(async () => {
     if (router.isReady) {
       let sendData = {}
       sendData.id = eventId
-      axios.post('/api/event_detail', sendData)
+      sendData.isAuth = user ? 1 : 0
+      await axios.post('/api/event_detail', sendData)
         .then(res => {
           setEventInfo(res.data.contents.event_info)
         }).catch(error => {
 
         })
     }
-  }, [eventId])
+  }, [user])
   return (
     <>
       <Header />
