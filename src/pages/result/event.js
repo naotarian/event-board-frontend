@@ -10,12 +10,12 @@ import Paper from '@mui/material/Paper'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
 import Button from '@mui/material/Button'
-import Link from 'next/link'
 //components
 import Header from '../../components/Parts/Template/Header'
 import Bread from '../../components/Parts/Template/Breadcrumbs'
 import MainArea from '../../components/Parts/EventDetail/MainArea'
 import RightArea from '../../components/Parts/EventDetail/RightArea'
+import { useAuth } from '@/hooks/auth'
 
 const WrapperGrid = styled(Grid)`
   max-width: 1200px;
@@ -28,22 +28,25 @@ const ContentWrapper = styled(Grid)`
   }
   justify-content: space-between;
 `
-const Event = (props) => {
+const Event = () => {
   const router = useRouter()
   const [eventInfo, setEventInfo] = useState(null)
+  const [applicationMessage, setApplicationMessage] = useState('')
   let eventId = router.query.event
+  const { user } = useAuth({ middleware: 'guest' })
   useEffect(async () => {
     if (router.isReady) {
       let sendData = {}
       sendData.id = eventId
-      axios.post('/api/event_detail', sendData)
+      sendData.isAuth = user ? 1 : 0
+      await axios.post('/api/event_detail', sendData)
         .then(res => {
           setEventInfo(res.data.contents.event_info)
         }).catch(error => {
 
         })
     }
-  }, [eventId])
+  }, [user])
   return (
     <>
       <Header />
@@ -51,10 +54,10 @@ const Event = (props) => {
         <Bread />
         <ContentWrapper>
           {eventInfo && (
-            <MainArea eventInfo={eventInfo} />
+            <MainArea eventInfo={eventInfo} applicationMessage={applicationMessage} setApplicationMessage={setApplicationMessage} />
           )}
           {eventInfo && (
-            <RightArea eventInfo={eventInfo} />
+            <RightArea eventInfo={eventInfo} applicationMessage={applicationMessage} setApplicationMessage={setApplicationMessage} />
           )}
         </ContentWrapper>
       </WrapperGrid>

@@ -67,7 +67,7 @@ const Contact = styled(Typography)`
   padding-bottom: 1rem;
 `
 const RightArea = (props) => {
-  const { eventInfo } = props
+  const { eventInfo, applicationMessage, setApplicationMessage } = props
   const { user } = useAuth({ middleware: 'guest' })
   const [loading, setLoading] = useState(false)
   const [recruitEnd, setRecruitEnd] = useState(null)
@@ -95,7 +95,8 @@ const RightArea = (props) => {
     sendData.guestFlag = false
     axios.post('/api/event_application', sendData)
       .then(res => {
-        console.log(res)
+        setApplicationMessage(res.data.msg)
+        setGuestModalOpen(false)
       }).catch(error => {
 
       })
@@ -113,6 +114,9 @@ const RightArea = (props) => {
     sendData.guestFlag = true
     axios.post('/api/event_application', sendData)
       .then(res => {
+        setApplicationMessage(res.data.msg)
+        setGuestModalOpen(false)
+        console.log(res)
       }).catch(error => {
 
       })
@@ -120,13 +124,21 @@ const RightArea = (props) => {
   const clickGuestModal = () => {
     setGuestModalOpen(true)
   }
-  return (
-    <RightAreaWrapper>
-      <RightAreaPaper>
-        <EventDateTypo>
-          <strong>{eventInfo.eventDate}</strong><br />{eventInfo.eventStartTime} ~ {eventInfo.eventEndTime}
-        </EventDateTypo>
-        {user ? (
+  const applicationButton = (user, ids, id) => {
+    if (user) {
+      console.log(ids.includes(id))
+      if (ids.includes(id)) {
+        return (
+          <StyledLoadingButton
+            loadingPosition="start"
+            variant="contained"
+            disabled='true'
+          >
+            申し込み済みです
+          </StyledLoadingButton>
+        )
+      } else {
+        return (
           <StyledLoadingButton
             loading={loading}
             loadingPosition="start"
@@ -136,18 +148,29 @@ const RightArea = (props) => {
           >
             イベントに申し込む
           </StyledLoadingButton>
-
-        ) : (
-          <StyledLoadingButton
-            loading={loading}
-            loadingPosition="start"
-            variant="contained"
-            disabled={applicationDisabled}
-            onClick={clickGuestModal}
-          >
-            イベントに申し込む
-          </StyledLoadingButton>
-        )}
+        )
+      }
+    } else {
+      return (
+        <StyledLoadingButton
+          loading={loading}
+          loadingPosition="start"
+          variant="contained"
+          disabled={applicationDisabled}
+          onClick={clickGuestModal}
+        >
+          イベントに申し込む
+        </StyledLoadingButton>
+      )
+    }
+  }
+  return (
+    <RightAreaWrapper>
+      <RightAreaPaper>
+        <EventDateTypo>
+          <strong>{eventInfo.eventDate}</strong><br />{eventInfo.eventStartTime} ~ {eventInfo.eventEndTime}
+        </EventDateTypo>
+        {applicationButton(user, eventInfo.already_applications, eventInfo.id)}
         <Recruitment>&#12304;募集期間&#12305;<br />{recruitStart} ~ {recruitEnd}</Recruitment>
         <Venue>会場 : {eventInfo.address}{eventInfo.other_address}</Venue>
         <Venue>参加者 : <strong>{eventInfo.event_crowd_management.current_number_of_applicants}人</strong> / {eventInfo.event_crowd_management.number_of_applicants}人</Venue>
@@ -166,6 +189,7 @@ const RightArea = (props) => {
         setGuestName={setGuestName}
         setGuestEmail={setGuestEmail}
         applicationButtonDisabled={applicationButtonDisabled}
+        applicationMessage={applicationMessage}
       />
     </RightAreaWrapper>
   )
