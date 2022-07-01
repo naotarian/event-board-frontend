@@ -8,6 +8,8 @@ import axios from '@/lib/axios'
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
+import Alert from '@mui/material/Alert'
+import Link from 'next/link'
 //components
 import DetailTags from './DetailTags'
 import EventContent from './EventContent'
@@ -28,12 +30,18 @@ const Baner = styled(Typography)`
   font-weight: bold;
   border-radius: 5px;
 `
+const StyledAlert = styled(Alert)`
+  margin-bottom: 2rem;
+`
 const MainArea = (props) => {
-  const { eventInfo } = props
+  const { eventInfo, applicationMessage, setApplicationMessage } = props
   return (
     <MainPaper elevation={0}>
       {eventInfo && (
         <>
+          {applicationMessage && (
+            <StyledAlert variant="filled" severity="success" onClose={() => setApplicationMessage('')}>{applicationMessage}<br />確認メールを送信しました。</StyledAlert>
+          )}
           <img src='/images/test.jpeg' alt='logo' width='800' style={{ maxWidth: '100%' }} />
           <MainWrapper>
             <Typography variant='h2' gutterBottom>

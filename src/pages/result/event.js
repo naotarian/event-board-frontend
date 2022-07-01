@@ -10,7 +10,6 @@ import Paper from '@mui/material/Paper'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
 import Button from '@mui/material/Button'
-import Link from 'next/link'
 //components
 import Header from '../../components/Parts/Template/Header'
 import Bread from '../../components/Parts/Template/Breadcrumbs'
@@ -29,9 +28,10 @@ const ContentWrapper = styled(Grid)`
   }
   justify-content: space-between;
 `
-const Event = (props) => {
+const Event = () => {
   const router = useRouter()
   const [eventInfo, setEventInfo] = useState(null)
+  const [applicationMessage, setApplicationMessage] = useState('')
   let eventId = router.query.event
   const { user } = useAuth({ middleware: 'guest' })
   useEffect(async () => {
@@ -54,10 +54,10 @@ const Event = (props) => {
         <Bread />
         <ContentWrapper>
           {eventInfo && (
-            <MainArea eventInfo={eventInfo} />
+            <MainArea eventInfo={eventInfo} applicationMessage={applicationMessage} setApplicationMessage={setApplicationMessage} />
           )}
           {eventInfo && (
-            <RightArea eventInfo={eventInfo} />
+            <RightArea eventInfo={eventInfo} applicationMessage={applicationMessage} setApplicationMessage={setApplicationMessage} />
           )}
         </ContentWrapper>
       </WrapperGrid>

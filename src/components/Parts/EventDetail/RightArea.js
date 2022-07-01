@@ -67,8 +67,7 @@ const Contact = styled(Typography)`
   padding-bottom: 1rem;
 `
 const RightArea = (props) => {
-  const { eventInfo } = props
-  console.log(eventInfo)
+  const { eventInfo, applicationMessage, setApplicationMessage } = props
   const { user } = useAuth({ middleware: 'guest' })
   const [loading, setLoading] = useState(false)
   const [recruitEnd, setRecruitEnd] = useState(null)
@@ -96,7 +95,8 @@ const RightArea = (props) => {
     sendData.guestFlag = false
     axios.post('/api/event_application', sendData)
       .then(res => {
-        console.log(res)
+        setApplicationMessage(res.data.msg)
+        setGuestModalOpen(false)
       }).catch(error => {
 
       })
@@ -114,6 +114,9 @@ const RightArea = (props) => {
     sendData.guestFlag = true
     axios.post('/api/event_application', sendData)
       .then(res => {
+        setApplicationMessage(res.data.msg)
+        setGuestModalOpen(false)
+        console.log(res)
       }).catch(error => {
 
       })
@@ -148,15 +151,17 @@ const RightArea = (props) => {
         )
       }
     } else {
-      <StyledLoadingButton
-        loading={loading}
-        loadingPosition="start"
-        variant="contained"
-        disabled={applicationDisabled}
-        onClick={clickGuestModal}
-      >
-        イベントに申し込む
-      </StyledLoadingButton>
+      return (
+        <StyledLoadingButton
+          loading={loading}
+          loadingPosition="start"
+          variant="contained"
+          disabled={applicationDisabled}
+          onClick={clickGuestModal}
+        >
+          イベントに申し込む
+        </StyledLoadingButton>
+      )
     }
   }
   return (
@@ -184,6 +189,7 @@ const RightArea = (props) => {
         setGuestName={setGuestName}
         setGuestEmail={setGuestEmail}
         applicationButtonDisabled={applicationButtonDisabled}
+        applicationMessage={applicationMessage}
       />
     </RightAreaWrapper>
   )

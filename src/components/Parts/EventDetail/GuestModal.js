@@ -10,7 +10,7 @@ import Link from 'next/link'
 
 
 const GuestModal = (props) => {
-  const { guestModalOpen, guestModalClose, guestApplication, setGuestName, setGuestEmail, applicationButtonDisabled } = props
+  const { guestModalOpen, guestModalClose, guestApplication, setGuestName, setGuestEmail, applicationButtonDisabled, applicationMessage } = props
   return (
     <div>
       <Dialog open={guestModalOpen} onClose={guestModalClose}>
