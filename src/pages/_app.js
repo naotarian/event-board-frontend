@@ -14,9 +14,9 @@ const App = ({ Component, pageProps }) => {
       <style global jsx>
         {`
           html {
-
           }
-          img {}
+          img {
+          }
         `}
       </style>
       <Component {...pageProps} />

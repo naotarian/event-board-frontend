@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import styled from "styled-components"
+import styled from 'styled-components'
 import { useRouter } from 'next/router'
 import moment from 'moment'
 import 'moment/locale/ja'
@@ -12,12 +12,12 @@ import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import Link from 'next/link'
 //icons
-import BookmarkIcon from '@mui/icons-material/Bookmark';
+import BookmarkIcon from '@mui/icons-material/Bookmark'
 const WrapperCard = styled(Card)`
   width: 85%;
   max-height: 240px;
   margin-bottom: 2rem;
-  @media screen and (max-width:767px) {
+  @media screen and (max-width: 767px) {
     width: 100%;
   }
 `
@@ -31,7 +31,7 @@ const EventDateArea = styled(Typography)`
 const EventDateTypo = styled(Typography)`
   font-weight: bold;
   font-size: 1.1rem;
-  @media screen and (max-width:767px) {
+  @media screen and (max-width: 767px) {
     display: inline;
   }
 `
@@ -41,12 +41,12 @@ const EventTitleTypo = styled(Typography)`
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   overflow: hidden;
-  @media screen and (min-width:1024px) {
+  @media screen and (min-width: 1024px) {
     -webkit-line-clamp: 3;
   }
 `
 const StyledCardContents = styled(CardContent)`
-  @media screen and (min-width:1024px) {
+  @media screen and (min-width: 1024px) {
     display: flex;
   }
 `
@@ -59,7 +59,7 @@ const StyledCardActions = styled(CardActions)`
   padding: 0.5rem 1rem;
   justify-content: space-between;
 `
-const DisplayCards = (props) => {
+const DisplayCards = props => {
   const { events, setEvents } = props
   const router = useRouter()
   events.map((data, index) => {
@@ -67,22 +67,22 @@ const DisplayCards = (props) => {
     data.eventStartTime = moment(data.event_start).format('HH:mm')
     data.eventEndTime = moment(data.event_end).format('HH:mm')
   })
-  const mypage = (data) => {
+  const mypage = data => {
     router.push({
       pathname: `/user/${data.user.name}`,
-    });
+    })
   }
-  const clickTag = (tagId) => {
+  const clickTag = tagId => {
     let sendData = {}
     sendData.tagId = tagId
-    axios.post('/api/event_tag_search', sendData)
+    axios
+      .post('/api/event_tag_search', sendData)
       .then(res => {
         setEvents(res.data.contents)
-      }).catch(error => {
-
       })
+      .catch(error => {})
   }
-  const bookmaek = (bookSelectId) => {
+  const bookmaek = bookSelectId => {
     console.log(bookSelectId)
   }
   return (
@@ -90,24 +90,36 @@ const DisplayCards = (props) => {
       {events.map((data, index) => (
         <WrapperCard key={index}>
           <StyledCardContents>
-            <EventDateArea variant='body1' gutterBottom>
-              <EventDateTypo>{data.eventDate}</EventDateTypo>{data.eventStartTime} ~ {data.eventEndTime}
+            <EventDateArea variant="body1" gutterBottom>
+              <EventDateTypo>{data.eventDate}</EventDateTypo>
+              {data.eventStartTime} ~ {data.eventEndTime}
             </EventDateArea>
-            <EventTitleTypo variant='h2'>
-              <Link href={`/result/event?event=${data.id}`} style={{ color: 'red' }}>
+            <EventTitleTypo variant="h2">
+              <Link
+                href={`/result/event?event=${data.id}`}
+                style={{ color: 'red' }}>
                 <a style={{ color: '#333' }}>{data.title}</a>
               </Link>
             </EventTitleTypo>
           </StyledCardContents>
-          <NumberOfApplicants variant='body1'>0/{data.number_of_applicants}人</NumberOfApplicants>
+          <NumberOfApplicants variant="body1">
+            0/{data.number_of_applicants}人
+          </NumberOfApplicants>
           <StyledCardActions>
-            <Button size="small" onClick={() => mypage(data)}>{data.user.name}</Button>
-            <Typography variant='body1' gutterBottom>
+            <Button size="small" onClick={() => mypage(data)}>
+              {data.user.name}
+            </Button>
+            <Typography variant="body1" gutterBottom>
               {Object.entries(data.id_tagname).map(([key, tag], index) => (
-                <Button size="small" onClick={() => clickTag(key)} key={index}>{tag}</Button>
+                <Button size="small" onClick={() => clickTag(key)} key={index}>
+                  {tag}
+                </Button>
               ))}
             </Typography>
-            <BookmarkIcon style={{ cursor: 'pointer' }} onClick={() => bookmaek(data.id)} />
+            <BookmarkIcon
+              style={{ cursor: 'pointer' }}
+              onClick={() => bookmaek(data.id)}
+            />
           </StyledCardActions>
         </WrapperCard>
       ))}

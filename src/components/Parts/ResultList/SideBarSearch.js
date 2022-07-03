@@ -12,7 +12,7 @@ import LoadingButton from '@mui/lab/LoadingButton'
 import FilterAltIcon from '@mui/icons-material/FilterAlt'
 import axios from '@/lib/axios'
 //css
-import styled from "styled-components"
+import styled from 'styled-components'
 import Css from '../../../../styles/sidebar_search.module.css'
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />
 const checkedIcon = <CheckBoxIcon fontSize="small" />
@@ -21,7 +21,7 @@ const ButtonArea = styled(Grid)`
   border-top: 1px solid #ddd;
   text-align: center;
 `
-const SideBarSearch = (props) => {
+const SideBarSearch = props => {
   const [selectDateStart, setSelectDateStart] = useState(null)
   const [selectDateEnd, setSelectDateEnd] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -37,13 +37,13 @@ const SideBarSearch = (props) => {
         searchData.areas.push(data.id)
       })
     }
-    axios.post('/api/event_search', searchData)
+    axios
+      .post('/api/event_search', searchData)
       .then(res => {
         console.log(res.data.contents)
         setEvents(res.data.contents)
-      }).catch(error => {
-
       })
+      .catch(error => {})
   }
   const areaChange = (e, newValue) => {
     setSelectAreas(newValue)
@@ -51,7 +51,7 @@ const SideBarSearch = (props) => {
   return (
     <dl className={Css.side_search_bar}>
       <dt className="bold">キーワード</dt>
-      <dd className='ml100'>
+      <dd className="ml100">
         <TextField
           label=""
           id="outlined-size-small"
@@ -59,13 +59,13 @@ const SideBarSearch = (props) => {
           variant="filled"
           value={keyWord}
           placeholder="キーワード"
-          onChange={(e) => {
-            setKeyWord(e.target.value);
+          onChange={e => {
+            setKeyWord(e.target.value)
           }}
         />
       </dd>
       <dt className="bold">タグ</dt>
-      <dd className='ml100'>
+      <dd className="ml100">
         <TextField
           label=""
           id="outlined-size-small"
@@ -77,14 +77,14 @@ const SideBarSearch = (props) => {
       </dd>
 
       <dt className="bold">エリア</dt>
-      <dd className='ml100'>
+      <dd className="ml100">
         <Autocomplete
           multiple
           id="checkboxes-tags-demo"
           options={areas}
           disableCloseOnSelect
           onChange={areaChange}
-          getOptionLabel={(option) => option.area_name}
+          getOptionLabel={option => option.area_name}
           renderOption={(props, option, { selected }) => (
             <li {...props}>
               <Checkbox
@@ -96,34 +96,32 @@ const SideBarSearch = (props) => {
               {option.area_name}
             </li>
           )}
-          renderInput={(params) => (
-            <TextField {...params} label="エリアを選択" />
-          )}
+          renderInput={params => <TextField {...params} label="エリアを選択" />}
         />
       </dd>
       <dt className="bold">開催日</dt>
-      <dd className='ml100'>
+      <dd className="ml100">
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DatePicker
             label="開始"
             value={selectDateStart}
-            onChange={(newValue) => {
-              setSelectDateStart(newValue);
+            onChange={newValue => {
+              setSelectDateStart(newValue)
             }}
-            renderInput={(params) => <TextField {...params} />}
+            renderInput={params => <TextField {...params} />}
           />
         </LocalizationProvider>
       </dd>
-      <dd className='ml100'>
+      <dd className="ml100">
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DatePicker
             label="終了"
             value={selectDateEnd}
             minDate={selectDateStart}
-            onChange={(newValue) => {
-              setSelectDateEnd(newValue);
+            onChange={newValue => {
+              setSelectDateEnd(newValue)
             }}
-            renderInput={(params) => <TextField {...params} />}
+            renderInput={params => <TextField {...params} />}
           />
         </LocalizationProvider>
       </dd>
@@ -133,8 +131,7 @@ const SideBarSearch = (props) => {
           loadingPosition="start"
           startIcon={<FilterAltIcon />}
           variant="outlined"
-          onClick={searchEvent}
-        >
+          onClick={searchEvent}>
           絞り込む
         </LoadingButton>
       </ButtonArea>

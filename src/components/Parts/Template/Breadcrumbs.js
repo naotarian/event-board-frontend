@@ -1,11 +1,11 @@
-import * as React from 'react';
-import Typography from '@mui/material/Typography';
-import Breadcrumbs from '@mui/material/Breadcrumbs';
-import Link from '@mui/material/Link';
+import * as React from 'react'
+import Typography from '@mui/material/Typography'
+import Breadcrumbs from '@mui/material/Breadcrumbs'
+import Link from '@mui/material/Link'
 
 function handleClick(event) {
-  event.preventDefault();
-  console.info('You clicked a breadcrumb.');
+  event.preventDefault()
+  console.info('You clicked a breadcrumb.')
 }
 
 export default function BasicBreadcrumbs() {
@@ -18,12 +18,11 @@ export default function BasicBreadcrumbs() {
         <Link
           underline="hover"
           color="inherit"
-          href="/material-ui/getting-started/installation/"
-        >
+          href="/material-ui/getting-started/installation/">
           Core
         </Link>
         <Typography color="text.primary">Breadcrumbs</Typography>
       </Breadcrumbs>
     </div>
-  );
+  )
 }

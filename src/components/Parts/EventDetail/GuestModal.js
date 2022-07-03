@@ -8,23 +8,33 @@ import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 import Link from 'next/link'
 
-
-const GuestModal = (props) => {
-  const { guestModalOpen, guestModalClose, guestApplication, setGuestName, setGuestEmail, applicationButtonDisabled, applicationMessage } = props
+const GuestModal = props => {
+  const {
+    guestModalOpen,
+    guestModalClose,
+    guestApplication,
+    setGuestName,
+    setGuestEmail,
+    applicationButtonDisabled,
+    applicationMessage,
+  } = props
   return (
     <div>
       <Dialog open={guestModalOpen} onClose={guestModalClose}>
         <DialogTitle>ゲストとして申し込む</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            このままゲストとしてイベントに申し込みを行う場合は<br />
-            ・氏名<br />
-            ・メールアドレス<br />の入力をお願いします。<br />
+            このままゲストとしてイベントに申し込みを行う場合は
+            <br />
+            ・氏名
+            <br />
+            ・メールアドレス
+            <br />
+            の入力をお願いします。
+            <br />
             ログインする場合は
             <Link href="/login">
-              <a>
-                こちら
-              </a>
+              <a>こちら</a>
             </Link>
           </DialogContentText>
           <TextField
@@ -50,10 +60,14 @@ const GuestModal = (props) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={guestModalClose}>閉じる</Button>
-          <Button onClick={guestApplication} disabled={applicationButtonDisabled}>申し込む</Button>
+          <Button
+            onClick={guestApplication}
+            disabled={applicationButtonDisabled}>
+            申し込む
+          </Button>
         </DialogActions>
       </Dialog>
     </div>
-  );
+  )
 }
 export default GuestModal

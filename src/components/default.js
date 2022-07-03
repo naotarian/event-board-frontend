@@ -1,4 +1,4 @@
-import { createTheme } from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles'
 
 const theme = createTheme({
   palette: {
@@ -18,9 +18,14 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: [
-      '"Yu Gothic"', 'YuGothic', '"Hiragino Sans"', '"Hiragino Kaku Gothic ProN"', 'Verdana', '"メイリオ"', 'Meiryo', 'sans-serif',
-
-
+      '"Yu Gothic"',
+      'YuGothic',
+      '"Hiragino Sans"',
+      '"Hiragino Kaku Gothic ProN"',
+      'Verdana',
+      '"メイリオ"',
+      'Meiryo',
+      'sans-serif',
     ].join(','),
     body1: {
       fontWeight: 500,
@@ -42,9 +47,9 @@ const theme = createTheme({
       fontWeight: 700,
     },
     button: {
-      textTransform: "none"
-    }
+      textTransform: 'none',
+    },
   },
-});
+})
 
 export default theme
