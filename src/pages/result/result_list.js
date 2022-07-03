@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { useAuth } from '@/hooks/auth'
 import axios from '@/lib/axios'
 //componentes
 import Header from '../../components/Parts/Template/Header'
@@ -83,7 +82,7 @@ const ResultList = () => {
         setAreas(res.data.contents.areas)
         setEventTags(res.data.contents.tags)
       })
-      .catch(error => {})
+      .catch(error => { })
   }, [])
   const tagModalClose = () => {
     setTagModal(false)

@@ -35,16 +35,8 @@ const theme = createTheme()
 export default function SignIn(props) {
   const {
     submitForm,
-    email,
     setEmail,
-    password,
     setPassword,
-    errors,
-    setErrors,
-    status,
-    setStatus,
-    loading,
-    setLoading,
   } = props
 
   return (

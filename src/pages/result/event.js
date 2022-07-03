@@ -1,15 +1,10 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useRouter } from 'next/router'
-import moment from 'moment'
 import 'moment/locale/ja'
 import axios from '@/lib/axios'
 //mui
 import Grid from '@mui/material/Grid'
-import Paper from '@mui/material/Paper'
-import CardActions from '@mui/material/CardActions'
-import CardContent from '@mui/material/CardContent'
-import Button from '@mui/material/Button'
 //components
 import Header from '../../components/Parts/Template/Header'
 import Bread from '../../components/Parts/Template/Breadcrumbs'

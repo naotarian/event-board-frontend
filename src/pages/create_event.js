@@ -18,14 +18,6 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
 import LoadingButton from '@mui/lab/LoadingButton'
 import Alert from '@mui/material/Alert'
-import Button from '@mui/material/Button'
-import Dialog from '@mui/material/Dialog'
-import DialogActions from '@mui/material/DialogActions'
-import DialogContent from '@mui/material/DialogContent'
-import DialogContentText from '@mui/material/DialogContentText'
-import DialogTitle from '@mui/material/DialogTitle'
-import useMediaQuery from '@mui/material/useMediaQuery'
-import { useTheme } from '@mui/material/styles'
 const WrapperBody = styled(Grid)`
   @media screen and (min-width: 767px) {
     min-width: 1220px;
@@ -161,7 +153,7 @@ const CreateEvent = () => {
       .then(res => {
         setTagAll(res.data.contents.tags)
       })
-      .catch(error => {})
+      .catch(error => { })
   }, [])
   const send = () => {
     // setLoading(true)

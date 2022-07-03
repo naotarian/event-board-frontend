@@ -44,7 +44,6 @@ const SideBarTagSearch = props => {
       .then(res => {
         setEvents(res.data.contents)
       })
-      .catch(error => {})
   }
   return (
     <Grid>

@@ -1,11 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import styled from 'styled-components'
 //mui
 import Grid from '@mui/material/Grid'
-import Paper from '@mui/material/Paper'
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
 import LoadingButton from '@mui/lab/LoadingButton'
 const SubTitle = styled(Grid)`
   margin-top: 2rem;
@@ -24,7 +20,6 @@ const StyledLoadingButton = styled(LoadingButton)`
   }
   height: 50px;
   margin: 0 auto;
-  // background-color: ${props => props.theme.palette.dark}
 `
 
 const EventContent = props => {

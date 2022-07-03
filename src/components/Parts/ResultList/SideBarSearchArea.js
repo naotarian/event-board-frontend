@@ -17,8 +17,6 @@ const SideBarWrapper = styled(Grid)`
   @media screen and (min-width: 1024px) {
     width: 50%;
   }
-  // position: fixed;
-  // right: 36px;
 `
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />
 const checkedIcon = <CheckBoxIcon fontSize="small" />

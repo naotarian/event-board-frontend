@@ -117,26 +117,26 @@ const EventCards = props => {
       )
     }
   })
-  )
   const overCountCard = (
     events.map((data, index) => {
-    if (index >= 3) {
-      return (
-        <WrapperCard key={index}>
-          <StyledCardContents>
-            <Band variant="h3" deadline={data.deadline}>
-              {data.bandTxt}
-            </Band>
-            <EventDateArea variant="body1" gutterBottom>
-              <EventDateTypo>{data.eventDate}</EventDateTypo>
-              {data.eventStartTime} ~ {data.eventEndTime}
-            </EventDateArea>
-            <EventTitleTypo variant="body2">{data.title}</EventTitleTypo>
-          </StyledCardContents>
-        </WrapperCard>
-      )
-    }
-  })
+      if (index >= 3) {
+        return (
+          <WrapperCard key={index}>
+            <StyledCardContents>
+              <Band variant="h3" deadline={data.deadline}>
+                {data.bandTxt}
+              </Band>
+              <EventDateArea variant="body1" gutterBottom>
+                <EventDateTypo>{data.eventDate}</EventDateTypo>
+                {data.eventStartTime} ~ {data.eventEndTime}
+              </EventDateArea>
+              <EventTitleTypo variant="body2">{data.title}</EventTitleTypo>
+            </StyledCardContents>
+          </WrapperCard>
+        )
+      }
+    })
+  )
   return (
     <>
       {CardDisplay}

@@ -1,15 +1,11 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { useRouter } from 'next/router'
-import moment from 'moment'
 import 'moment/locale/ja'
-import axios from '@/lib/axios'
 //mui
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
 import Alert from '@mui/material/Alert'
-import Link from 'next/link'
 //components
 import DetailTags from './DetailTags'
 import EventContent from './EventContent'

@@ -1,12 +1,3 @@
-// import ApplicationLogo from '@/components/ApplicationLogo'
-// import AuthCard from '@/components/AuthCard'
-// import AuthSessionStatus from '@/components/AuthSessionStatus'
-// import AuthValidationErrors from '@/components/AuthValidationErrors'
-// import Button from '@/components/Button'
-// import GuestLayout from '@/components/Layouts/GuestLayout'
-// import Input from '@/components/Input'
-// import Label from '@/components/Label'
-// import Link from 'next/link'
 import { useAuth } from '@/hooks/auth'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
@@ -45,16 +36,8 @@ const Login = () => {
     <>
       <SignIn
         submitForm={submitForm}
-        email={email}
         setEmail={setEmail}
-        password={password}
         setPassword={setPassword}
-        errors={errors}
-        setErrors={setErrors}
-        status={status}
-        setStatus={setStatus}
-        loading={loading}
-        setLoading={setLoading}
       />
     </>
   )
