@@ -1,6 +1,4 @@
 const SendComplate = () => {
-	return (
-		<>メールを送信しました。</>
-	)
+  return <>メールを送信しました。</>
 }
 export default SendComplate

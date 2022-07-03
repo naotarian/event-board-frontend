@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import styled from "styled-components"
+import styled from 'styled-components'
 import axios from '@/lib/axios'
 //mui
 import Grid from '@mui/material/Grid'
@@ -34,16 +34,15 @@ const TagButton = styled(Button)`
   cursor: pointer;
   text-transform: none;
 `
-const SideBarTagSearch = (props) => {
+const SideBarTagSearch = props => {
   const { setEvents, eventTags } = props
-  const ClickTag = (tagId) => {
+  const ClickTag = tagId => {
     let sendData = {}
     sendData.tagId = tagId
-    axios.post('/api/event_tag_search', sendData)
+    axios
+      .post('/api/event_tag_search', sendData)
       .then(res => {
         setEvents(res.data.contents)
-      }).catch(error => {
-
       })
   }
   return (
@@ -58,8 +57,7 @@ const SideBarTagSearch = (props) => {
               <TagButton
                 variant="contained"
                 color="primary"
-                onClick={() => ClickTag(data.id)}
-              >
+                onClick={() => ClickTag(data.id)}>
                 {data.tag_name}
               </TagButton>
             </TagGrid>

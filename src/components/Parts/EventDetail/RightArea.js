@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
-import styled from "styled-components"
-import { useRouter } from 'next/router'
+import styled from 'styled-components'
 import moment from 'moment'
 import 'moment/locale/ja'
 import axios from '@/lib/axios'
@@ -12,23 +11,23 @@ import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
 import LoadingButton from '@mui/lab/LoadingButton'
 //icons
-import EmailIcon from '@mui/icons-material/Email';
+import EmailIcon from '@mui/icons-material/Email'
 //components
 import GuestModal from './GuestModal'
 const RightAreaWrapper = styled(Grid)`
-@media screen and (min-width:1024px) {
-  width: 300px;
-}
+  @media screen and (min-width: 1024px) {
+    width: 300px;
+  }
   margin-top: 1rem;
-  @media screen and (min-width:1024px) {
+  @media screen and (min-width: 1024px) {
     position: fixed;
     left: 70%;
   }
 `
 const RightAreaPaper = styled(Paper)`
-@media screen and (min-width:1024px) {
-  width: 320px;
-}
+  @media screen and (min-width: 1024px) {
+    width: 320px;
+  }
   padding: 1rem;
 `
 const EventDateTypo = styled(Typography)`
@@ -36,15 +35,10 @@ const EventDateTypo = styled(Typography)`
   margin-bottom: 1rem;
 `
 const StyledLoadingButton = styled(LoadingButton)`
-@media screen and (min-width:1024px) {
-}
-width: 300px;
-height: 50px;
-margin: 0 auto;
-display: block;
-@media screen and (max-width:767px) {
-  // display: none;
-}
+  width: 300px;
+  height: 50px;
+  margin: 0 auto;
+  display: block;
 `
 const Recruitment = styled(Typography)`
   font-size: 0.8rem;
@@ -66,7 +60,7 @@ const Contact = styled(Typography)`
   margin-top: 1rem;
   padding-bottom: 1rem;
 `
-const RightArea = (props) => {
+const RightArea = props => {
   const { eventInfo, applicationMessage, setApplicationMessage } = props
   const { user } = useAuth({ middleware: 'guest' })
   const [loading, setLoading] = useState(false)
@@ -76,64 +70,59 @@ const RightArea = (props) => {
   const [guestModalOpen, setGuestModalOpen] = useState(false)
   const [guestName, setGuestName] = useState('')
   const [guestEmail, setGuestEmail] = useState('')
-  const [applicationButtonDisabled, setApplicationButtonDisabled] = useState(false)
+  const [applicationButtonDisabled, setApplicationButtonDisabled] = useState(
+    false,
+  )
   useEffect(() => {
-    setRecruitEnd(moment(new Date(eventInfo.recruit_end)).format('YYYY-MM-DD-HH:mm'))
-    setRecruitStart(moment(new Date(eventInfo.recruit_start)).format('YYYY-MM-DD-HH:mm'))
-    if (user) {
-      if (user.id == eventInfo.user_id) {
-        setApplicationDisabled(true)
-      }
-    }
+    setRecruitEnd(
+      moment(new Date(eventInfo.recruit_end)).format('YYYY-MM-DD-HH:mm'),
+    )
+    setRecruitStart(
+      moment(new Date(eventInfo.recruit_start)).format('YYYY-MM-DD-HH:mm'),
+    )
+    if (!user) return
+    setApplicationDisabled(user.id === eventInfo.user_id)
   }, [eventInfo])
-  eventInfo.eventDate = moment(new Date(eventInfo.event_start)).format('YYYY-MM-DD(ddd)')
-  eventInfo.eventStartTime = moment(new Date(eventInfo.event_start)).format('HH:mm')
+  eventInfo.eventDate = moment(new Date(eventInfo.event_start)).format(
+    'YYYY-MM-DD(ddd)',
+  )
+  eventInfo.eventStartTime = moment(new Date(eventInfo.event_start)).format(
+    'HH:mm',
+  )
   eventInfo.eventEndTime = moment(new Date(eventInfo.event_end)).format('HH:mm')
-  const eventApplication = () => {
-    let sendData = {}
-    sendData.eventId = eventInfo.id
-    sendData.guestFlag = false
-    axios.post('/api/event_application', sendData)
-      .then(res => {
-        setApplicationMessage(res.data.msg)
-        setGuestModalOpen(false)
-      }).catch(error => {
-
-      })
+  const eventApplication = async () => {
+    let sendData = { eventId: eventInfo.id, guestFlag: false }
+    const res = await axios.post('/api/event_application', sendData)
+    setApplicationMessage(res.data.msg)
+    setGuestModalOpen(false)
   }
   const guestModalClose = () => {
     setGuestModalOpen(false)
   }
-  const guestApplication = () => {
+  const guestApplication = async () => {
     setApplicationButtonDisabled(true)
-    let sendData = {}
-    sendData.userId = -1
-    sendData.eventId = eventInfo.id
-    sendData.userName = guestName
-    sendData.email = guestEmail
-    sendData.guestFlag = true
-    axios.post('/api/event_application', sendData)
-      .then(res => {
-        setApplicationMessage(res.data.msg)
-        setGuestModalOpen(false)
-        console.log(res)
-      }).catch(error => {
-
-      })
+    const sendData = {
+      userId: -1,
+      eventId: eventInfo.id,
+      userName: guestName,
+      email: guestEmail,
+      guestFlag: true
+    }
+    const res = await axios.post('/api/event_application', sendData)
+    setApplicationMessage(res.data.msg)
+    setGuestModalOpen(false)
   }
   const clickGuestModal = () => {
     setGuestModalOpen(true)
   }
   const applicationButton = (user, ids, id) => {
     if (user) {
-      console.log(ids.includes(id))
       if (ids.includes(id)) {
         return (
           <StyledLoadingButton
             loadingPosition="start"
             variant="contained"
-            disabled='true'
-          >
+            disabled="true">
             申し込み済みです
           </StyledLoadingButton>
         )
@@ -144,8 +133,7 @@ const RightArea = (props) => {
             loadingPosition="start"
             variant="contained"
             disabled={applicationDisabled}
-            onClick={eventApplication}
-          >
+            onClick={eventApplication}>
             イベントに申し込む
           </StyledLoadingButton>
         )
@@ -157,8 +145,7 @@ const RightArea = (props) => {
           loadingPosition="start"
           variant="contained"
           disabled={applicationDisabled}
-          onClick={clickGuestModal}
-        >
+          onClick={clickGuestModal}>
           イベントに申し込む
         </StyledLoadingButton>
       )
@@ -168,16 +155,34 @@ const RightArea = (props) => {
     <RightAreaWrapper>
       <RightAreaPaper>
         <EventDateTypo>
-          <strong>{eventInfo.eventDate}</strong><br />{eventInfo.eventStartTime} ~ {eventInfo.eventEndTime}
+          <strong>{eventInfo.eventDate}</strong>
+          <br />
+          {eventInfo.eventStartTime} ~ {eventInfo.eventEndTime}
         </EventDateTypo>
         {applicationButton(user, eventInfo.already_applications, eventInfo.id)}
-        <Recruitment>&#12304;募集期間&#12305;<br />{recruitStart} ~ {recruitEnd}</Recruitment>
-        <Venue>会場 : {eventInfo.address}{eventInfo.other_address}</Venue>
-        <Venue>参加者 : <strong>{eventInfo.event_crowd_management.current_number_of_applicants}人</strong> / {eventInfo.event_crowd_management.number_of_applicants}人</Venue>
+        <Recruitment>
+          &#12304;募集期間&#12305;
+          <br />
+          {recruitStart} ~ {recruitEnd}
+        </Recruitment>
+        <Venue>
+          会場 : {eventInfo.address}
+          {eventInfo.other_address}
+        </Venue>
+        <Venue>
+          参加者 :
+          <strong>
+            {eventInfo.event_crowd_management.current_number_of_applicants}人
+          </strong>
+          / {eventInfo.event_crowd_management.number_of_applicants}人
+        </Venue>
         {!applicationDisabled && (
           <Contact>
             <Link href="#">
-              <a><EmailIcon style={{ verticalAlign: 'middle' }} />イベントに関するお問合せ</a>
+              <a>
+                <EmailIcon style={{ verticalAlign: 'middle' }} />
+                イベントに関するお問合せ
+              </a>
             </Link>
           </Contact>
         )}

@@ -15,10 +15,13 @@ import { createTheme, ThemeProvider } from '@mui/material/styles'
 import AuthSessionStatus from '@/components/AuthSessionStatus'
 import AuthValidationErrors from '@/components/AuthValidationErrors'
 
-
 function Copyright(props) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}>
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
         Your Website
@@ -26,13 +29,21 @@ function Copyright(props) {
       {new Date().getFullYear()}
       {'.'}
     </Typography>
-  );
+  )
 }
 
-const theme = createTheme();
+const theme = createTheme()
 
 export default function ForgetPassword(props) {
-  const { email, setEmail, errors, setErrors, status, setStatus, submitForm } = props
+  const {
+    email,
+    setEmail,
+    errors,
+    setErrors,
+    status,
+    setStatus,
+    submitForm,
+  } = props
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -43,8 +54,7 @@ export default function ForgetPassword(props) {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-          }}
-        >
+          }}>
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
@@ -70,8 +80,7 @@ export default function ForgetPassword(props) {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              onClick={submitForm}
-            >
+              onClick={submitForm}>
               メール送信
             </Button>
             <Grid container>
@@ -91,5 +100,5 @@ export default function ForgetPassword(props) {
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
-  );
+  )
 }

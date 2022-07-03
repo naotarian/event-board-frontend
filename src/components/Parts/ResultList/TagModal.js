@@ -1,11 +1,10 @@
 import { useState } from 'react'
-import styled from "styled-components"
+import styled from 'styled-components'
 //mui
 import Modal from '@mui/material/Modal'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
-import Paper from '@mui/material/Paper'
 import Grid from '@mui/material/Grid'
 const modalStyle = {
   position: 'absolute',
@@ -16,7 +15,7 @@ const modalStyle = {
   bgcolor: 'background.paper',
   boxShadow: 24,
   p: 4,
-};
+}
 const ModalBox = styled(Box)`
   overflow-y: scroll;
 `
@@ -36,7 +35,7 @@ const TagBand = styled(Typography)`
   border-radius: 2px;
   background-color: #333;
 `
-const TagModal = (props) => {
+const TagModal = props => {
   const { tagModal, tagModalClose } = props
   function FormRow() {
     return (
@@ -54,7 +53,7 @@ const TagModal = (props) => {
           <Item>Akka</Item>
         </Grid>
       </>
-    );
+    )
   }
   const Item = styled(Grid)`
     padding: 1rem;
@@ -64,12 +63,9 @@ const TagModal = (props) => {
       open={tagModal}
       onClose={tagModalClose}
       aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
+      aria-describedby="modal-modal-description">
       <ModalBox sx={modalStyle}>
-        <TagTitle id="modal-modal-title">
-          タグを選択
-        </TagTitle>
+        <TagTitle id="modal-modal-title">タグを選択</TagTitle>
         <TagBand id="modal-modal-description" sx={{ mt: 2 }}>
           プログラム
         </TagBand>

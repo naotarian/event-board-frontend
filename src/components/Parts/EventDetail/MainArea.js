@@ -1,20 +1,16 @@
 import { useEffect, useState } from 'react'
-import styled from "styled-components"
-import { useRouter } from 'next/router'
-import moment from 'moment'
+import styled from 'styled-components'
 import 'moment/locale/ja'
-import axios from '@/lib/axios'
 //mui
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
 import Alert from '@mui/material/Alert'
-import Link from 'next/link'
 //components
 import DetailTags from './DetailTags'
 import EventContent from './EventContent'
 const MainPaper = styled(Paper)`
-  @media screen and (min-width:1024px) {
+  @media screen and (min-width: 1024px) {
     width: 800px;
   }
   margin-top: 1rem;
@@ -23,7 +19,7 @@ const MainWrapper = styled(Grid)`
   padding: 1rem 2rem;
 `
 const Baner = styled(Typography)`
-  background-color: #3F50B5;
+  background-color: #3f50b5;
   color: #fff;
   padding: 1rem;
   font-size: 1.1rem;
@@ -33,18 +29,30 @@ const Baner = styled(Typography)`
 const StyledAlert = styled(Alert)`
   margin-bottom: 2rem;
 `
-const MainArea = (props) => {
+const MainArea = props => {
   const { eventInfo, applicationMessage, setApplicationMessage } = props
   return (
     <MainPaper elevation={0}>
       {eventInfo && (
         <>
           {applicationMessage && (
-            <StyledAlert variant="filled" severity="success" onClose={() => setApplicationMessage('')}>{applicationMessage}<br />確認メールを送信しました。</StyledAlert>
+            <StyledAlert
+              variant="filled"
+              severity="success"
+              onClose={() => setApplicationMessage('')}>
+              {applicationMessage}
+              <br />
+              確認メールを送信しました。
+            </StyledAlert>
           )}
-          <img src='/images/test.jpeg' alt='logo' width='800' style={{ maxWidth: '100%' }} />
+          <img
+            src="/images/test.jpeg"
+            alt="logo"
+            width="800"
+            style={{ maxWidth: '100%' }}
+          />
           <MainWrapper>
-            <Typography variant='h2' gutterBottom>
+            <Typography variant="h2" gutterBottom>
               {eventInfo.title}
             </Typography>
             <DetailTags eventInfo={eventInfo} />

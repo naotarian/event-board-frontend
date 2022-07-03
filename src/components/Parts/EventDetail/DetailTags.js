@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react'
-import styled from "styled-components"
+import styled from 'styled-components'
 //mui
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
-import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
 const Item = styled(Paper)`
   text-align: center;
   white-space: nowrap;
@@ -29,9 +27,9 @@ const TagButton = styled(Button)`
   cursor: pointer;
   text-transform: none;
 `
-const DetailTags = (props) => {
+const DetailTags = props => {
   const { eventInfo } = props
-  const ClickTag = (index) => {
+  const ClickTag = index => {
     console.log(index)
   }
   return (
@@ -41,8 +39,7 @@ const DetailTags = (props) => {
           <TagButton
             variant="contained"
             color="primary"
-            onClick={() => ClickTag(tag.id)}
-          >
+            onClick={() => ClickTag(tag.id)}>
             {tag.tag_name}
           </TagButton>
         </TagGrid>

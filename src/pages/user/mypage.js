@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import styled from "styled-components"
+import styled from 'styled-components'
 import axios from '@/lib/axios'
 //componentes
 import Header from '../../components/Parts/Template/Header'
@@ -8,23 +8,23 @@ import MainArea from '../../components/Parts/UserInfo/MainArea'
 //mui
 import Grid from '@mui/material/Grid'
 const UserPageWrapper = styled(Grid)`
-	margin: 6rem auto 0 auto;
-	@media screen and (min-width:1024px) {
-		max-width: 1200px;
-		display: flex;
-		justify-content: space-around;
-	}
+  margin: 6rem auto 0 auto;
+  @media screen and (min-width: 1024px) {
+    max-width: 1200px;
+    display: flex;
+    justify-content: space-around;
+  }
 `
 const MyPage = () => {
   const [userInfo, setUserInfo] = useState(null)
   useEffect(async () => {
-    axios.get('/api/my_page')
+    axios
+      .get('/api/my_page')
       .then(res => {
         setUserInfo(res.data.contents.user_info)
         console.log(res)
-      }).catch(error => {
-
       })
+      .catch(error => {})
   }, [])
   return (
     <>
