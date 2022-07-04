@@ -27,7 +27,6 @@ const AssignmentTags = props => {
     checkedTags,
     setCheckedTags,
   } = props
-  console.log(tagAll)
   const handleChange = e => {
     if (checkedTags.includes(e.target.value)) {
       setCheckedTags(

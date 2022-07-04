@@ -2,12 +2,7 @@ import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 //mui
 import Grid from '@mui/material/Grid'
-import Paper from '@mui/material/Paper'
 import Button from '@mui/material/Button'
-const Item = styled(Paper)`
-  text-align: center;
-  white-space: nowrap;
-`
 const FlexGrid = styled(Grid)`
   display: flex;
   flex-wrap: wrap;
@@ -15,11 +10,6 @@ const FlexGrid = styled(Grid)`
 const TagGrid = styled(Grid)`
   margin-right: 0.5rem;
   margin-bottom: 1rem;
-`
-const TagItem = styled(Item)`
-  min-width: 40px;
-  padding: 0 1rem;
-  cursor: pointer;
 `
 const TagButton = styled(Button)`
   min-width: 40px;

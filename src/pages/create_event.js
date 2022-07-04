@@ -101,26 +101,31 @@ const SuccessAlert = styled(Alert)`
   margin-top: 2rem;
 `
 const CreateEvent = () => {
-  const [startTime, setStartTime] = useState(new Date())
   let dt = new Date()
   let ts = dt.getTime()
   let ts_after = ts + 1000 * 60 * 60 * 1
-  const [endTime, setEndTime] = useState(new Date(ts_after))
-  const [eventDate, setEventValue] = useState(null)
   const [zipCode, setZipCode] = useState('')
-  const [address, setAddress] = useState('')
-  const [otherAddress, setOtherAddress] = useState('')
   const [rangeStartValue, setRangeStartValue] = useState(new Date())
-  const [rangeEndValue, setRangeEndValue] = useState(new Date())
   const [loading, setLoading] = useState(false)
-  const [eventTitle, setEventTitle] = useState('')
-  const [overview, setOverview] = useState('')
-  const [eventTheme, setEventTheme] = useState('')
-  const [recommendation, setRecommendation] = useState('')
-  const [notes, setNotes] = useState('')
-  const [email, setEmail] = useState('')
   const [success, setSuccess] = useState(false)
-  const [numberOfApplicants, setNumberOfApplicants] = useState(0)
+  const [sendFlag, setSendFlag] = useState(true)
+  const [sendObj, setSendObj] = useState({
+    'eventTitle': '',
+    'eventDate': '',
+    'zipCode': '',
+    'address': '',
+    'otherAddress': '',
+    'startTime': '',
+    'endTime': '',
+    'rangeStartValue': '',
+    'rangeEndValue': '',
+    'numberOfApplicants': 0,
+    'overview': '',
+    'eventTheme': '',
+    'email': '',
+    'recommendation': '',
+    'notes': ''
+  })
   //errorflag用
   const [eventTitleError, setEventTitleError] = useState(false)
   const [eventDateError, setEventDateError] = useState(false)
@@ -143,7 +148,7 @@ const CreateEvent = () => {
           return result.json()
         })
         .then(result => {
-          setAddress(result.data?.fullAddress || '')
+          setSendObj({ ...sendObj, address: result.data?.fullAddress || '' })
         })
     }
   }, [zipCode])
@@ -153,113 +158,16 @@ const CreateEvent = () => {
       .then(res => {
         setTagAll(res.data.contents.tags)
       })
-      .catch(error => { })
   }, [])
-  const send = () => {
-    // setLoading(true)
-    //validation
-    let sendFlag = true
-    let sendDatas = {}
-    if (!eventTitle) {
-      setEventTitleError(true)
-      sendFlag = false
-    }
-    if (!eventDate) {
-      setEventDateError(true)
-      sendFlag = false
-    }
-    if (!zipCode) {
-      setZipCodeError(true)
-    }
-    if (!address) {
-      setAddressError(true)
-    }
-    if (!email) {
-      setEmailError(true)
-    }
-    if (!startTime) {
-      setStartTimeError(true)
-    }
-    if (!endTime) {
-      setEndTimeError(true)
-    }
-    if (!numberOfApplicants) {
-      setNumberOfApplicantsError(true)
-    }
-    if (!sendFlag) {
-      return
-    }
-    sendDatas.eventTitle = eventTitle
-    sendDatas.eventDate =
-      eventDate.getFullYear() +
-      '/' +
-      ('00' + (eventDate.getMonth() + 1)).slice(-2) +
-      '/' +
-      ('00' + eventDate.getDate()).slice(-2)
-    sendDatas.zipCode = zipCode
-    sendDatas.address = address
-    sendDatas.startTime =
-      startTime.getFullYear() +
-      '/' +
-      ('00' + (startTime.getMonth() + 1)).slice(-2) +
-      '/' +
-      ('00' + startTime.getDate()).slice(-2) +
-      ' ' +
-      ('00' + startTime.getHours()).slice(-2) +
-      ':' +
-      ('00' + startTime.getMinutes()).slice(-2)
-    sendDatas.endTime =
-      endTime.getFullYear() +
-      '/' +
-      ('00' + (endTime.getMonth() + 1)).slice(-2) +
-      '/' +
-      ('00' + endTime.getDate()).slice(-2) +
-      ' ' +
-      ('00' + endTime.getHours()).slice(-2) +
-      ':' +
-      ('00' + endTime.getMinutes()).slice(-2)
-    sendDatas.rangeStartValue =
-      rangeStartValue.getFullYear() +
-      '/' +
-      ('00' + (rangeStartValue.getMonth() + 1)).slice(-2) +
-      '/' +
-      ('00' + rangeStartValue.getDate()).slice(-2) +
-      ' ' +
-      ('00' + rangeStartValue.getHours()).slice(-2) +
-      ':' +
-      ('00' + rangeStartValue.getMinutes()).slice(-2)
-    sendDatas.rangeEndValue =
-      rangeEndValue.getFullYear() +
-      '/' +
-      ('00' + (rangeEndValue.getMonth() + 1)).slice(-2) +
-      '/' +
-      ('00' + rangeEndValue.getDate()).slice(-2) +
-      ' ' +
-      ('00' + rangeEndValue.getHours()).slice(-2) +
-      ':' +
-      ('00' + rangeEndValue.getMinutes()).slice(-2)
-    sendDatas.otherAddress = otherAddress
-    sendDatas.overview = overview
-    sendDatas.eventTheme = eventTheme
-    sendDatas.recommendation = recommendation
-    sendDatas.numberOfApplicants = numberOfApplicants
-    sendDatas.notes = notes
-    sendDatas.email = email
-    sendDatas.event_tags = checkedTags
-    if (sendFlag) {
-      axios
-        .post('/api/create_event', sendDatas)
-        .then(res => {
-          if (res.data.code == 200) {
-            setSuccess(true)
-            setLoading(false)
-          }
-        })
-        .catch(error => {
-          if (error.response.status != 422) throw error
-        })
-    } else {
-      return
+  const send = async () => {
+    if (!sendFlag) return
+    sendObj.event_tags = checkedTags
+    const res = await axios.post('/api/create_event', sendObj).catch(error => {
+      if (error.response.status != 422) throw error
+    })
+    if (res.data.code == 200) {
+      setSuccess(true)
+      setLoading(false)
     }
   }
   const handleClickOpen = () => {
@@ -268,6 +176,96 @@ const CreateEvent = () => {
 
   const handleClose = () => {
     setOpen(false)
+  }
+  const onChangeTitle = (e) => {
+    setSendObj({ ...sendObj, eventTitle: e.target.value })
+    e.target.value.length == 0 ? setEventTitleError(true) : setEventTitleError(false)
+  }
+  const onChangeEventDate = (newValue) => {
+    const NewEventDate = newValue.getFullYear() + '/' +
+      ('00' + (newValue.getMonth() + 1)).slice(-2) + '/' +
+      ('00' + newValue.getDate()).slice(-2)
+    setSendObj({ ...sendObj, eventDate: NewEventDate })
+  }
+  const onChangeZipCode = (e) => {
+    setZipCode(e.target.value)
+    setSendObj({ ...sendObj, zipCode: e.target.value })
+    e.target.value.length == 0 ? setZipCodeError(true) : setZipCodeError(false)
+    e.target.value.length == 0 ? setSendFlag(false) : setSendFlag(true)
+  }
+  const onChangeAdress = (e) => {
+    // setSendObj({ ...sendObj, address: e.target.value })
+    e.target.value.length == 0 ? setAddressError(true) : setAddressError(false)
+    e.target.value.length == 0 ? setSendFlag(false) : setSendFlag(true)
+  }
+  const onChangeOtherAddress = (e) => {
+    setSendObj({ ...sendObj, otherAddress: e.target.value })
+  }
+  const onChangeEndTime = (newValue) => {
+    const NewEndTime = newValue.getFullYear() +
+      '/' +
+      ('00' + (newValue.getMonth() + 1)).slice(-2) +
+      '/' +
+      ('00' + newValue.getDate()).slice(-2) +
+      ' ' +
+      ('00' + newValue.getHours()).slice(-2) +
+      ':' +
+      ('00' + newValue.getMinutes()).slice(-2)
+    setSendObj({ ...sendObj, endTime: NewEndTime })
+  }
+  const onChangeStartTime = (newValue) => {
+    const NewStartTime = newValue.getFullYear() +
+      '/' +
+      ('00' + (newValue.getMonth() + 1)).slice(-2) +
+      '/' +
+      ('00' + newValue.getDate()).slice(-2) +
+      ' ' +
+      ('00' + newValue.getHours()).slice(-2) +
+      ':' +
+      ('00' + newValue.getMinutes()).slice(-2)
+    setSendObj({ ...sendObj, startTime: NewStartTime })
+  }
+  const onChangeRangeStartValue = (newValue) => {
+    const NewStartRange = newValue.getFullYear() +
+      '/' +
+      ('00' + (newValue.getMonth() + 1)).slice(-2) +
+      '/' +
+      ('00' + newValue.getDate()).slice(-2) +
+      ' ' +
+      ('00' + newValue.getHours()).slice(-2) +
+      ':' +
+      ('00' + newValue.getMinutes()).slice(-2)
+    setSendObj({ ...sendObj, rangeStartValue: NewStartRange })
+  }
+  const onChangeRangeEndValue = (newValue) => {
+    const NewEndRange = newValue.getFullYear() +
+      '/' +
+      ('00' + (newValue.getMonth() + 1)).slice(-2) +
+      '/' +
+      ('00' + newValue.getDate()).slice(-2) +
+      ' ' +
+      ('00' + newValue.getHours()).slice(-2) +
+      ':' +
+      ('00' + newValue.getMinutes()).slice(-2)
+    setSendObj({ ...sendObj, rangeEndValue: NewEndRange })
+  }
+  const onChangeNumberOfApplicants = (e) => {
+    setSendObj({ ...sendObj, numberOfApplicants: e.target.value })
+  }
+  const onChangeOverview = (e) => {
+    setSendObj({ ...sendObj, overview: e.target.value })
+  }
+  const onChangeEventTheme = (e) => {
+    setSendObj({ ...sendObj, eventTheme: e.target.value })
+  }
+  const onChangeEmail = (e) => {
+    setSendObj({ ...sendObj, email: e.target.value })
+  }
+  const onChangeRecommendation = (e) => {
+    setSendObj({ ...sendObj, recommendation: e.target.value })
+  }
+  const onChangeNotes = (e) => {
+    setSendObj({ ...sendObj, notes: e.target.value })
   }
 
   return (
@@ -292,8 +290,8 @@ const CreateEvent = () => {
               multiline
               required
               error={eventTitleError}
-              value={eventTitle}
-              onChange={event => setEventTitle(event.target.value)}
+              value={sendObj.eventTitle}
+              onChange={onChangeTitle}
             />
             <PcFlex>
               <PcFlexItem>
@@ -303,12 +301,9 @@ const CreateEvent = () => {
                   adapterLocale={jaLocale}>
                   <DatePicker
                     label="開催日設定"
-                    value={eventDate}
-                    onChange={newValue => {
-                      setEventValue(newValue)
-                    }}
+                    value={sendObj.eventDate}
+                    onChange={onChangeEventDate}
                     inputFormat="yyyy年MM月dd日"
-                    // mask="__/__/____"
                     mask="____年__月__日"
                     renderInput={params => <TextField {...params} />}
                   />
@@ -322,10 +317,8 @@ const CreateEvent = () => {
                     label="郵便番号"
                     variant="outlined"
                     placeholder="XXX-XXXX"
-                    value={zipCode}
-                    onChange={e => {
-                      setZipCode(e.target.value)
-                    }}
+                    value={sendObj.zipCode}
+                    onChange={onChangeZipCode}
                     error={zipCodeError}
                   />
                 </PlaceGrid>
@@ -334,10 +327,8 @@ const CreateEvent = () => {
                     id="address"
                     label="住所"
                     variant="outlined"
-                    value={address}
-                    onChange={e => {
-                      setAddress(e.target.value)
-                    }}
+                    value={sendObj.address}
+                    onChange={onChangeAdress}
                     error={addressError}
                     fullWidth
                   />
@@ -346,10 +337,8 @@ const CreateEvent = () => {
                   <TextField
                     label="以下住所"
                     variant="outlined"
-                    value={otherAddress}
-                    onChange={e => {
-                      setOtherAddress(e.target.value)
-                    }}
+                    value={sendObj.otherAddress}
+                    onChange={onChangeOtherAddress}
                     fullWidth
                   />
                 </PlaceGrid>
@@ -364,10 +353,8 @@ const CreateEvent = () => {
                 <DateTimePicker
                   renderInput={props => <TextField {...props} />}
                   label="開始時間"
-                  value={startTime}
-                  onChange={newValue => {
-                    setStartTime(newValue)
-                  }}
+                  value={sendObj.startTime}
+                  onChange={onChangeStartTime}
                   ampm={false}
                   inputFormat="yyyy年MM月dd日 HH時mm分"
                   mask="____年__月__日 __時__分"
@@ -381,13 +368,10 @@ const CreateEvent = () => {
                 <DateTimePicker
                   renderInput={props => <TextField {...props} />}
                   label="終了時間"
-                  value={endTime}
-                  onChange={newValue => {
-                    setEndTime(newValue)
-                  }}
+                  value={sendObj.endTime}
+                  onChange={onChangeEndTime}
                   ampm={false}
                   inputFormat="yyyy年MM月dd日 HH時mm分"
-                  // mask="____年__月__日 __時__分"
                   mask="____年__月__日 __時__分"
                   minDateTime={rangeStartValue}
                   error={endTimeError}
@@ -402,10 +386,8 @@ const CreateEvent = () => {
                 <DateTimePicker
                   renderInput={props => <TextField {...props} />}
                   label="募集開始"
-                  value={rangeStartValue}
-                  onChange={newValue => {
-                    setRangeStartValue(newValue)
-                  }}
+                  value={sendObj.rangeStartValue}
+                  onChange={onChangeRangeStartValue}
                   ampm={false}
                   inputFormat="yyyy年MM月dd日 HH時mm分"
                   mask="____年__月__日 __時__分"
@@ -418,15 +400,12 @@ const CreateEvent = () => {
                 <DateTimePicker
                   renderInput={props => <TextField {...props} />}
                   label="募集終了"
-                  value={rangeEndValue}
-                  onChange={newValue => {
-                    setRangeEndValue(newValue)
-                  }}
+                  value={sendObj.rangeEndValue}
+                  onChange={onChangeRangeEndValue}
                   ampm={false}
                   inputFormat="yyyy年MM月dd日 HH時mm分"
-                  // mask="____年__月__日 __時__分"
                   mask="____年__月__日 __時__分"
-                  minDateTime={rangeStartValue}
+                  minDateTime={sendObj.rangeStartValue}
                 />
               </LocalizationProvider>
             </TimerGrid>
@@ -435,12 +414,12 @@ const CreateEvent = () => {
               id="outlined-number"
               label="募集人数(名)"
               type="number"
-              value={numberOfApplicants}
+              value={sendObj.numberOfApplicants}
               InputLabelProps={{
                 shrink: true,
               }}
               error={numberOfApplicantsError}
-              onChange={event => setNumberOfApplicants(event.target.value)}
+              onChange={onChangeNumberOfApplicants}
             />
             <SubItem variant="h2">概要</SubItem>
             <TextArea
@@ -448,16 +427,16 @@ const CreateEvent = () => {
               multiline
               rows={8}
               placeholder="イベントの概要を記入"
-              value={overview}
-              onChange={event => setOverview(event.target.value)}
+              value={sendObj.overview}
+              onChange={onChangeOverview}
             />
             <SubItem variant="h2">テーマ</SubItem>
             <TextArea
               label="テーマ"
               multiline
               rows={4}
-              value={eventTheme}
-              onChange={event => setEventTheme(event.target.value)}
+              value={sendObj.eventTheme}
+              onChange={onChangeEventTheme}
               placeholder="イベントのテーマを記入"
             />
             <SubItem variant="h2">イベントのタグ設定</SubItem>
@@ -477,10 +456,8 @@ const CreateEvent = () => {
               label="お問い合わせ用メールアドレス"
               placeholder="test@test.com"
               required
-              value={email}
-              onChange={e => {
-                setEmail(e.target.value)
-              }}
+              value={sendObj.email}
+              onChange={onChangeEmail}
               error={emailError}
             />
             <SubItem variant="h2">こんな方におすすめ</SubItem>
@@ -489,8 +466,8 @@ const CreateEvent = () => {
               multiline
               rows={4}
               placeholder="・技術検証組織に興味がある&#13;&#10;・SaaS開発に携わるエンジニアの話が聞きたい"
-              value={recommendation}
-              onChange={event => setRecommendation(event.target.value)}
+              value={sendObj.recommendation}
+              onChange={onChangeRecommendation}
             />
             <SubItem variant="h2">注意事項</SubItem>
             <TextArea
@@ -500,8 +477,8 @@ const CreateEvent = () => {
               placeholder="・当イベントの内容およびスケジュールは、予告なく変更となる場合があります。予めご了承ください。&#13;&#10;
               ・他の参加者の方の妨げになるような行為は禁止、運営側の判断でご退出をお願いする場合があります。&#13;&#10;
               ・ブログやSNS等で当イベントに関する発信を行う際は、公序良俗に反する内容のないよう、ご協力をお願いします。"
-              value={notes}
-              onChange={event => setNotes(event.target.value)}
+              value={sendObj.notes}
+              onChange={onChangeNotes}
             />
             {success && (
               <SuccessAlert
