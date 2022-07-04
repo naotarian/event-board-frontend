@@ -56,9 +56,6 @@ const ActionItemChild = styled(Grid)`
     color: #0e7ac4;
   }
 `
-const MainContentGrid = styled(Grid)`
-  // display: flex;
-`
 const CardContentGrid = styled(Grid)`
   min-width: 900px;
 `
@@ -75,14 +72,12 @@ const ResultList = () => {
   const [areas, setAreas] = useState(null)
   const [eventTags, setEventTags] = useState(null)
   useEffect(async () => {
-    axios
-      .get('/api/get_events')
-      .then(res => {
-        setEvents(res.data.contents.events)
-        setAreas(res.data.contents.areas)
-        setEventTags(res.data.contents.tags)
-      })
-      .catch(error => { })
+    (async () => {
+      const res = await axios.get('/api/get_events')
+      setEvents(res.data.contents.events)
+      setAreas(res.data.contents.areas)
+      setEventTags(res.data.contents.tags)
+    })()
   }, [])
   const tagModalClose = () => {
     setTagModal(false)
@@ -128,7 +123,7 @@ const ResultList = () => {
             <StyledTab value="two" label="レポート" />
           </Tabs>
         </Box>
-        <MainContentGrid>
+        <Grid>
           <ListActions>
             {events && (
               <ActionItem>
@@ -171,7 +166,7 @@ const ResultList = () => {
               />
             )}
           </FlexGrid>
-        </MainContentGrid>
+        </Grid>
         <TagModal tagModal={tagModal} tagModalClose={tagModalClose} />
       </WrapperGrid>
     </>

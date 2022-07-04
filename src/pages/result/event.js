@@ -30,11 +30,9 @@ const Event = () => {
   const eventId = router.query.event
   const { user } = useAuth({ middleware: 'guest' })
   useEffect(() => {
-    ; (async () => {
-      if (!router.isReady || !user) return
+    (async () => {
+      if (!router.isReady) return
       const sendData = { id: eventId, isAuth: user ? 1 : 0 }
-      // sendData.id = eventId
-      // sendData.isAuth = user ? 1 : 0
       const res = await axios.post('/api/event_detail', sendData)
       setEventInfo(res.data.contents.event_info)
     })()

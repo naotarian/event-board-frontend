@@ -194,7 +194,6 @@ const RightArea = props => {
         setGuestName={setGuestName}
         setGuestEmail={setGuestEmail}
         applicationButtonDisabled={applicationButtonDisabled}
-        applicationMessage={applicationMessage}
       />
     </RightAreaWrapper>
   )

@@ -16,7 +16,6 @@ const GuestModal = props => {
     setGuestName,
     setGuestEmail,
     applicationButtonDisabled,
-    applicationMessage,
   } = props
   return (
     <div>
