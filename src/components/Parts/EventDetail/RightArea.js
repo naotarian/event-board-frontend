@@ -178,7 +178,7 @@ const RightArea = props => {
         </Venue>
         {!applicationDisabled && (
           <Contact>
-            <Link href="#">
+            <Link href={`/events/contact?event=${eventInfo.id}`}>
               <a>
                 <EmailIcon style={{ verticalAlign: 'middle' }} />
                 イベントに関するお問合せ
