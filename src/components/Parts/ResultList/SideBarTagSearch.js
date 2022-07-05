@@ -39,11 +39,9 @@ const SideBarTagSearch = props => {
   const ClickTag = tagId => {
     let sendData = {}
     sendData.tagId = tagId
-    axios
-      .post('/api/event_tag_search', sendData)
-      .then(res => {
-        setEvents(res.data.contents)
-      })
+    axios.post('/api/event_tag_search', sendData).then(res => {
+      setEvents(res.data.contents)
+    })
   }
   return (
     <Grid>
