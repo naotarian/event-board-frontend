@@ -33,11 +33,7 @@ function Copyright(props) {
 const theme = createTheme()
 
 export default function SignIn(props) {
-  const {
-    submitForm,
-    setEmail,
-    setPassword,
-  } = props
+  const { submitForm, setEmail, setPassword } = props
 
   return (
     <ThemeProvider theme={theme}>

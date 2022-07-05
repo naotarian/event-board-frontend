@@ -106,7 +106,7 @@ const RightArea = props => {
       eventId: eventInfo.id,
       userName: guestName,
       email: guestEmail,
-      guestFlag: true
+      guestFlag: true,
     }
     const res = await axios.post('/api/event_application', sendData)
     setApplicationMessage(res.data.msg)

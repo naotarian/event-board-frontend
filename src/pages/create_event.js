@@ -13,7 +13,6 @@ import Typography from '@mui/material/Typography'
 import jaLocale from 'date-fns/locale/ja'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-import { TimePicker } from '@mui/x-date-pickers/TimePicker'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
 import LoadingButton from '@mui/lab/LoadingButton'
@@ -81,12 +80,6 @@ const PcFlexItem = styled(Grid)`
 const PlaceGrid = styled(Grid)`
   margin-bottom: 2rem;
 `
-const StyledTimePicker = styled(TimePicker)`
-  @media screen and (max-width: 767px) {
-    margin-bottom: 2rem;
-    width: 150px;
-  }
-`
 const SendButton = styled(LoadingButton)`
   width: 200px;
 `
@@ -101,34 +94,30 @@ const SuccessAlert = styled(Alert)`
   margin-top: 2rem;
 `
 const CreateEvent = () => {
-  let dt = new Date()
-  let ts = dt.getTime()
-  let ts_after = ts + 1000 * 60 * 60 * 1
   const [zipCode, setZipCode] = useState('')
   const [rangeStartValue, setRangeStartValue] = useState(new Date())
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [sendFlag, setSendFlag] = useState(true)
   const [sendObj, setSendObj] = useState({
-    'eventTitle': '',
-    'eventDate': '',
-    'zipCode': '',
-    'address': '',
-    'otherAddress': '',
-    'startTime': '',
-    'endTime': '',
-    'rangeStartValue': '',
-    'rangeEndValue': '',
-    'numberOfApplicants': 0,
-    'overview': '',
-    'eventTheme': '',
-    'email': '',
-    'recommendation': '',
-    'notes': ''
+    eventTitle: '',
+    eventDate: '',
+    zipCode: '',
+    address: '',
+    otherAddress: '',
+    startTime: '',
+    endTime: '',
+    rangeStartValue: '',
+    rangeEndValue: '',
+    numberOfApplicants: 0,
+    overview: '',
+    eventTheme: '',
+    email: '',
+    recommendation: '',
+    notes: '',
   })
   //errorflag用
   const [eventTitleError, setEventTitleError] = useState(false)
-  const [eventDateError, setEventDateError] = useState(false)
   const [zipCodeError, setZipCodeError] = useState(false)
   const [addressError, setAddressError] = useState(false)
   const [emailError, setEmailError] = useState(false)
@@ -148,16 +137,16 @@ const CreateEvent = () => {
           return result.json()
         })
         .then(result => {
+          console.log(result)
           setSendObj({ ...sendObj, address: result.data?.fullAddress || '' })
         })
     }
   }, [zipCode])
-  useEffect(async () => {
-    axios
-      .get('/api/get_tags')
-      .then(res => {
-        setTagAll(res.data.contents.tags)
-      })
+  useEffect(() => {
+    ;(async () => {
+      const res = await axios.get('/api/get_tags')
+      setTagAll(res.data.contents.tags)
+    })()
   }, [])
   const send = async () => {
     if (!sendFlag) return
@@ -177,32 +166,38 @@ const CreateEvent = () => {
   const handleClose = () => {
     setOpen(false)
   }
-  const onChangeTitle = (e) => {
+  const onChangeTitle = e => {
     setSendObj({ ...sendObj, eventTitle: e.target.value })
-    e.target.value.length == 0 ? setEventTitleError(true) : setEventTitleError(false)
+    e.target.value.length == 0
+      ? setEventTitleError(true)
+      : setEventTitleError(false)
   }
-  const onChangeEventDate = (newValue) => {
-    const NewEventDate = newValue.getFullYear() + '/' +
-      ('00' + (newValue.getMonth() + 1)).slice(-2) + '/' +
+  const onChangeEventDate = newValue => {
+    const NewEventDate =
+      newValue.getFullYear() +
+      '/' +
+      ('00' + (newValue.getMonth() + 1)).slice(-2) +
+      '/' +
       ('00' + newValue.getDate()).slice(-2)
     setSendObj({ ...sendObj, eventDate: NewEventDate })
   }
-  const onChangeZipCode = (e) => {
+  const onChangeZipCode = e => {
     setZipCode(e.target.value)
     setSendObj({ ...sendObj, zipCode: e.target.value })
     e.target.value.length == 0 ? setZipCodeError(true) : setZipCodeError(false)
     e.target.value.length == 0 ? setSendFlag(false) : setSendFlag(true)
   }
-  const onChangeAdress = (e) => {
+  const onChangeAdress = e => {
     // setSendObj({ ...sendObj, address: e.target.value })
     e.target.value.length == 0 ? setAddressError(true) : setAddressError(false)
     e.target.value.length == 0 ? setSendFlag(false) : setSendFlag(true)
   }
-  const onChangeOtherAddress = (e) => {
+  const onChangeOtherAddress = e => {
     setSendObj({ ...sendObj, otherAddress: e.target.value })
   }
-  const onChangeEndTime = (newValue) => {
-    const NewEndTime = newValue.getFullYear() +
+  const onChangeEndTime = newValue => {
+    const NewEndTime =
+      newValue.getFullYear() +
       '/' +
       ('00' + (newValue.getMonth() + 1)).slice(-2) +
       '/' +
@@ -213,8 +208,9 @@ const CreateEvent = () => {
       ('00' + newValue.getMinutes()).slice(-2)
     setSendObj({ ...sendObj, endTime: NewEndTime })
   }
-  const onChangeStartTime = (newValue) => {
-    const NewStartTime = newValue.getFullYear() +
+  const onChangeStartTime = newValue => {
+    const NewStartTime =
+      newValue.getFullYear() +
       '/' +
       ('00' + (newValue.getMonth() + 1)).slice(-2) +
       '/' +
@@ -225,8 +221,9 @@ const CreateEvent = () => {
       ('00' + newValue.getMinutes()).slice(-2)
     setSendObj({ ...sendObj, startTime: NewStartTime })
   }
-  const onChangeRangeStartValue = (newValue) => {
-    const NewStartRange = newValue.getFullYear() +
+  const onChangeRangeStartValue = newValue => {
+    const NewStartRange =
+      newValue.getFullYear() +
       '/' +
       ('00' + (newValue.getMonth() + 1)).slice(-2) +
       '/' +
@@ -237,8 +234,9 @@ const CreateEvent = () => {
       ('00' + newValue.getMinutes()).slice(-2)
     setSendObj({ ...sendObj, rangeStartValue: NewStartRange })
   }
-  const onChangeRangeEndValue = (newValue) => {
-    const NewEndRange = newValue.getFullYear() +
+  const onChangeRangeEndValue = newValue => {
+    const NewEndRange =
+      newValue.getFullYear() +
       '/' +
       ('00' + (newValue.getMonth() + 1)).slice(-2) +
       '/' +
@@ -249,22 +247,22 @@ const CreateEvent = () => {
       ('00' + newValue.getMinutes()).slice(-2)
     setSendObj({ ...sendObj, rangeEndValue: NewEndRange })
   }
-  const onChangeNumberOfApplicants = (e) => {
+  const onChangeNumberOfApplicants = e => {
     setSendObj({ ...sendObj, numberOfApplicants: e.target.value })
   }
-  const onChangeOverview = (e) => {
+  const onChangeOverview = e => {
     setSendObj({ ...sendObj, overview: e.target.value })
   }
-  const onChangeEventTheme = (e) => {
+  const onChangeEventTheme = e => {
     setSendObj({ ...sendObj, eventTheme: e.target.value })
   }
-  const onChangeEmail = (e) => {
+  const onChangeEmail = e => {
     setSendObj({ ...sendObj, email: e.target.value })
   }
-  const onChangeRecommendation = (e) => {
+  const onChangeRecommendation = e => {
     setSendObj({ ...sendObj, recommendation: e.target.value })
   }
-  const onChangeNotes = (e) => {
+  const onChangeNotes = exports => {
     setSendObj({ ...sendObj, notes: e.target.value })
   }
 
@@ -373,7 +371,7 @@ const CreateEvent = () => {
                   ampm={false}
                   inputFormat="yyyy年MM月dd日 HH時mm分"
                   mask="____年__月__日 __時__分"
-                  minDateTime={rangeStartValue}
+                  minDateTime={sendObj.rangeStartValue}
                   error={endTimeError}
                 />
               </LocalizationProvider>

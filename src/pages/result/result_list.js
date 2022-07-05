@@ -72,7 +72,7 @@ const ResultList = () => {
   const [areas, setAreas] = useState(null)
   const [eventTags, setEventTags] = useState(null)
   useEffect(async () => {
-    (async () => {
+    ;(async () => {
       const res = await axios.get('/api/get_events')
       setEvents(res.data.contents.events)
       setAreas(res.data.contents.areas)

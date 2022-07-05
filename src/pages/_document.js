@@ -1,5 +1,4 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
-import { ServerStyleSheets } from '@material-ui/styles'
 import { ServerStyleSheet } from 'styled-components'
 import theme from '../components/default'
 
