@@ -43,6 +43,10 @@ const SentLoadingButton = styled(LoadingButton)`
 const StyledAlert = styled(Alert)`
   margin-bottom: 1rem;
 `
+const SuccessAlert = styled(Alert)`
+  margin: 2rem auto;
+  width: 800px;
+`
 
 const Contact = () => {
   const router = useRouter()
@@ -55,6 +59,7 @@ const Contact = () => {
   const [email, setEmail] = useState('')
   const [errorEmail, setErrorEmail] = useState(false)
   const [errorEmailMessage, setErrorEmailMessage] = useState('')
+  const [success, setSuccess] = useState(false)
   useEffect(() => {
     ; (async () => {
       if (!router.isReady) return
@@ -97,24 +102,28 @@ const Contact = () => {
       setErrorEmailMessage('')
       setErrorEmail(false)
     }
-    if(!sendFlag) return
+    if (!sendFlag) return
     const sendDatas = {
       'eventId': eventInfo.id,
       'contactText': contactText,
       'email': user ? user.email : email
     }
     const res = await axios.post('/api/event_contact', sendDatas)
-    console.log(res)
+    if (res.status === 200) {
+      setSuccess(true)
+      setContactText('')
+      setEmail('')
+    }
     setLoading(false)
   }
   const emailArea = () => {
     if (user) {
       return (
-        <>{ user.email }</>
+        <>{user.email}</>
       )
     } else {
       return (
-        <Input placeholder="test@test.com" onChange={ onChangeEmail } />
+        <Input placeholder="test@test.com" onChange={onChangeEmail} />
       )
     }
   }
@@ -126,6 +135,16 @@ const Contact = () => {
       <Header />
       <WrapperGrid>
         <Bread />
+        {success && (
+          <SuccessAlert
+            onClose={() => {
+              setSuccess(false)
+            }}
+            variant="filled"
+            severity="success">
+            お問い合わせが完了しました。主催者からの返答をお待ちください。
+          </SuccessAlert>
+        )}
         <ContentWrapper>
           {eventInfo && (
             <FromWrapper>
