@@ -105,6 +105,8 @@ const SideBarSearch = props => {
           <DatePicker
             label="開始"
             value={selectDateStart}
+            inputFormat="yyyy年MM月dd日"
+            mask="____年__月__日"
             onChange={newValue => {
               setSelectDateStart(newValue)
             }}
@@ -118,6 +120,8 @@ const SideBarSearch = props => {
             label="終了"
             value={selectDateEnd}
             minDate={selectDateStart}
+            inputFormat="yyyy年MM月dd日"
+            mask="____年__月__日"
             onChange={newValue => {
               setSelectDateEnd(newValue)
             }}
