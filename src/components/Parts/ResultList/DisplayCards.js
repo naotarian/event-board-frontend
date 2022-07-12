@@ -57,7 +57,18 @@ const NumberOfApplicants = styled(Typography)`
 const StyledCardActions = styled(CardActions)`
   border-top: 1px solid #ddd;
   padding: 0.5rem 1rem;
-  justify-content: space-between;
+  justify-content: flex-start;
+  position: relative;
+`
+const TagTypo = styled(Typography)`
+  height: 25px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`
+const Rec = styled(Typography)`
+  position: absolute;
+  right: 10px;
 `
 const DisplayCards = props => {
   const { events, setEvents } = props
@@ -109,17 +120,19 @@ const DisplayCards = props => {
             <Button size="small" onClick={() => mypage(data)}>
               {data.user.name}
             </Button>
-            <Typography variant="body1" gutterBottom>
-              {Object.entries(data.id_tagname).map(([key, tag], index) => (
+            <TagTypo variant="body1" gutterBottom>
+              {data.id_tagname && Object.entries(data.id_tagname).map(([key, tag], index) => (
                 <Button size="small" onClick={() => clickTag(key)} key={index}>
                   {tag}
                 </Button>
               ))}
-            </Typography>
+            </TagTypo>
+          <Rec>
             <BookmarkIcon
               style={{ cursor: 'pointer' }}
               onClick={() => bookmaek(data.id)}
             />
+          </Rec>
           </StyledCardActions>
         </WrapperCard>
       ))}

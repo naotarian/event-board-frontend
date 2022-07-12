@@ -57,7 +57,9 @@ const ActionItemChild = styled(Grid)`
   }
 `
 const CardContentGrid = styled(Grid)`
-  min-width: 900px;
+  @media screen and (min-width: 1024px) {
+    min-width: 900px;
+  }
 `
 const FlexGrid = styled(Grid)`
   justify-content: space-between;

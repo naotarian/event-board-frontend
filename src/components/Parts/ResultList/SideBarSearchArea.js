@@ -11,7 +11,11 @@ import SideBarSearch from './SideBarSearch'
 //css
 const SideBar = styled(Paper)`
   padding: 1.5rem;
-  margin-bottom: 2rem;
+  margin: 0 auto 2rem auto;
+  width: 100%;
+  @media screen and (max-width: 767px) {
+    width: 85%;
+  }
 `
 const SideBarWrapper = styled(Grid)`
   @media screen and (min-width: 1024px) {
